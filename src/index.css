@@ -27,12 +27,14 @@
 html {
   min-width: 320px;
   background: #101c13;
+  overflow-x: hidden;
 }
 
 body {
   min-width: 320px;
   min-height: 100vh;
   margin: 0;
+  overflow-x: hidden;
   background:
     linear-gradient(90deg, rgba(124, 255, 155, 0.045) 1px, transparent 1px) 0 0 / 72px 72px,
     linear-gradient(0deg, rgba(124, 255, 155, 0.035) 1px, transparent 1px) 0 0 / 72px 72px,
@@ -790,6 +792,7 @@ h1 {
   gap: 10px;
   padding: 12px;
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .category-button {
@@ -1344,20 +1347,75 @@ h1 {
 @media (max-width: 820px) {
   .app-shell {
     padding: 12px;
+    overflow: visible;
+  }
+
+  body::after {
+    width: 130px;
+    height: 130px;
+    opacity: 0.18;
+  }
+
+  .browser-frame {
+    box-shadow: 7px 7px 0 rgba(5, 8, 5, 0.36);
   }
 
   .browser-topbar {
     display: flex;
     flex-direction: column;
     align-items: stretch;
+    gap: 8px;
+    padding: 8px;
   }
 
   .hero-panel {
     grid-template-columns: 1fr;
+    gap: 18px;
+    padding: 20px;
   }
 
   .nav-links {
     flex-wrap: wrap;
+  }
+
+  .nav-link,
+  .date-tab {
+    display: inline-flex;
+    min-height: 38px;
+    align-items: center;
+  }
+
+  .address-bar {
+    white-space: normal;
+    line-height: 1.35;
+  }
+
+  h1 {
+    font-size: clamp(2.15rem, 13vw, 3.6rem);
+    line-height: 1.02;
+  }
+
+  .subtitle {
+    line-height: 1.45;
+  }
+
+  .intro-copy,
+  .todays-content p,
+  .signal-text,
+  .detail-section p,
+  .detail-section li,
+  .about-card p,
+  .about-card li {
+    font-size: 0.95rem;
+  }
+
+  .quick-links button,
+  .category-button,
+  .open-button,
+  .source-button,
+  .mail-button,
+  .detail-titlebar button {
+    min-height: 42px;
   }
 
   .window-controls {
@@ -1365,11 +1423,21 @@ h1 {
   }
 
   .visual-panel {
-    min-height: 220px;
+    min-height: 260px;
+    padding: 12px;
   }
 
   .visual-panel-inner {
-    min-height: 260px;
+    min-height: 232px;
+  }
+
+  .signal-image-hero {
+    width: calc(100% - 16px);
+    min-height: 150px;
+  }
+
+  .archive-stamps span {
+    font-size: 0.72rem;
   }
 
   .hero-status-grid,
@@ -1388,10 +1456,40 @@ h1 {
 
   .todays-signal {
     width: auto;
+    margin: 14px;
+  }
+
+  .category-console,
+  .about-section {
+    margin-right: 14px;
+    margin-left: 14px;
+  }
+
+  .section-title,
+  .card-titlebar,
+  .about-header,
+  .profile-window-bar {
+    align-items: flex-start;
+    flex-wrap: wrap;
+    line-height: 1.35;
   }
 
   .signal-grid {
     grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 0 14px 20px;
+  }
+
+  .signal-card {
+    box-shadow: 5px 5px 0 rgba(5, 8, 5, 0.3);
+  }
+
+  .card-body {
+    padding: 16px;
+  }
+
+  .signal-image-thumb {
+    margin-bottom: 14px;
   }
 
   .card-file-meta {
@@ -1399,11 +1497,26 @@ h1 {
   }
 
   .detail-overlay {
-    padding: 12px;
+    align-items: start;
+    padding: 10px;
+    overflow-y: auto;
+  }
+
+  .detail-window {
+    width: 100%;
+    max-height: none;
+    margin: 8px 0;
+    box-shadow: 6px 6px 0 rgba(5, 8, 5, 0.4);
+  }
+
+  .detail-body {
+    max-height: none;
+    padding: 14px;
   }
 
   .detail-grid {
     grid-template-columns: 1fr;
+    gap: 12px;
   }
 
   .detail-titlebar {
@@ -1412,11 +1525,23 @@ h1 {
   }
 
   .signal-image-feature {
-    min-height: 210px;
+    min-height: 180px;
   }
 
   .signal-image-detail {
-    min-height: 180px;
+    min-height: 150px;
+  }
+
+  .detail-hero {
+    padding: 16px;
+  }
+
+  .detail-hero h2 {
+    font-size: clamp(1.45rem, 8vw, 2.2rem);
+  }
+
+  .detail-section {
+    padding: 13px;
   }
 
   .about-header {
@@ -1426,6 +1551,16 @@ h1 {
   .about-grid {
     grid-template-columns: 1fr;
     padding: 12px;
+    gap: 12px;
+  }
+
+  .about-card,
+  .profile-card {
+    box-shadow: 4px 4px 0 rgba(5, 8, 5, 0.24);
+  }
+
+  .about-card {
+    padding: 15px;
   }
 
   .about-card-large,
@@ -1450,5 +1585,141 @@ h1 {
     float: none;
     width: 100%;
     margin: 0 0 16px;
+  }
+}
+
+@media (max-width: 460px) {
+  .app-shell {
+    padding: 8px;
+  }
+
+  .browser-frame {
+    border-width: 1px;
+    box-shadow: 4px 4px 0 rgba(5, 8, 5, 0.35);
+  }
+
+  .hero-panel {
+    padding: 16px 12px;
+  }
+
+  .nav-links {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .nav-link {
+    justify-content: center;
+    padding: 8px 6px;
+    text-align: center;
+  }
+
+  .window-controls {
+    display: none;
+  }
+
+  h1 {
+    font-size: clamp(2rem, 15vw, 3rem);
+  }
+
+  .quick-links {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .quick-links button {
+    padding: 9px 8px;
+  }
+
+  .personal-file-strip span {
+    width: 100%;
+  }
+
+  .visual-panel {
+    min-height: 230px;
+  }
+
+  .visual-panel-inner {
+    min-height: 206px;
+  }
+
+  .signal-image-hero,
+  .signal-image-feature {
+    min-height: 145px;
+  }
+
+  .signal-image-placeholder {
+    padding: 9px;
+  }
+
+  .placeholder-grid {
+    width: min(190px, 76%);
+    gap: 6px;
+  }
+
+  .signal-image-placeholder strong {
+    font-size: 1.08rem;
+  }
+
+  .todays-signal,
+  .category-console,
+  .about-section {
+    margin-right: 8px;
+    margin-left: 8px;
+  }
+
+  .todays-content {
+    padding: 14px;
+  }
+
+  .category-list {
+    gap: 8px;
+    padding: 10px;
+  }
+
+  .category-button {
+    padding: 8px 10px;
+    font-size: 0.82rem;
+  }
+
+  .signal-grid {
+    padding-right: 8px;
+    padding-left: 8px;
+  }
+
+  .card-titlebar {
+    font-size: 0.72rem;
+  }
+
+  .tool-chip,
+  .visual-tag {
+    font-size: 0.78rem;
+  }
+
+  .detail-overlay {
+    padding: 6px;
+  }
+
+  .detail-titlebar,
+  .detail-body {
+    padding: 10px;
+  }
+
+  .detail-meta span,
+  .detail-chip-row span {
+    font-size: 0.78rem;
+  }
+
+  .profile-body,
+  .about-grid {
+    padding: 10px;
+  }
+
+  .profile-avatar {
+    min-height: 120px;
+    font-size: 3rem;
+  }
+
+  .about-card h2 {
+    font-size: 1.25rem;
   }
 }
