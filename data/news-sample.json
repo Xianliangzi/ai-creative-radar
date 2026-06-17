@@ -1,0 +1,170 @@
+[
+  {
+    "id": "signal-001",
+    "title": "AI 视频工具升级角色一致性，适合做连续感视觉短片",
+    "signal": "AI 视频正在从单条炫技片段，走向可持续制作角色和系列内容的工作流。",
+    "summary": "新一代 AI 视频工具开始强化角色一致性、镜头衔接和风格保持能力，让创作者更容易围绕同一个人物、服装或世界观生成多段视频素材。",
+    "creator_value": "视觉创作者可以用它测试短片分镜、时尚大片预演、AI Lookbook、梦核影像和音乐视觉片，不必一开始就投入完整拍摄成本。",
+    "project_ideas": [
+      "制作一组 30 秒梦核短片，用同一角色穿越不同房间和光线场景。",
+      "做 AI Lookbook 预演，把一个虚拟模特放进 5 套不同造型和城市背景。",
+      "为个人作品集设计一个虚拟角色预告片，展示角色设定、服装、场景和情绪。"
+    ],
+    "business_potential": "适合发展成短视频视觉服务、品牌广告预演、音乐人视觉片段、服装上新预览或内容账号系列栏目。现阶段更适合作为提案、样片和低成本视觉验证。",
+    "target_reader": "AI 视觉创作者、影像方向创作者、时尚创作者、数字媒体艺术学生",
+    "category": "AI视觉工具",
+    "tools": ["Runway", "Pika", "Luma Dream Machine", "After Effects"],
+    "prompt_hint": "同一位虚拟模特，夜间地下通道，绿色荧光灯，梦核氛围，低清 VHS 质感，缓慢推镜，时尚大片预演",
+    "source": "AI Video Tool Blog",
+    "url": "https://example.com/ai-video-character-consistency",
+    "date": "2026-06-18",
+    "visual_tag": ["video", "fashion", "cyber", "lookbook"]
+  },
+  {
+    "id": "signal-002",
+    "title": "图像模型提升文字和版式控制，品牌视觉实验更容易落地",
+    "signal": "AI 生图不再只适合氛围图，正在进入海报、封面和品牌视觉草案阶段。",
+    "summary": "新的图像模型在文字生成、构图控制和局部编辑方面更稳定，能更好地生成带标题、标语、包装元素和排版层级的视觉草稿。",
+    "creator_value": "设计师可以把它用于品牌 moodboard、海报方向探索、活动主视觉草案和作品集前期实验，再进入专业软件做精修。",
+    "project_ideas": [
+      "为一个虚构潮牌设计 9 张 AI 海报，探索不同字体、材质和街头摄影风格。",
+      "做一套音乐节主视觉提案，包含海报、票面、社媒封面和周边包装。",
+      "制作作品集项目：从 AI 草图到人工精修，展示完整品牌视觉迭代过程。"
+    ],
+    "business_potential": "适合做视觉提案、社媒封面套餐、品牌 moodboard 服务和模板售卖。正式商用前仍需检查版权、字体、商标和图像细节。",
+    "target_reader": "视觉设计师、品牌设计师、内容运营、学生",
+    "category": "AI视觉工具",
+    "tools": ["Midjourney", "GPT-4o Image", "Adobe Photoshop", "Figma"],
+    "prompt_hint": "experimental poster for a fictional cyber fashion brand, bold typography, black and neon green palette, halftone texture, browser window layout, high contrast",
+    "source": "Model Update Notes",
+    "url": "https://example.com/image-model-layout-update",
+    "date": "2026-06-18",
+    "visual_tag": ["design", "branding", "poster", "cyber"]
+  },
+  {
+    "id": "signal-003",
+    "title": "AI 时尚大片案例把虚拟模特、生成场景和真实服装混合",
+    "signal": "数字时尚正在从概念图走向可用于品牌预演和社媒传播的混合制作流程。",
+    "summary": "一个 AI 时尚视觉案例使用虚拟模特、生成式场景和真实服装参考，完成了一组具有杂志大片感的视觉内容。",
+    "creator_value": "时尚和影像创作者可以借鉴这种流程，在没有完整拍摄团队的情况下完成 Lookbook、趋势报告、品牌提案或虚拟人物设定。",
+    "project_ideas": [
+      "为小众服装品牌制作 AI Lookbook 概念案，展示 3 个城市夜景主题。",
+      "做数字媒体课程作业：虚拟模特与真实面料纹理的混合影像研究。",
+      "经营一个 AI fashion archive 内容账号，每周拆解一种未来服装视觉风格。"
+    ],
+    "business_potential": "适合面向独立设计师、淘宝店、买手店或小品牌提供低成本视觉预演服务，也适合做内容账号和作品集专题。",
+    "target_reader": "时尚创作者、视觉设计师、AI 视觉创作者、内容运营",
+    "category": "创意案例",
+    "tools": ["Midjourney", "Krea", "Runway", "Photoshop"],
+    "prompt_hint": "virtual fashion editorial, translucent raincoat, neon green subway platform, cyber streetwear, halftone magazine scan, dramatic flash photography",
+    "source": "Creative Case Study",
+    "url": "https://example.com/ai-fashion-editorial-case",
+    "date": "2026-06-18",
+    "visual_tag": ["fashion", "avatar", "cyber", "editorial"]
+  },
+  {
+    "id": "signal-004",
+    "title": "Y2K 与赛博旧网页美学回潮，适合做个人主页式创意档案",
+    "signal": "创作者网站正在从极简作品集，重新转向带强烈个人风格的 weird web 档案站。",
+    "summary": "越来越多视觉项目使用旧浏览器窗口、像素图形、扫描线、半调网点、荧光色和终端界面，塑造个人主页和地下情报站式体验。",
+    "creator_value": "这种趋势适合视觉创作者建立有记忆点的个人品牌，也适合把 AI 作品、Prompt、案例拆解和商业服务包装成一个可持续更新的创意档案。",
+    "project_ideas": [
+      "做一个个人 AI 视觉档案站，把作品按工具、风格和实验主题归档。",
+      "为毕业设计搭建一个赛博情报界面，用来展示虚拟人、影像和交互装置。",
+      "设计一套 Y2K 视觉模板包，包括卡片、标签、海报、社媒封面和网页组件。"
+    ],
+    "business_potential": "适合做个人 IP、作品集升级、模板售卖和视觉风格服务。它的价值来自差异化审美，不适合做成太普通的企业模板。",
+    "target_reader": "视觉设计师、数字媒体艺术学生、个人创作者、潮流方向创作者",
+    "category": "潮流趋势",
+    "tools": ["Figma", "Framer", "Midjourney", "CSS"],
+    "prompt_hint": "retro internet interface, black and neon green cyber palette, old browser window, pixel icons, scanlines, halftone image, weird web personal archive",
+    "source": "Visual Trend Notes",
+    "url": "https://example.com/weird-web-y2k-trend",
+    "date": "2026-06-18",
+    "visual_tag": ["y2k", "cyber", "design", "weird-web"]
+  },
+  {
+    "id": "signal-005",
+    "title": "AI 模板售卖成为个人创作者的小商业入口",
+    "signal": "AI 工作流可以被包装成模板、素材包和教程，变成低门槛的小产品。",
+    "summary": "不少个人创作者开始把 AI 海报流程、短视频分镜、Prompt 包、Notion 工作台和视觉模板打包售卖，面向设计师、运营和小商家。",
+    "creator_value": "视觉创作者可以不只卖单张图，而是把自己的方法、审美和流程产品化，形成可复用的内容资产。",
+    "project_ideas": [
+      "制作一套 AI 海报 Prompt + PSD 精修模板包，面向内容运营和独立品牌。",
+      "做 AI Lookbook 生成流程教程，包含提示词、参考图、后期步骤和案例文件。",
+      "搭建一个视觉账号，每周发布一个 AI 商业视觉改造案例，引流到模板产品。"
+    ],
+    "business_potential": "适合副业、内容账号、模板售卖和轻量咨询。关键是选择明确人群和场景，例如小红书封面、潮牌海报、课程封面或活动视觉。",
+    "target_reader": "想做副业的设计师、内容运营、AI 视觉创作者、个人创意创业者",
+    "category": "商业玩法",
+    "tools": ["Gumroad", "Notion", "Figma", "Canva", "Midjourney"],
+    "prompt_hint": "AI poster template system for independent fashion brand, reusable composition, editable text area, neon green and black cyber style, social media ready",
+    "source": "Creator Business Report",
+    "url": "https://example.com/ai-template-business",
+    "date": "2026-06-18",
+    "visual_tag": ["business", "template", "design", "prompt"]
+  },
+  {
+    "id": "signal-006",
+    "title": "一组可复用的赛博时尚 Prompt 可以快速扩展成视觉系列",
+    "signal": "Prompt 不只是生成单图的句子，也可以成为稳定视觉系列的风格系统。",
+    "summary": "通过固定主体、色彩、镜头、材质和后期质感，创作者可以把一组提示词扩展成海报、短片、Lookbook 和社媒连载。",
+    "creator_value": "这适合新手建立自己的视觉语言，也适合设计师快速测试不同风格方向，形成可展示、可复用的 Prompt 工作流。",
+    "project_ideas": [
+      "生成 12 张赛博时尚人物海报，组成一个虚拟品牌季度 Campaign。",
+      "把同一 Prompt 改造成视频镜头脚本，制作 15 秒社媒短片。",
+      "整理成作品集章节：从 Prompt 系统到最终视觉系列。"
+    ],
+    "business_potential": "适合做 Prompt 包、教学内容、视觉系列账号和作品集项目。若用于客户项目，需要把 AI 初稿与人工设计能力结合，而不是只交付原始生成图。",
+    "target_reader": "AI 初学者、视觉设计师、数字媒体艺术学生、内容运营",
+    "category": "灵感Prompt",
+    "tools": ["Midjourney", "Runway", "Photoshop", "Pinterest"],
+    "prompt_hint": "cyber fashion portrait series, black vinyl jacket, neon green rim light, old web interface background, pixel noise, halftone print texture, editorial photography",
+    "source": "Prompt Lab Notes",
+    "url": "https://example.com/cyber-fashion-prompt-system",
+    "date": "2026-06-18",
+    "visual_tag": ["prompt", "fashion", "cyber", "poster"]
+  },
+  {
+    "id": "signal-007",
+    "title": "AI 3D 生成工具降低了空间装置和展览草图门槛",
+    "signal": "3D 生成能力正在让数字媒体学生更快把概念变成可讨论的空间原型。",
+    "summary": "AI 3D 工具可以从文字、图片或草图生成基础模型和场景资产，虽然还需要清理和优化，但已经适合早期概念验证。",
+    "creator_value": "数字媒体艺术学生可以用它快速搭建互动装置草图、展览空间预演、虚拟橱窗和游戏化视觉原型，帮助导师或客户理解方案。",
+    "project_ideas": [
+      "做一个 AI 生成的地下情报站展览空间，包含终端屏幕、档案墙和投影影像。",
+      "为时尚品牌设计虚拟快闪店概念，用 AI 3D 生成基础空间和道具。",
+      "制作毕业设计预演视频，把 3D 草图与 AI 影像拼接成提案片。"
+    ],
+    "business_potential": "适合做展陈提案、虚拟空间概念图、品牌快闪预演和课程作品。短期更适合辅助提案，复杂商用仍需要专业 3D 清模和渲染。",
+    "target_reader": "数字媒体艺术学生、空间设计师、视觉设计师、AI 视觉创作者",
+    "category": "前沿观察",
+    "tools": ["Spline", "Tripo", "Meshy", "Blender"],
+    "prompt_hint": "underground cyber archive room, old computers, green terminal screens, pixel posters, industrial metal shelves, immersive installation concept",
+    "source": "3D AI Startup Notes",
+    "url": "https://example.com/ai-3d-installation-prototype",
+    "date": "2026-06-18",
+    "visual_tag": ["3D", "installation", "cyber", "space"]
+  },
+  {
+    "id": "signal-008",
+    "title": "虚拟人内容账号从单次出图转向角色设定和连续叙事",
+    "signal": "虚拟人赛道的机会不只是脸好看，而是角色世界观、穿搭、语气和持续内容。",
+    "summary": "越来越多虚拟人账号开始围绕固定角色身份、生活方式、穿搭审美和短视频叙事来运营，而不是只发布单张 AI 美女图。",
+    "creator_value": "创作者可以把虚拟人当作完整的视觉 IP 项目来做，包括角色设定、服装系统、空间风格、短视频栏目和品牌合作提案。",
+    "project_ideas": [
+      "创建一个赛博档案管理员虚拟人，每天发布 AI 视觉工具和灵感卡片。",
+      "为虚拟模特设计 7 天穿搭栏目，结合 AI Lookbook 和短视频。",
+      "做作品集项目：从角色设定、视觉系统到内容账号运营计划。"
+    ],
+    "business_potential": "适合内容账号、品牌联名提案、虚拟模特视觉服务和个人 IP 试验。需要长期稳定输出，不适合只依赖单次爆款图。",
+    "target_reader": "AI 视觉创作者、内容运营、时尚创作者、个人 IP 创作者",
+    "category": "潮流趋势",
+    "tools": ["Midjourney", "Runway", "CapCut", "Instagram", "小红书"],
+    "prompt_hint": "cyber archive girl, neon green terminal light, vintage browser interface, streetwear outfit, mysterious personal homepage, continuous character design",
+    "source": "Virtual Creator Watch",
+    "url": "https://example.com/virtual-avatar-content-trend",
+    "date": "2026-06-18",
+    "visual_tag": ["avatar", "fashion", "business", "cyber"]
+  }
+]
