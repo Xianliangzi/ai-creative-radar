@@ -13,6 +13,7 @@ function SignalDetail({ signal, onClose }) {
   const projectIdeas = renderValue(signal.project_ideas)
   const tools = renderValue(signal.tools)
   const visualTags = renderValue(signal.visual_tag)
+  const sourceUrl = typeof signal.url === 'string' && signal.url.startsWith('https://') ? signal.url : ''
 
   return (
     <div className="detail-overlay" role="presentation">
@@ -88,12 +89,17 @@ function SignalDetail({ signal, onClose }) {
             <section className="detail-section detail-section-wide">
               <h3>SOURCE</h3>
               <p>{renderValue(signal.source)}</p>
-              {signal.url ? (
-                <a className="source-button" href={signal.url} target="_blank" rel="noreferrer">
+              {sourceUrl ? (
+                <a
+                  className="source-button"
+                  href={sourceUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   OPEN SOURCE
                 </a>
               ) : (
-                <span className="source-button is-disabled">Not available</span>
+                <span className="source-button is-disabled">Source not available</span>
               )}
             </section>
           </div>
