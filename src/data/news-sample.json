@@ -13,7 +13,13 @@
     "business_potential": "适合用于作品集、短视频账号、广告提案预演和视觉接单前期方案。现阶段更适合卖“创意预演”和“视觉方向探索”，不适合承诺完全替代商业拍摄。",
     "target_reader": "数字媒体艺术学生、影像方向创作者、AI 视觉创作者、视觉设计师",
     "category": "AI视觉工具",
-    "tools": ["Runway", "Pika", "Luma Dream Machine", "CapCut", "After Effects"],
+    "tools": [
+      "Runway",
+      "Pika",
+      "Luma Dream Machine",
+      "CapCut",
+      "After Effects"
+    ],
     "prompt_hint": "a lonely virtual model walking through an old shopping mall at night, dark sage green lighting, retro surveillance camera look, slow dolly shot, cinematic visual diary",
     "source": "Runway",
     "url": "https://runwayml.com/",
@@ -21,7 +27,13 @@
     "image": "",
     "image_alt": "AI 视频工作流动态视觉实验预览",
     "image_mode": "cover",
-    "visual_tag": ["video", "cinematic", "portfolio", "workflow"]
+    "visual_tag": [
+      "video",
+      "cinematic",
+      "portfolio",
+      "workflow"
+    ],
+    "confidence_level": "HIGH"
   },
   {
     "id": "signal-002",
@@ -37,7 +49,13 @@
     "business_potential": "适合做社媒封面、活动海报草案、品牌 moodboard 和小型视觉提案服务。商用时需要检查字体、素材版权和品牌使用风险。",
     "target_reader": "视觉设计师、平面设计学生、内容运营、品牌视觉方向创作者",
     "category": "AI视觉工具",
-    "tools": ["Midjourney", "Adobe Photoshop", "Firefly", "Figma", "Illustrator"],
+    "tools": [
+      "Midjourney",
+      "Adobe Photoshop",
+      "Firefly",
+      "Figma",
+      "Illustrator"
+    ],
     "prompt_hint": "experimental exhibition poster, dark green old web aesthetic, scanned paper texture, halftone portrait, strong grid layout, editable title area, student design portfolio",
     "source": "Adobe Firefly",
     "url": "https://www.adobe.com/products/firefly.html",
@@ -45,7 +63,13 @@
     "image": "",
     "image_alt": "AI 图像生成与海报局部编辑工作流预览",
     "image_mode": "cover",
-    "visual_tag": ["design", "poster", "branding", "editing"]
+    "visual_tag": [
+      "design",
+      "poster",
+      "branding",
+      "editing"
+    ],
+    "confidence_level": "HIGH"
   },
   {
     "id": "signal-003",
@@ -61,7 +85,13 @@
     "business_potential": "适合做小品牌视觉提案、服装店上新预演、小红书内容账号和作品集项目。真正商业交付时，应明确这是概念预演还是正式素材。",
     "target_reader": "时尚创作者、摄影学生、视觉设计师、内容运营",
     "category": "创意案例",
-    "tools": ["Midjourney", "Krea", "Photoshop", "Runway", "小红书"],
+    "tools": [
+      "Midjourney",
+      "Krea",
+      "Photoshop",
+      "Runway",
+      "小红书"
+    ],
     "prompt_hint": "independent streetwear lookbook, young model in oversized jacket, old shopping street at night, dark sage green color grade, flash photography, editorial layout",
     "source": "Krea AI",
     "url": "https://www.krea.ai/",
@@ -69,7 +99,13 @@
     "image": "",
     "image_alt": "AI Lookbook 独立品牌视觉预演案例",
     "image_mode": "cover",
-    "visual_tag": ["fashion", "lookbook", "editorial", "case"]
+    "visual_tag": [
+      "fashion",
+      "lookbook",
+      "editorial",
+      "case"
+    ],
+    "confidence_level": "MEDIUM"
   },
   {
     "id": "signal-004",
@@ -85,7 +121,13 @@
     "business_potential": "适合发展成音乐封面、动态海报、短视频背景和 MV 概念片服务。可以从低价小单或个人合作开始，但需要注意音乐授权和素材版权。",
     "target_reader": "数字媒体艺术学生、影像创作者、音乐视觉设计师、内容运营",
     "category": "创意案例",
-    "tools": ["Runway", "Pika", "Midjourney", "CapCut", "After Effects"],
+    "tools": [
+      "Runway",
+      "Pika",
+      "Midjourney",
+      "CapCut",
+      "After Effects"
+    ],
     "prompt_hint": "looping music visual, lonely singer silhouette, green CRT monitor light, rain on window, analog video texture, slow motion, album teaser",
     "source": "Pika",
     "url": "https://pika.art/",
@@ -93,7 +135,13 @@
     "image": "",
     "image_alt": "AI MV 与音乐视觉循环短片案例",
     "image_mode": "cover",
-    "visual_tag": ["video", "music", "motion", "case"]
+    "visual_tag": [
+      "video",
+      "music",
+      "motion",
+      "case"
+    ],
+    "confidence_level": "MEDIUM"
   },
   {
     "id": "signal-005",
@@ -109,7 +157,13 @@
     "business_potential": "适合做个人作品集、视觉模板包、网页视觉定制和内容账号风格定位。商业化重点不是大众通用，而是服务有独特审美需求的小众项目。",
     "target_reader": "视觉设计师、数字媒体艺术学生、前端初学者、个人创作者",
     "category": "潮流趋势",
-    "tools": ["Figma", "React", "CSS", "Framer", "Midjourney"],
+    "tools": [
+      "Figma",
+      "React",
+      "CSS",
+      "Framer",
+      "Midjourney"
+    ],
     "prompt_hint": "old web personal homepage, dark sage green browser window, pixel image archive, student portfolio, cyber zine layout, small buttons and profile card",
     "source": "Figma Make",
     "url": "https://www.figma.com/make/",
@@ -117,7 +171,13 @@
     "image": "",
     "image_alt": "旧网页个人主页美学与作品集趋势",
     "image_mode": "cover",
-    "visual_tag": ["y2k", "old-web", "portfolio", "design"]
+    "visual_tag": [
+      "y2k",
+      "old-web",
+      "portfolio",
+      "design"
+    ],
+    "confidence_level": "HIGH"
   },
   {
     "id": "signal-006",
@@ -133,7 +193,13 @@
     "business_potential": "适合做内容账号、个人 IP、虚拟模特视觉服务和品牌联名提案。需要长期更新和角色一致性，不适合只靠一次出图变现。",
     "target_reader": "AI 视觉创作者、内容运营、时尚创作者、个人 IP 创作者",
     "category": "潮流趋势",
-    "tools": ["Midjourney", "Runway", "CapCut", "小红书", "Instagram"],
+    "tools": [
+      "Midjourney",
+      "Runway",
+      "CapCut",
+      "小红书",
+      "Instagram"
+    ],
     "prompt_hint": "AI visual archivist character, dark green old computer room, personal diary photo, consistent outfit, weird web profile page, soft flash photography",
     "source": "Midjourney",
     "url": "https://www.midjourney.com/",
@@ -141,7 +207,13 @@
     "image": "",
     "image_alt": "虚拟人角色日记与连续内容趋势",
     "image_mode": "cover",
-    "visual_tag": ["avatar", "content", "fashion", "storytelling"]
+    "visual_tag": [
+      "avatar",
+      "content",
+      "fashion",
+      "storytelling"
+    ],
+    "confidence_level": "MEDIUM"
   },
   {
     "id": "signal-007",
@@ -157,7 +229,13 @@
     "business_potential": "适合模板售卖、内容账号引流、轻量咨询和接单前的标准化服务。不要承诺一键变现，重点是帮助特定人群节省时间。",
     "target_reader": "视觉设计师、内容运营、想做副业的学生、个人创意创业者",
     "category": "商业玩法",
-    "tools": ["Notion", "Figma", "Canva", "Midjourney", "Gumroad"],
+    "tools": [
+      "Notion",
+      "Figma",
+      "Canva",
+      "Midjourney",
+      "Gumroad"
+    ],
     "prompt_hint": "AI social media cover template, reusable layout, dark green cyber zine style, editable text area, student creator toolkit, visual system preview",
     "source": "Gumroad",
     "url": "https://gumroad.com/",
@@ -165,7 +243,13 @@
     "image": "",
     "image_alt": "AI 视觉模板包小产品商业玩法",
     "image_mode": "cover",
-    "visual_tag": ["business", "template", "creator", "product"]
+    "visual_tag": [
+      "business",
+      "template",
+      "creator",
+      "product"
+    ],
+    "confidence_level": "MEDIUM"
   },
   {
     "id": "signal-008",
@@ -181,7 +265,13 @@
     "business_potential": "适合接单入门、内容账号展示、作品集商业模拟和低成本视觉咨询。要明确交付边界，避免把 AI 草图包装成完整商业成片。",
     "target_reader": "想接单的学生、视觉设计师、内容运营、AI 视觉创作者",
     "category": "商业玩法",
-    "tools": ["Midjourney", "Figma", "Photoshop", "Runway", "Notion"],
+    "tools": [
+      "Midjourney",
+      "Figma",
+      "Photoshop",
+      "Runway",
+      "Notion"
+    ],
     "prompt_hint": "brand visual proposal preview, six moodboard frames, dark green archive layout, poster mockup, campaign direction, student design service",
     "source": "Canva AI Image Generator",
     "url": "https://www.canva.com/ai-image-generator/",
@@ -189,7 +279,13 @@
     "image": "",
     "image_alt": "AI 视觉提案预演接单玩法",
     "image_mode": "cover",
-    "visual_tag": ["business", "proposal", "service", "branding"]
+    "visual_tag": [
+      "business",
+      "proposal",
+      "service",
+      "branding"
+    ],
+    "confidence_level": "MEDIUM"
   },
   {
     "id": "signal-009",
@@ -205,7 +301,13 @@
     "business_potential": "适合做 Prompt 教程、视觉系列账号、作品集章节和模板产品。更适合展示方法论，不建议只售卖未经整理的提示词。",
     "target_reader": "AI 初学者、视觉设计学生、Prompt 练习者、内容运营",
     "category": "灵感Prompt",
-    "tools": ["Midjourney", "Krea", "Runway", "Photoshop", "Pinterest"],
+    "tools": [
+      "Midjourney",
+      "Krea",
+      "Runway",
+      "Photoshop",
+      "Pinterest"
+    ],
     "prompt_hint": "dark sage green visual archive, old browser interface, halftone portrait, pixel collage, Chinese student portfolio, cyber zine, consistent layout system",
     "source": "Midjourney Docs",
     "url": "https://docs.midjourney.com/",
@@ -213,7 +315,13 @@
     "image": "",
     "image_alt": "风格系统 Prompt 视觉系列方法",
     "image_mode": "cover",
-    "visual_tag": ["prompt", "system", "portfolio", "visual-style"]
+    "visual_tag": [
+      "prompt",
+      "system",
+      "portfolio",
+      "visual-style"
+    ],
+    "confidence_level": "HIGH"
   },
   {
     "id": "signal-010",
@@ -229,7 +337,13 @@
     "business_potential": "适合做展陈提案、虚拟快闪店概念、互动网页作品和课程项目。商业化还需要 3D 清模、性能优化和前端实现能力。",
     "target_reader": "数字媒体艺术学生、交互设计学生、空间视觉创作者、前端视觉方向学习者",
     "category": "前沿观察",
-    "tools": ["Spline", "Tripo", "Meshy", "Blender", "Three.js"],
+    "tools": [
+      "Spline",
+      "Tripo",
+      "Meshy",
+      "Blender",
+      "Three.js"
+    ],
     "prompt_hint": "interactive 3D archive room, dark green old computer interface, floating image cards, student digital media installation, low light, web experience concept",
     "source": "Spline AI",
     "url": "https://spline.design/ai-generate",
@@ -237,6 +351,12 @@
     "image": "",
     "image_alt": "AI 3D 与网页交互作品集前沿观察",
     "image_mode": "cover",
-    "visual_tag": ["3D", "interactive", "web", "frontier"]
+    "visual_tag": [
+      "3D",
+      "interactive",
+      "web",
+      "frontier"
+    ],
+    "confidence_level": "HIGH"
   }
 ]
