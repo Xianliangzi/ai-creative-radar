@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import SignalImage from './SignalImage.jsx'
 
 function renderValue(value) {
@@ -10,10 +10,26 @@ function renderValue(value) {
 }
 
 function SignalDetail({ signal, onClose }) {
+  const [copyStatus, setCopyStatus] = useState('idle')
   const projectIdeas = renderValue(signal.project_ideas)
   const tools = renderValue(signal.tools)
   const visualTags = renderValue(signal.visual_tag)
   const sourceUrl = typeof signal.url === 'string' && signal.url.startsWith('https://') ? signal.url : ''
+
+  const copySourceUrl = async () => {
+    if (!sourceUrl) return
+
+    try {
+      await navigator.clipboard.writeText(sourceUrl)
+      setCopyStatus('copied')
+    } catch {
+      setCopyStatus('failed')
+    }
+
+    window.setTimeout(() => {
+      setCopyStatus('idle')
+    }, 1500)
+  }
 
   return (
     <div className="detail-overlay" role="presentation">
@@ -90,14 +106,26 @@ function SignalDetail({ signal, onClose }) {
               <h3>SOURCE</h3>
               <p>{renderValue(signal.source)}</p>
               {sourceUrl ? (
-                <a
-                  className="source-button"
-                  href={sourceUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  OPEN SOURCE
-                </a>
+                <>
+                  <p className="source-url">source url: {sourceUrl}</p>
+                  <div className="source-actions">
+                    <a
+                      className="source-button"
+                      href={sourceUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      OPEN SOURCE
+                    </a>
+                    <button className="source-button" type="button" onClick={copySourceUrl}>
+                      {copyStatus === 'copied'
+                        ? 'COPIED'
+                        : copyStatus === 'failed'
+                          ? 'COPY FAILED'
+                          : 'COPY LINK'}
+                    </button>
+                  </div>
+                </>
               ) : (
                 <span className="source-button is-disabled">Source not available</span>
               )}

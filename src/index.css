@@ -1099,6 +1099,32 @@ h1 {
   text-decoration: none;
 }
 
+.source-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.source-actions .source-button {
+  margin-top: 0;
+}
+
+.source-actions button.source-button {
+  cursor: pointer;
+}
+
+.source-url {
+  margin-top: 10px;
+  margin-bottom: 12px;
+  padding: 8px 10px;
+  border: 1px solid rgba(143, 175, 138, 0.7);
+  color: #b8c9aa;
+  background: rgba(5, 8, 5, 0.18);
+  font-size: 0.82rem;
+  overflow-wrap: anywhere;
+}
+
 .source-button:hover {
   border-color: #050805;
   background: #7cff9b;
@@ -1707,6 +1733,16 @@ h1 {
   .detail-meta span,
   .detail-chip-row span {
     font-size: 0.78rem;
+  }
+
+  .source-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .source-actions .source-button {
+    width: 100%;
+    text-align: center;
   }
 
   .profile-body,
