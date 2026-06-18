@@ -18,18 +18,48 @@ const categories = [
   '前沿观察',
 ]
 
+const searchableFields = [
+  'title',
+  'signal',
+  'summary',
+  'creator_value',
+  'project_ideas',
+  'business_potential',
+  'target_reader',
+  'category',
+  'tools',
+  'prompt_hint',
+  'source',
+  'visual_tag',
+]
+
+function getSearchText(signal) {
+  return searchableFields
+    .flatMap((field) => {
+      const value = signal[field]
+      return Array.isArray(value) ? value : [value]
+    })
+    .filter(Boolean)
+    .join(' ')
+    .toLowerCase()
+}
+
 function App() {
   const [activeCategory, setActiveCategory] = useState('All')
   const [selectedSignal, setSelectedSignal] = useState(null)
+  const [searchQuery, setSearchQuery] = useState('')
   const todaysSignal = signals[0]
 
   const filteredSignals = useMemo(() => {
-    if (activeCategory === 'All') {
-      return signals
-    }
+    const normalizedQuery = searchQuery.trim().toLowerCase()
 
-    return signals.filter((signal) => signal.category === activeCategory)
-  }, [activeCategory])
+    return signals.filter((signal) => {
+      const matchesCategory = activeCategory === 'All' || signal.category === activeCategory
+      const matchesSearch = !normalizedQuery || getSearchText(signal).includes(normalizedQuery)
+
+      return matchesCategory && matchesSearch
+    })
+  }, [activeCategory, searchQuery])
 
   return (
     <main className="app-shell">
@@ -83,11 +113,38 @@ function App() {
 
         <TodaysSignal signal={todaysSignal} />
 
+        <section className="search-panel" aria-label="Search creative signals">
+          <div className="section-title">
+            <span>Search archive</span>
+            <span>{searchQuery ? 'query active' : 'waiting input'}</span>
+          </div>
+          <label className="search-field">
+            <span>keyword</span>
+            <input
+              type="search"
+              value={searchQuery}
+              onChange={(event) => setSearchQuery(event.target.value)}
+              placeholder="搜索工具 / Prompt / 项目方向..."
+            />
+          </label>
+        </section>
+
         <CategoryFilter
           categories={categories}
           activeCategory={activeCategory}
           onChange={setActiveCategory}
         />
+
+        <div className={`search-result-status ${filteredSignals.length === 0 ? 'is-empty' : ''}`}>
+          {filteredSignals.length > 0 ? (
+            <span>SEARCH RESULT / 找到 {filteredSignals.length} 条相关 Signal</span>
+          ) : (
+            <>
+              <span>NO SIGNAL FOUND / 暂时没有找到相关内容</span>
+              <small>可以尝试搜索工具名、视觉风格、项目方向或 Prompt 关键词。</small>
+            </>
+          )}
+        </div>
 
         <section className="signal-grid" id="signals" aria-label="Signal Card list">
           {filteredSignals.map((signal) => (
