@@ -11,6 +11,7 @@ function renderValue(value) {
 
 function SignalDetail({ signal, onClose }) {
   const [copyStatus, setCopyStatus] = useState('idle')
+  const [jsonCopyStatus, setJsonCopyStatus] = useState('idle')
   const projectIdeas = renderValue(signal.project_ideas)
   const tools = renderValue(signal.tools)
   const visualTags = renderValue(signal.visual_tag)
@@ -28,6 +29,19 @@ function SignalDetail({ signal, onClose }) {
 
     window.setTimeout(() => {
       setCopyStatus('idle')
+    }, 1500)
+  }
+
+  const copySignalJson = async () => {
+    try {
+      await navigator.clipboard.writeText(JSON.stringify(signal, null, 2))
+      setJsonCopyStatus('copied')
+    } catch {
+      setJsonCopyStatus('failed')
+    }
+
+    window.setTimeout(() => {
+      setJsonCopyStatus('idle')
     }, 1500)
   }
 
@@ -124,10 +138,34 @@ function SignalDetail({ signal, onClose }) {
                           ? 'COPY FAILED'
                           : 'COPY LINK'}
                     </button>
+                    <button
+                      className="source-button signal-json-button"
+                      type="button"
+                      onClick={copySignalJson}
+                    >
+                      {jsonCopyStatus === 'copied'
+                        ? 'SIGNAL COPIED'
+                        : jsonCopyStatus === 'failed'
+                          ? 'COPY FAILED'
+                          : 'COPY SIGNAL JSON'}
+                    </button>
                   </div>
                 </>
               ) : (
-                <span className="source-button is-disabled">Source not available</span>
+                <div className="source-actions">
+                  <span className="source-button is-disabled">Source not available</span>
+                  <button
+                    className="source-button signal-json-button"
+                    type="button"
+                    onClick={copySignalJson}
+                  >
+                    {jsonCopyStatus === 'copied'
+                      ? 'SIGNAL COPIED'
+                      : jsonCopyStatus === 'failed'
+                        ? 'COPY FAILED'
+                        : 'COPY SIGNAL JSON'}
+                  </button>
+                </div>
               )}
             </section>
           </div>

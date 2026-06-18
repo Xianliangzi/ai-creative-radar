@@ -1396,6 +1396,16 @@ h1 {
   cursor: pointer;
 }
 
+.source-button.signal-json-button {
+  color: #dce8ca;
+  background: #1f3024;
+}
+
+.source-button.signal-json-button:hover {
+  color: #050805;
+  background: #aec7aa;
+}
+
 .source-url {
   margin-top: 10px;
   margin-bottom: 12px;
