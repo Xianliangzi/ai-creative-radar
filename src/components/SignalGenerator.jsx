@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import React, { useMemo, useState } from 'react'
 
 const templateOptions = [
   { id: 'tool', label: 'AI Tool', category: 'AI视觉工具' },
