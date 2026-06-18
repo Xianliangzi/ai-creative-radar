@@ -182,7 +182,7 @@ function SignalGenerator({ onAddSignal }) {
           </div>
 
           <button className="generate-button" type="button" onClick={generateSignal}>
-            GENERATE SIGNAL
+            GENERATE DRAFT
           </button>
         </div>
 
@@ -191,6 +191,11 @@ function SignalGenerator({ onAddSignal }) {
             <span>DRAFT SIGNAL PREVIEW</span>
             <span>{draftSignal ? draftSignal.category : 'waiting'}</span>
           </div>
+          <p className="draft-review-note">
+            This is a draft signal generated from your input. Please review it before publishing.
+            <br />
+            这是一条根据输入生成的草稿情报，发布前请先人工检查。
+          </p>
 
           {draftSignal ? (
             <div className="draft-content">
@@ -246,8 +251,13 @@ function SignalGenerator({ onAddSignal }) {
                 <span>url: {draftSignal.url || 'Not available'}</span>
               </div>
 
+              <p className="publish-note">
+                Temporary publish only. It will disappear after refresh.
+                <br />
+                当前只会临时加入页面，刷新后会消失。
+              </p>
               <button className="add-library-button" type="button" onClick={addToLibrary}>
-                {addStatus === 'added' ? 'ADDED TEMPORARILY' : 'ADD TO LIBRARY'}
+                {addStatus === 'added' ? 'SIGNAL PUBLISHED TO TEMP LIBRARY' : 'PUBLISH SIGNAL'}
               </button>
             </div>
           ) : (
