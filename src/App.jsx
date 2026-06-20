@@ -6,6 +6,7 @@ import SignalDetail from './components/SignalDetail.jsx'
 import SignalImage from './components/SignalImage.jsx'
 import SignalCard from './components/SignalCard.jsx'
 import SignalGenerator from './components/SignalGenerator.jsx'
+import QuickGuide from './components/QuickGuide.jsx'
 import TodaysSignal from './components/TodaysSignal.jsx'
 import signals from './data/news-sample.json'
 
@@ -122,6 +123,8 @@ function App() {
         <TodaysSignal signal={todaysSignal} />
 
         <SignalGenerator onAddSignal={addGeneratedSignal} />
+
+        <QuickGuide />
 
         <section className="search-panel" aria-label="Search creative signals">
           <div className="section-title">

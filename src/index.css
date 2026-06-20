@@ -719,6 +719,7 @@ h1 {
 .todays-signal,
 .category-console,
 .generator-panel,
+.quick-guide,
 .search-panel {
   margin: 18px;
   border: 2px solid #8faf8a;
@@ -819,6 +820,127 @@ h1 {
   background:
     linear-gradient(90deg, rgba(5, 8, 5, 0.14) 1px, transparent 1px) 0 0 / 24px 24px,
     #2e4032;
+}
+
+.quick-guide {
+  overflow: hidden;
+  background:
+    radial-gradient(circle, rgba(174, 199, 170, 0.1) 1px, transparent 1px) 0 0 / 13px 13px,
+    linear-gradient(135deg, rgba(5, 8, 5, 0.16), transparent 42%),
+    #2e4032;
+}
+
+.guide-body {
+  display: grid;
+  gap: 14px;
+  padding: 16px;
+}
+
+.guide-steps {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.guide-card,
+.confidence-card,
+.prototype-note {
+  min-width: 0;
+  border: 2px solid #6f876b;
+  background:
+    linear-gradient(180deg, rgba(174, 199, 170, 0.1), transparent 48%),
+    #1f3024;
+  box-shadow: 5px 5px 0 rgba(5, 8, 5, 0.24);
+}
+
+.guide-card {
+  padding: 13px;
+}
+
+.guide-card-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  align-items: start;
+  margin-bottom: 12px;
+}
+
+.guide-card-top span {
+  display: inline-grid;
+  width: 34px;
+  height: 28px;
+  place-items: center;
+  border: 1px solid #6f876b;
+  color: #050805;
+  background: #aec7aa;
+  font-size: 0.78rem;
+}
+
+.guide-card-top small,
+.guide-label small,
+.prototype-note > small {
+  color: #b8c9aa;
+  font-size: 0.72rem;
+  line-height: 1.4;
+}
+
+.guide-card h3 {
+  margin-bottom: 9px;
+  color: #e5f3d4;
+  font-size: 1rem;
+  line-height: 1.35;
+}
+
+.guide-card p,
+.confidence-card li,
+.prototype-note p {
+  color: #dce8ca;
+  font-size: 0.9rem;
+  line-height: 1.72;
+}
+
+.guide-info-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: 12px;
+}
+
+.confidence-card,
+.prototype-note {
+  padding: 14px;
+}
+
+.guide-label {
+  margin-bottom: 10px;
+}
+
+.guide-label strong {
+  display: block;
+  color: #050805;
+  background: #9bb89c;
+  padding: 6px 8px;
+  border-left: 8px solid #050805;
+  font-size: 0.9rem;
+}
+
+.guide-label small {
+  display: block;
+  margin-top: 5px;
+}
+
+.confidence-card ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.confidence-card li + li {
+  margin-top: 7px;
+}
+
+.prototype-note {
+  background:
+    linear-gradient(135deg, rgba(174, 199, 170, 0.12), transparent 46%),
+    #243527;
 }
 
 .generator-body {
@@ -1819,6 +1941,7 @@ h1 {
 
   .category-console,
   .generator-panel,
+  .quick-guide,
   .search-panel,
   .about-section {
     margin-right: 14px;
@@ -1828,6 +1951,14 @@ h1 {
   .generator-body {
     grid-template-columns: 1fr;
     padding: 12px;
+  }
+
+  .guide-steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .guide-info-row {
+    grid-template-columns: 1fr;
   }
 
   .draft-grid {
@@ -2037,6 +2168,7 @@ h1 {
   .todays-signal,
   .category-console,
   .generator-panel,
+  .quick-guide,
   .search-panel,
   .about-section {
     margin-right: 8px;
@@ -2068,9 +2200,20 @@ h1 {
   }
 
   .generator-body,
+  .guide-body,
   .draft-content,
   .draft-empty {
     padding: 10px;
+  }
+
+  .guide-steps {
+    grid-template-columns: 1fr;
+  }
+
+  .guide-card,
+  .confidence-card,
+  .prototype-note {
+    box-shadow: 4px 4px 0 rgba(5, 8, 5, 0.24);
   }
 
   .search-field span {
