@@ -146,6 +146,19 @@ function AboutSection() {
           <a className="mail-button" href="mailto:2728172670@qq.com">
             2728172670@qq.com
           </a>
+          <div className="feedback-box">
+            <p className="about-label">FEEDBACK</p>
+            <p>
+              如果你发现链接打不开、内容不准确，或者希望增加某个 AI 工具，可以通过邮箱反馈。
+            </p>
+            <a
+              className="mail-button feedback-button"
+              href="mailto:2728172670@qq.com?subject=AI%20Creative%20Radar%20Feedback"
+            >
+              发送反馈
+              <small>Send Feedback</small>
+            </a>
+          </div>
           <p>如果这个网站刚好对你有一点帮助，我会很开心。</p>
         </article>
       </div>
