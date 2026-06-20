@@ -89,8 +89,12 @@ function truncateText(text, maxLength = 42) {
 
 function buildPlanSummary(results) {
   return {
+    overview: '根据当前情报库，以下内容可以作为你这个方向的初步参考。',
     tools: uniqueItems(results.flatMap((signal) => signal.tools || [])).slice(0, 7),
-    relatedSignals: results.slice(0, 4),
+    relatedCases: results.slice(0, 4).map((signal) => ({
+      title: signal.title,
+      signal,
+    })),
     ideas: results
       .flatMap((signal) => signal.project_ideas || [])
       .map((idea) => truncateText(idea, 40))
@@ -105,6 +109,31 @@ function buildPlanSummary(results) {
       .filter(Boolean)
       .map((item) => truncateText(item, 54))
       .slice(0, 2),
+    nextSteps: [
+      '你可以先选择一个工具和一个落地方向，做一个小型视觉实验或作品集项目。',
+      '未来这里会支持继续和 AI 对话，帮助你把想法整理成完整方案。',
+    ],
+  }
+}
+
+function buildApiPlanSummary(plan, matchedSignals) {
+  const relatedCases = Array.isArray(plan.related_cases) ? plan.related_cases : []
+
+  return {
+    overview: plan.overview || '这是 AI 接口测试返回的初步方案概括。',
+    tools: Array.isArray(plan.recommended_tools) ? plan.recommended_tools : [],
+    relatedCases: relatedCases.map((title) => {
+      const matchedSignal = matchedSignals.find((signal) => signal.title === title)
+
+      return {
+        title,
+        signal: matchedSignal || null,
+      }
+    }),
+    ideas: Array.isArray(plan.directions) ? plan.directions : [],
+    prompts: Array.isArray(plan.prompt_ideas) ? plan.prompt_ideas : [],
+    business: Array.isArray(plan.business_ideas) ? plan.business_ideas : [],
+    nextSteps: Array.isArray(plan.next_steps) ? plan.next_steps : [],
   }
 }
 
@@ -112,20 +141,21 @@ function formatList(items, fallback = '暂无明确内容') {
   return items.length ? items.map((item) => `- ${item}`).join('\n') : `- ${fallback}`
 }
 
-function buildInitialPlanText(query, summary) {
-  const nextStep =
-    '你可以先选择一个工具和一个落地方向，做一个小型视觉实验或作品集项目。未来这里会支持继续和 AI 对话，帮助你把想法整理成完整方案。'
-
+function buildInitialPlanText(query, summary, sourceLabel) {
   return [
     'AI Creative Radar｜初步方案',
     '',
     `创意方向：${query}`,
+    `方案来源：${sourceLabel}`,
+    '',
+    '方案概括：',
+    summary.overview || '暂无明确概括',
     '',
     '推荐工具：',
     formatList(summary.tools, '暂无明确工具'),
     '',
     '相关案例 / 情报：',
-    formatList(summary.relatedSignals.map((signal) => signal.title)),
+    formatList(summary.relatedCases.map((item) => item.title)),
     '',
     '可落地方向：',
     formatList(summary.ideas),
@@ -137,8 +167,15 @@ function buildInitialPlanText(query, summary) {
     formatList(summary.business),
     '',
     '下一步建议：',
-    nextStep,
+    formatList(summary.nextSteps),
   ].join('\n')
+}
+
+function findPlanMatches(query) {
+  const normalizedQuery = query.trim().toLowerCase()
+  if (!normalizedQuery) return []
+
+  return signals.filter((signal) => getSearchText(signal).includes(normalizedQuery))
 }
 
 function App() {
@@ -148,6 +185,10 @@ function App() {
   const [planQuery, setPlanQuery] = useState('')
   const [submittedPlanQuery, setSubmittedPlanQuery] = useState('')
   const [planCopyStatus, setPlanCopyStatus] = useState('idle')
+  const [apiPlanSummary, setApiPlanSummary] = useState(null)
+  const [planSource, setPlanSource] = useState('local')
+  const [isPlanLoading, setIsPlanLoading] = useState(false)
+  const [planApiError, setPlanApiError] = useState(false)
   const todaysSignal = signals[0]
 
   const feedSignals = useMemo(
@@ -157,36 +198,78 @@ function App() {
   )
 
   const planResults = useMemo(() => {
-    const normalizedQuery = submittedPlanQuery.trim().toLowerCase()
-    if (!normalizedQuery) return []
-
-    return signals.filter((signal) => getSearchText(signal).includes(normalizedQuery))
+    return findPlanMatches(submittedPlanQuery)
   }, [submittedPlanQuery])
 
   const hasPlanQuery = submittedPlanQuery.trim().length > 0
-  const planSummary = useMemo(
+  const localPlanSummary = useMemo(
     () => (hasPlanQuery && planResults.length > 0 ? buildPlanSummary(planResults) : null),
     [hasPlanQuery, planResults],
   )
+  const planSummary = apiPlanSummary || localPlanSummary
+  const planSourceLabel = planSource === 'api' ? 'AI 接口测试' : '本地匹配'
+
+  const generatePlanForQuery = async (query) => {
+    const nextQuery = query.trim()
+    if (!nextQuery) return
+
+    const matchedSignalsForPlan = findPlanMatches(nextQuery)
+
+    setSubmittedPlanQuery(nextQuery)
+    setApiPlanSummary(null)
+    setPlanSource('local')
+    setPlanApiError(false)
+    setPlanCopyStatus('idle')
+
+    if (matchedSignalsForPlan.length === 0) return
+
+    setIsPlanLoading(true)
+
+    try {
+      const response = await fetch('/api/generate-plan', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          query: nextQuery,
+          matchedSignals: matchedSignalsForPlan,
+        }),
+      })
+
+      const data = await response.json()
+
+      if (!response.ok || !data.success || !data.plan) {
+        throw new Error(data.error || 'Failed to generate plan')
+      }
+
+      setApiPlanSummary(buildApiPlanSummary(data.plan, matchedSignalsForPlan))
+      setPlanSource(data.source === 'mock' ? 'api' : 'local')
+    } catch (error) {
+      setApiPlanSummary(null)
+      setPlanSource('local')
+      setPlanApiError(true)
+    } finally {
+      setIsPlanLoading(false)
+    }
+  }
 
   const generateInitialPlan = () => {
-    const nextQuery = planQuery.trim()
-    if (!nextQuery) return
-    setSubmittedPlanQuery(nextQuery)
-    setPlanCopyStatus('idle')
+    generatePlanForQuery(planQuery)
   }
 
   const choosePlanKeyword = (keyword) => {
     setPlanQuery(keyword)
-    setSubmittedPlanQuery(keyword)
-    setPlanCopyStatus('idle')
+    generatePlanForQuery(keyword)
   }
 
   const copyInitialPlan = async () => {
     if (!planSummary) return
 
     try {
-      await navigator.clipboard.writeText(buildInitialPlanText(submittedPlanQuery, planSummary))
+      await navigator.clipboard.writeText(
+        buildInitialPlanText(submittedPlanQuery, planSummary, planSourceLabel),
+      )
       setPlanCopyStatus('copied')
     } catch (error) {
       setPlanCopyStatus('failed')
@@ -336,6 +419,9 @@ function App() {
                   onChange={(event) => {
                     setPlanQuery(event.target.value)
                     setSubmittedPlanQuery('')
+                    setApiPlanSummary(null)
+                    setPlanSource('local')
+                    setPlanApiError(false)
                     setPlanCopyStatus('idle')
                   }}
                   onKeyDown={(event) => {
@@ -350,10 +436,13 @@ function App() {
                 className="plan-generate-button"
                 type="button"
                 onClick={generateInitialPlan}
-                disabled={!planQuery.trim()}
+                disabled={!planQuery.trim() || isPlanLoading}
               >
-                生成初步方案
+                {isPlanLoading ? 'AI 正在整理初步方案...' : '生成初步方案'}
               </button>
+              {isPlanLoading && (
+                <p className="plan-loading-note">AI 正在整理初步方案...</p>
+              )}
               <div className="quick-keywords" aria-label="Creative plan quick keywords">
                 {planKeywords.map((keyword) => (
                   <button
@@ -385,11 +474,14 @@ function App() {
                   <strong>初步方案结果</strong>
                   <small>Initial Plan Result</small>
                 </span>
-                <span>{planResults.length} 条参考情报</span>
+                <span className="plan-source-tag">{planSourceLabel}</span>
               </div>
               <div className="initial-plan-body">
                 <p>这是根据现有 AI 资讯整理出的初步方向，不是最终完整方案。</p>
-                <p>根据当前情报库，以下内容可以作为你这个方向的初步参考。</p>
+                {planApiError && (
+                  <p className="plan-api-warning">AI 接口暂时不可用，已展示本地匹配结果。</p>
+                )}
+                <p>{planSummary.overview}</p>
                 <div className="plan-summary-grid">
                   <div>
                     <strong>推荐工具</strong>
@@ -398,15 +490,19 @@ function App() {
                   <div>
                     <strong>相关案例 / 情报</strong>
                     <ul className="plan-related-list">
-                      {planSummary.relatedSignals.map((signal) => (
-                        <li key={signal.id}>
-                          <button
-                            className="plan-signal-button"
-                            type="button"
-                            onClick={() => setSelectedSignal(signal)}
-                          >
-                            {signal.title}
-                          </button>
+                      {planSummary.relatedCases.map((item) => (
+                        <li key={item.title}>
+                          {item.signal ? (
+                            <button
+                              className="plan-signal-button"
+                              type="button"
+                              onClick={() => setSelectedSignal(item.signal)}
+                            >
+                              {item.title}
+                            </button>
+                          ) : (
+                            <span className="plan-case-text">{item.title}</span>
+                          )}
                         </li>
                       ))}
                     </ul>
@@ -437,10 +533,11 @@ function App() {
                   </div>
                   <div>
                     <strong>下一步建议</strong>
-                    <p>
-                      你可以先选择一个工具和一个落地方向，做一个小型视觉实验或作品集项目。未来这里会支持继续和 AI
-                      对话，帮助你把想法整理成完整方案。
-                    </p>
+                    <ul>
+                      {planSummary.nextSteps.map((step) => (
+                        <li key={step}>{step}</li>
+                      ))}
+                    </ul>
                   </div>
                 </div>
                 <div className="plan-copy-row">

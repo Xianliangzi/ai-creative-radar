@@ -1504,6 +1504,13 @@ h1 {
   cursor: not-allowed;
 }
 
+.plan-loading-note {
+  margin: 0 12px 12px;
+  color: #b8c9aa;
+  font-size: 0.84rem;
+  line-height: 1.5;
+}
+
 .history-entry-card small {
   color: #b8c9aa;
   font-size: 0.72rem;
@@ -1536,6 +1543,20 @@ h1 {
   color: #dce8ca;
   font-size: 0.92rem;
   line-height: 1.7;
+}
+
+.plan-source-tag {
+  border: 1px solid #050805;
+  color: #050805;
+  background: #aec7aa;
+  padding: 4px 7px;
+}
+
+.plan-api-warning {
+  border: 1px solid rgba(174, 199, 170, 0.76);
+  color: #050805 !important;
+  background: #aec7aa;
+  padding: 9px 10px;
 }
 
 .plan-summary-grid {
@@ -1604,6 +1625,16 @@ h1 {
   color: #050805;
   background: #aec7aa;
   outline: none;
+}
+
+.plan-case-text {
+  display: block;
+  border: 1px solid rgba(174, 199, 170, 0.5);
+  color: #dce8ca;
+  background: rgba(5, 8, 5, 0.16);
+  padding: 8px 9px;
+  font-size: 0.86rem;
+  line-height: 1.45;
 }
 
 .plan-copy-row {
