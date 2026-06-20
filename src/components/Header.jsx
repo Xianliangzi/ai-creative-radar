@@ -1,21 +1,33 @@
 import React from 'react'
 
-function Header() {
+function Header({ activeMode, onModeChange }) {
   return (
     <header className="browser-topbar">
       <div className="date-tab" aria-label="Session date">
         <span>Oct 19</span>
       </div>
       <nav className="nav-links" aria-label="Primary navigation">
-        <a href="#home" className="nav-link active">
-          首页
-        </a>
-        <a href="#news-feed" className="nav-link">
-          情报
-        </a>
-        <a href="#about" className="nav-link">
-          关于
-        </a>
+        <button
+          type="button"
+          className={activeMode === 'news' ? 'nav-link active' : 'nav-link'}
+          onClick={() => onModeChange('news')}
+        >
+          AI 资讯
+        </button>
+        <button
+          type="button"
+          className={activeMode === 'plan' ? 'nav-link active' : 'nav-link'}
+          onClick={() => onModeChange('plan')}
+        >
+          创意方案
+        </button>
+        <button
+          type="button"
+          className={activeMode === 'library' ? 'nav-link active' : 'nav-link'}
+          onClick={() => onModeChange('library')}
+        >
+          我的方案
+        </button>
         <a href="#feedback" className="nav-link nav-feedback" title="Feedback">
           反馈
         </a>

@@ -31,6 +31,27 @@ const libraryFeatures = [
   '生成思维导图',
 ]
 
+const modeTabs = [
+  {
+    id: 'news',
+    title: 'AI 资讯',
+    label: 'AI News',
+    description: '浏览工具、案例和趋势',
+  },
+  {
+    id: 'plan',
+    title: '创意方案',
+    label: 'Creative Plan',
+    description: '输入想法，生成初步方案',
+  },
+  {
+    id: 'library',
+    title: '我的方案',
+    label: 'My Plans',
+    description: '查询历史方案，即将开放',
+  },
+]
+
 const searchableFields = [
   'title',
   'signal',
@@ -121,6 +142,7 @@ function buildInitialPlanText(query, summary) {
 }
 
 function App() {
+  const [activeMode, setActiveMode] = useState('news')
   const [activeCategory, setActiveCategory] = useState('All')
   const [selectedSignal, setSelectedSignal] = useState(null)
   const [planQuery, setPlanQuery] = useState('')
@@ -175,11 +197,22 @@ function App() {
     }, 1500)
   }
 
+  const selectMode = (mode) => {
+    setActiveMode(mode)
+
+    window.setTimeout(() => {
+      document.getElementById('main-functions')?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      })
+    }, 0)
+  }
+
   return (
     <main className="app-shell">
       <div className="noise-layer" aria-hidden="true" />
       <section className="browser-frame" id="home" aria-label="AI Creative Radar Home">
-        <Header />
+        <Header activeMode={activeMode} onModeChange={selectMode} />
 
         <div className="hero-panel">
           <div className="hero-copy">
@@ -190,21 +223,33 @@ function App() {
               浏览最新 AI 工具、案例和趋势；输入你的创意方向，获得工具推荐、案例参考、Prompt 灵感和可落地方案。
             </p>
             <div className="primary-actions three-actions" aria-label="Primary actions">
-              <a href="#news-feed" className="primary-action-card">
+              <button
+                type="button"
+                className="primary-action-card"
+                onClick={() => selectMode('news')}
+              >
                 <small>AI News Feed</small>
                 <strong>看 AI 资讯</strong>
                 <span>浏览最新 AI 工具、创意案例、趋势观察和商业玩法。</span>
-              </a>
-              <a href="#plan-consult" className="primary-action-card">
+              </button>
+              <button
+                type="button"
+                className="primary-action-card"
+                onClick={() => selectMode('plan')}
+              >
                 <small>Creative Plan Assistant</small>
                 <strong>做创意方案</strong>
                 <span>输入方向，获得工具、案例、Prompt 灵感和下一步建议。</span>
-              </a>
-              <a href="#plan-library" className="primary-action-card secondary-action">
+              </button>
+              <button
+                type="button"
+                className="primary-action-card secondary-action"
+                onClick={() => selectMode('library')}
+              >
                 <small>My Plan Library</small>
                 <strong>我的方案库</strong>
                 <span>即将开放：保存、继续编辑和导出完整方案。</span>
-              </a>
+              </button>
             </div>
             <div className="hero-status-grid" aria-label="Radar status">
               <span>在线更新 / Online</span>
@@ -239,6 +284,33 @@ function App() {
 
         <QuickGuide />
 
+        <section className="mode-switcher" id="main-functions" aria-labelledby="mode-switcher-title">
+          <div className="section-title">
+            <span>
+              <strong id="mode-switcher-title">选择你现在要做什么</strong>
+              <small>Choose a Mode</small>
+            </span>
+            <span>{modeTabs.find((tab) => tab.id === activeMode)?.title}</span>
+          </div>
+          <div className="mode-tabs" role="tablist" aria-label="Main function tabs">
+            {modeTabs.map((tab) => (
+              <button
+                key={tab.id}
+                type="button"
+                role="tab"
+                aria-selected={activeMode === tab.id}
+                className={activeMode === tab.id ? 'mode-tab is-active' : 'mode-tab'}
+                onClick={() => selectMode(tab.id)}
+              >
+                <small>{tab.label}</small>
+                <strong>{tab.title}</strong>
+                <span>{tab.description}</span>
+              </button>
+            ))}
+          </div>
+        </section>
+
+        {activeMode === 'plan' && (
         <section className="plan-consult" id="plan-consult" aria-labelledby="plan-consult-title">
           <div className="section-title">
             <span>
@@ -421,7 +493,9 @@ function App() {
           </section>
           )}
         </section>
+        )}
 
+        {activeMode === 'news' && (
         <section className="feed-section" id="news-feed" aria-labelledby="news-feed-title">
           <div className="section-title">
             <span>
@@ -446,7 +520,9 @@ function App() {
             ))}
           </section>
         </section>
+        )}
 
+        {activeMode === 'library' && (
         <section className="plan-library" id="plan-library" aria-labelledby="plan-library-title">
           <div className="section-title">
             <span>
@@ -467,6 +543,7 @@ function App() {
             </div>
           </div>
         </section>
+        )}
 
         <AboutSection />
       </section>
