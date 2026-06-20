@@ -1372,6 +1372,66 @@ h1 {
     #2e4032;
 }
 
+.consult-entry-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(260px, 0.85fr);
+  gap: 12px;
+  padding: 14px;
+}
+
+.consult-input-card,
+.history-entry-card {
+  min-width: 0;
+  padding: 14px;
+  border: 2px solid #6f876b;
+  background:
+    radial-gradient(circle, rgba(174, 199, 170, 0.1) 1px, transparent 1px) 0 0 / 12px 12px,
+    #1f3024;
+}
+
+.consult-input-card h3,
+.history-entry-card h3 {
+  margin-bottom: 8px;
+  color: #e5f3d4;
+  font-size: 1.12rem;
+}
+
+.consult-input-card p,
+.history-entry-card p {
+  color: #dce8ca;
+  font-size: 0.9rem;
+  line-height: 1.7;
+}
+
+.plan-generate-button,
+.history-entry-card button,
+.next-refine-body button {
+  width: 100%;
+  min-height: 42px;
+  border: 2px solid #6f876b;
+  color: #050805;
+  background: #aec7aa;
+  padding: 10px 12px;
+}
+
+.plan-generate-button {
+  margin: 0 12px 12px;
+  width: calc(100% - 24px);
+}
+
+.history-entry-card small {
+  color: #b8c9aa;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+}
+
+.history-entry-card button,
+.next-refine-body button {
+  color: #b8c9aa;
+  background: #243527;
+  cursor: not-allowed;
+}
+
 .initial-plan,
 .coming-next {
   margin: 14px;
@@ -1458,6 +1518,57 @@ h1 {
 
 .future-card > span {
   color: #b8c9aa;
+  font-size: 0.78rem;
+}
+
+.next-refine-panel {
+  background:
+    linear-gradient(135deg, rgba(174, 199, 170, 0.1), transparent 48%),
+    #243527;
+}
+
+.next-refine-body {
+  display: grid;
+  gap: 12px;
+  padding: 14px;
+}
+
+.next-refine-body > p,
+.post-plan-actions p {
+  margin: 0;
+  color: #dce8ca;
+  line-height: 1.7;
+}
+
+.next-refine-body > span {
+  color: #b8c9aa;
+  font-size: 0.82rem;
+}
+
+.post-plan-actions {
+  padding: 12px;
+  border: 1px solid rgba(143, 175, 138, 0.68);
+  background: rgba(5, 8, 5, 0.18);
+}
+
+.post-plan-actions strong {
+  display: block;
+  margin-bottom: 6px;
+  color: #e5f3d4;
+}
+
+.post-plan-actions div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.post-plan-actions small {
+  padding: 6px 8px;
+  border: 1px solid #6f876b;
+  color: #050805;
+  background: #aec7aa;
   font-size: 0.78rem;
 }
 
@@ -2321,6 +2432,7 @@ h1 {
 
   .plan-summary-grid,
   .future-grid,
+  .consult-entry-grid,
   .library-body {
     grid-template-columns: 1fr;
   }
@@ -2581,6 +2693,8 @@ h1 {
   .guide-body,
   .initial-plan-body,
   .future-grid,
+  .consult-entry-grid,
+  .next-refine-body,
   .library-body,
   .draft-content,
   .draft-empty {

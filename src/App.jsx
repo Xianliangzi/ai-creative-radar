@@ -21,34 +21,14 @@ const categories = [
 
 const planKeywords = ['数字人', 'AI 视频', '作品集', '海报', '小红书 AI 账号', '虚拟人', 'Midjourney', 'Runway']
 
-const futureAbilities = [
-  {
-    title: '继续和 AI 聊',
-    label: 'Chat Next',
-    description: '围绕当前方案继续追问，让 AI 帮你细化主题、工具、执行步骤和内容方向。',
-    button: '继续完善方案',
-  },
-  {
-    title: '生成完整方案文档',
-    label: 'Plan Document',
-    description: '把对话内容整理成完整方案，可包含文字方案、执行步骤、结构图、PPT 大纲或思维导图。',
-    button: '生成方案文档',
-  },
-  {
-    title: '保存到我的方案库',
-    label: 'Save Plan',
-    description: '登录后可以保存方案卡片，之后继续编辑、下载或导出。',
-    button: '保存到方案库',
-  },
-]
+const postPlanActions = ['生成完整方案文档', '保存到我的方案库', '下载为文档', '导出 PPT 大纲', '生成思维导图']
 
 const libraryFeatures = [
-  '保存方案卡片',
+  '查询历史方案',
   '继续编辑方案',
   '下载方案文档',
   '导出 PPT 大纲',
   '生成思维导图',
-  '管理历史方案',
 ]
 
 const searchableFields = [
@@ -204,39 +184,57 @@ function App() {
             </span>
             <span>local match</span>
           </div>
-          <p className="search-description">
-            输入你想做的方向，系统会基于已有 AI 资讯，为你整理工具、案例、Prompt 灵感、商业玩法和下一步建议。
-          </p>
-          <label className="search-field">
-            <span>
-              创意方向
-              <small>Idea Keyword</small>
-            </span>
-            <input
-              type="search"
-              value={planQuery}
-              onChange={(event) => setPlanQuery(event.target.value)}
-              placeholder="例如：我想做数字人 / AI 视频作品集 / 小红书 AI 账号 / 海报视觉实验..."
-            />
-          </label>
-          <div className="quick-keywords" aria-label="Creative plan quick keywords">
-            {planKeywords.map((keyword) => (
-              <button key={keyword} type="button" onClick={() => setPlanQuery(keyword)}>
-                {keyword}
+          <div className="consult-entry-grid">
+            <div className="consult-input-card">
+              <h3>你想做什么？</h3>
+              <p>
+                当前会基于已有 AI 资讯进行本地匹配，整理工具、案例、Prompt 灵感和商业玩法。
+              </p>
+              <label className="search-field">
+                <span>
+                  创意方向
+                  <small>Idea Keyword</small>
+                </span>
+                <input
+                  type="search"
+                  value={planQuery}
+                  onChange={(event) => setPlanQuery(event.target.value)}
+                  placeholder="例如：我想做一个数字人作品集项目 / AI 视频短片 / 小红书 AI 账号..."
+                />
+              </label>
+              <button className="plan-generate-button" type="button">
+                生成初步方案
               </button>
-            ))}
+              <div className="quick-keywords" aria-label="Creative plan quick keywords">
+                {planKeywords.map((keyword) => (
+                  <button key={keyword} type="button" onClick={() => setPlanQuery(keyword)}>
+                    {keyword}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <aside className="history-entry-card" aria-label="History plan placeholder">
+              <small>Plan History</small>
+              <h3>查看历史方案</h3>
+              <p>未来登录后可以查看你保存过的完整方案。</p>
+              <button type="button" disabled>
+                即将开放
+              </button>
+            </aside>
           </div>
 
           {hasPlanQuery && planResults.length > 0 && planSummary && (
             <section className="initial-plan" aria-label="Initial plan summary">
               <div className="section-title">
                 <span>
-                  <strong>初步方案总结</strong>
-                  <small>Initial Plan Summary</small>
+                  <strong>初步方案结果</strong>
+                  <small>Initial Plan Result</small>
                 </span>
                 <span>{planResults.length} 条参考情报</span>
               </div>
               <div className="initial-plan-body">
+                <p>这是根据现有 AI 资讯整理出的初步方向，不是最终完整方案。</p>
                 <p>根据当前情报库，以下内容可以作为你这个方向的初步参考。</p>
                 <div className="plan-summary-grid">
                   <div>
@@ -294,28 +292,35 @@ function App() {
             </div>
           )}
 
-          <section className="coming-next" aria-label="Coming next abilities">
+          {hasPlanQuery && planResults.length > 0 && (
+          <section className="coming-next next-refine-panel" aria-label="Next refine with AI">
             <div className="section-title">
               <span>
-                <strong>下一阶段能力</strong>
-                <small>Coming Next</small>
+                <strong>下一步：继续完善方案</strong>
+                <small>Next: Refine with AI</small>
               </span>
               <span>即将开放</span>
             </div>
-            <div className="future-grid">
-              {futureAbilities.map((ability) => (
-                <article className="future-card" key={ability.title}>
-                  <small>{ability.label}</small>
-                  <h3>{ability.title}</h3>
-                  <p>{ability.description}</p>
-                  <button type="button" disabled>
-                    {ability.button}
-                  </button>
-                  <span>即将开放</span>
-                </article>
-              ))}
+            <div className="next-refine-body">
+              <p>
+                未来你可以围绕当前初步方案继续和 AI 对话，让 AI 帮你细化主题、工具链、执行步骤、内容方向和输出形式。
+              </p>
+              <button type="button" disabled>
+                继续和 AI 完善方案
+              </button>
+              <span>即将开放</span>
+              <div className="post-plan-actions">
+                <strong>完善后可以做什么？</strong>
+                <p>这些能力将在后续版本开放。</p>
+                <div>
+                  {postPlanActions.map((action) => (
+                    <small key={action}>{action}</small>
+                  ))}
+                </div>
+              </div>
             </div>
           </section>
+          )}
         </section>
 
         <section className="feed-section" id="news-feed" aria-labelledby="news-feed-title">
@@ -353,8 +358,8 @@ function App() {
           </div>
           <div className="library-body">
             <article className="library-status-card">
-              <h3>方案库即将开放</h3>
-              <p>未来你可以把 AI 帮你整理好的完整方案保存到个人账户，并导出为文档、PPT 大纲、思维导图或执行计划。</p>
+              <h3>历史方案查询即将开放</h3>
+              <p>这里未来会保存你通过 AI 咨询整理出的完整方案。你可以在这里查询历史方案、继续编辑、下载或导出。</p>
             </article>
             <div className="library-feature-list">
               {libraryFeatures.map((feature) => (

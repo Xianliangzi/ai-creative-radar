@@ -11,13 +11,13 @@ const guideSteps = [
     number: '02',
     title: '做方案',
     label: 'Plan Assistant',
-    description: '输入你的创意方向，获得工具、案例、Prompt 和落地建议。',
+    description: '输入你的创意方向，先获得初步方案结果。',
   },
   {
     number: '03',
     title: '存方案',
     label: 'Plan Library',
-    description: '未来可保存完整方案，并导出为文档或 PPT 大纲。',
+    description: '未来可继续和 AI 聊，把方案完善后保存到方案库并导出。',
   },
 ]
 
