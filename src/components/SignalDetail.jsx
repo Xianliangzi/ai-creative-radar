@@ -147,7 +147,7 @@ function SignalDetail({ signal, onClose }) {
                       onClick={copySignalJson}
                     >
                       {jsonCopyStatus === 'copied'
-                        ? '已复制 Signal'
+                        ? '已复制情报数据'
                         : jsonCopyStatus === 'failed'
                           ? '复制失败'
                           : '复制情报数据'}
@@ -163,7 +163,7 @@ function SignalDetail({ signal, onClose }) {
                     onClick={copySignalJson}
                   >
                     {jsonCopyStatus === 'copied'
-                      ? '已复制 Signal'
+                      ? '已复制情报数据'
                       : jsonCopyStatus === 'failed'
                         ? '复制失败'
                         : '复制情报数据'}

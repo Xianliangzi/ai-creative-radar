@@ -10,7 +10,7 @@ function Header() {
         <a href="#home" className="nav-link active">
           首页
         </a>
-        <a href="#signals" className="nav-link">
+        <a href="#news-feed" className="nav-link">
           情报
         </a>
         <a href="#about" className="nav-link">

@@ -91,6 +91,7 @@ function App() {
   const [activeCategory, setActiveCategory] = useState('All')
   const [selectedSignal, setSelectedSignal] = useState(null)
   const [planQuery, setPlanQuery] = useState('')
+  const [submittedPlanQuery, setSubmittedPlanQuery] = useState('')
   const todaysSignal = signals[0]
 
   const feedSignals = useMemo(
@@ -100,17 +101,28 @@ function App() {
   )
 
   const planResults = useMemo(() => {
-    const normalizedQuery = planQuery.trim().toLowerCase()
+    const normalizedQuery = submittedPlanQuery.trim().toLowerCase()
     if (!normalizedQuery) return []
 
     return signals.filter((signal) => getSearchText(signal).includes(normalizedQuery))
-  }, [planQuery])
+  }, [submittedPlanQuery])
 
-  const hasPlanQuery = planQuery.trim().length > 0
+  const hasPlanQuery = submittedPlanQuery.trim().length > 0
   const planSummary = useMemo(
     () => (hasPlanQuery && planResults.length > 0 ? buildPlanSummary(planResults) : null),
     [hasPlanQuery, planResults],
   )
+
+  const generateInitialPlan = () => {
+    const nextQuery = planQuery.trim()
+    if (!nextQuery) return
+    setSubmittedPlanQuery(nextQuery)
+  }
+
+  const choosePlanKeyword = (keyword) => {
+    setPlanQuery(keyword)
+    setSubmittedPlanQuery(keyword)
+  }
 
   return (
     <main className="app-shell">
@@ -198,16 +210,34 @@ function App() {
                 <input
                   type="search"
                   value={planQuery}
-                  onChange={(event) => setPlanQuery(event.target.value)}
+                  onChange={(event) => {
+                    setPlanQuery(event.target.value)
+                    setSubmittedPlanQuery('')
+                  }}
+                  onKeyDown={(event) => {
+                    if (event.key === 'Enter') {
+                      generateInitialPlan()
+                    }
+                  }}
                   placeholder="例如：我想做一个数字人作品集项目 / AI 视频短片 / 小红书 AI 账号..."
                 />
               </label>
-              <button className="plan-generate-button" type="button">
+              <button
+                className="plan-generate-button"
+                type="button"
+                onClick={generateInitialPlan}
+                disabled={!planQuery.trim()}
+              >
                 生成初步方案
               </button>
               <div className="quick-keywords" aria-label="Creative plan quick keywords">
                 {planKeywords.map((keyword) => (
-                  <button key={keyword} type="button" onClick={() => setPlanQuery(keyword)}>
+                  <button
+                    key={keyword}
+                    type="button"
+                    className={submittedPlanQuery === keyword ? 'is-active' : ''}
+                    onClick={() => choosePlanKeyword(keyword)}
+                  >
                     {keyword}
                   </button>
                 ))}
@@ -287,8 +317,8 @@ function App() {
 
           {hasPlanQuery && planResults.length === 0 && (
             <div className="search-result-status is-empty in-panel">
-              <span>暂时没有匹配到方案</span>
-              <small>可以换一个关键词试试，例如 AI 视频、作品集、海报、虚拟人、Runway、Midjourney。</small>
+              <span>暂时没有匹配到相关方案，可以换一个关键词试试。</span>
+              <small>例如 AI 视频、作品集、海报、虚拟人、Runway、Midjourney。</small>
             </div>
           )}
 

@@ -1333,6 +1333,13 @@ h1 {
   background: #7cff9b;
 }
 
+.quick-keywords button.is-active {
+  border-color: #050805;
+  color: #050805;
+  background: #7cff9b;
+  box-shadow: 3px 3px 0 rgba(5, 8, 5, 0.38);
+}
+
 .matched-plan {
   overflow: hidden;
   background:
@@ -1417,6 +1424,12 @@ h1 {
 .plan-generate-button {
   margin: 0 12px 12px;
   width: calc(100% - 24px);
+}
+
+.plan-generate-button:disabled {
+  color: #b8c9aa;
+  background: #243527;
+  cursor: not-allowed;
 }
 
 .history-entry-card small {
