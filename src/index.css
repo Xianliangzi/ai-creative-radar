@@ -1506,6 +1506,57 @@ h1 {
   padding-left: 18px;
 }
 
+.plan-related-list {
+  display: grid;
+  gap: 7px;
+  padding-left: 0;
+  list-style: none;
+}
+
+.plan-signal-button {
+  width: 100%;
+  border: 1px solid rgba(174, 199, 170, 0.72);
+  color: #e5f3d4;
+  background: rgba(46, 64, 50, 0.72);
+  padding: 8px 9px;
+  font-family: inherit;
+  font-size: 0.86rem;
+  line-height: 1.45;
+  text-align: left;
+  cursor: pointer;
+}
+
+.plan-signal-button:hover,
+.plan-signal-button:focus-visible {
+  border-color: #050805;
+  color: #050805;
+  background: #aec7aa;
+  outline: none;
+}
+
+.plan-copy-row {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 2px;
+}
+
+.plan-copy-button {
+  min-height: 42px;
+  border: 2px solid #6f876b;
+  color: #050805;
+  background: #aec7aa;
+  padding: 10px 13px;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.plan-copy-button:hover,
+.plan-copy-button:focus-visible {
+  border-color: #050805;
+  background: #7cff9b;
+  outline: none;
+}
+
 .future-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -2772,9 +2823,14 @@ h1 {
   }
 
   .source-actions .source-button,
-  .feedback-actions .mail-button {
+  .feedback-actions .mail-button,
+  .plan-copy-button {
     width: 100%;
     text-align: center;
+  }
+
+  .plan-copy-row {
+    justify-content: stretch;
   }
 
   .feedback-actions {

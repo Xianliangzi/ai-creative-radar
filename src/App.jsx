@@ -69,7 +69,7 @@ function truncateText(text, maxLength = 42) {
 function buildPlanSummary(results) {
   return {
     tools: uniqueItems(results.flatMap((signal) => signal.tools || [])).slice(0, 7),
-    titles: results.map((signal) => signal.title).slice(0, 4),
+    relatedSignals: results.slice(0, 4),
     ideas: results
       .flatMap((signal) => signal.project_ideas || [])
       .map((idea) => truncateText(idea, 40))
@@ -87,11 +87,45 @@ function buildPlanSummary(results) {
   }
 }
 
+function formatList(items, fallback = '暂无明确内容') {
+  return items.length ? items.map((item) => `- ${item}`).join('\n') : `- ${fallback}`
+}
+
+function buildInitialPlanText(query, summary) {
+  const nextStep =
+    '你可以先选择一个工具和一个落地方向，做一个小型视觉实验或作品集项目。未来这里会支持继续和 AI 对话，帮助你把想法整理成完整方案。'
+
+  return [
+    'AI Creative Radar｜初步方案',
+    '',
+    `创意方向：${query}`,
+    '',
+    '推荐工具：',
+    formatList(summary.tools, '暂无明确工具'),
+    '',
+    '相关案例 / 情报：',
+    formatList(summary.relatedSignals.map((signal) => signal.title)),
+    '',
+    '可落地方向：',
+    formatList(summary.ideas),
+    '',
+    'Prompt 灵感：',
+    formatList(summary.prompts),
+    '',
+    '商业玩法：',
+    formatList(summary.business),
+    '',
+    '下一步建议：',
+    nextStep,
+  ].join('\n')
+}
+
 function App() {
   const [activeCategory, setActiveCategory] = useState('All')
   const [selectedSignal, setSelectedSignal] = useState(null)
   const [planQuery, setPlanQuery] = useState('')
   const [submittedPlanQuery, setSubmittedPlanQuery] = useState('')
+  const [planCopyStatus, setPlanCopyStatus] = useState('idle')
   const todaysSignal = signals[0]
 
   const feedSignals = useMemo(
@@ -117,11 +151,28 @@ function App() {
     const nextQuery = planQuery.trim()
     if (!nextQuery) return
     setSubmittedPlanQuery(nextQuery)
+    setPlanCopyStatus('idle')
   }
 
   const choosePlanKeyword = (keyword) => {
     setPlanQuery(keyword)
     setSubmittedPlanQuery(keyword)
+    setPlanCopyStatus('idle')
+  }
+
+  const copyInitialPlan = async () => {
+    if (!planSummary) return
+
+    try {
+      await navigator.clipboard.writeText(buildInitialPlanText(submittedPlanQuery, planSummary))
+      setPlanCopyStatus('copied')
+    } catch (error) {
+      setPlanCopyStatus('failed')
+    }
+
+    window.setTimeout(() => {
+      setPlanCopyStatus('idle')
+    }, 1500)
   }
 
   return (
@@ -213,6 +264,7 @@ function App() {
                   onChange={(event) => {
                     setPlanQuery(event.target.value)
                     setSubmittedPlanQuery('')
+                    setPlanCopyStatus('idle')
                   }}
                   onKeyDown={(event) => {
                     if (event.key === 'Enter') {
@@ -273,9 +325,17 @@ function App() {
                   </div>
                   <div>
                     <strong>相关案例 / 情报</strong>
-                    <ul>
-                      {planSummary.titles.map((title) => (
-                        <li key={title}>{title}</li>
+                    <ul className="plan-related-list">
+                      {planSummary.relatedSignals.map((signal) => (
+                        <li key={signal.id}>
+                          <button
+                            className="plan-signal-button"
+                            type="button"
+                            onClick={() => setSelectedSignal(signal)}
+                          >
+                            {signal.title}
+                          </button>
+                        </li>
                       ))}
                     </ul>
                   </div>
@@ -310,6 +370,15 @@ function App() {
                       对话，帮助你把想法整理成完整方案。
                     </p>
                   </div>
+                </div>
+                <div className="plan-copy-row">
+                  <button className="plan-copy-button" type="button" onClick={copyInitialPlan}>
+                    {planCopyStatus === 'copied'
+                      ? '已复制方案'
+                      : planCopyStatus === 'failed'
+                        ? '复制失败'
+                        : '复制初步方案'}
+                  </button>
                 </div>
               </div>
             </section>
