@@ -239,9 +239,18 @@ function formatFinalPlanList(items, fallback = '暂无明确内容') {
   return items?.length ? items.map((item) => `- ${item}`).join('\n') : `- ${fallback}`
 }
 
-function buildFinalPlanText(finalPlan) {
+function sanitizeFilename(filename) {
+  return filename.replace(/[\\/:*?"<>|]/g, '').replace(/\s+/g, ' ').trim()
+}
+
+function buildFinalPlanText(finalPlan, query = '') {
+  const createdAt = new Date().toLocaleDateString('zh-CN')
+
   return [
     `# ${finalPlan.title || '完整方案草稿'}`,
+    '',
+    `> 原始创意目标：${query || '未填写'}`,
+    `> 生成时间：${createdAt}`,
     '',
     '## 方案摘要',
     finalPlan.summary || '暂无摘要',
@@ -311,6 +320,7 @@ function App() {
   const [isFinalizingPlan, setIsFinalizingPlan] = useState(false)
   const [finalPlanError, setFinalPlanError] = useState('')
   const [finalPlanCopyStatus, setFinalPlanCopyStatus] = useState('idle')
+  const [finalPlanDownloadStatus, setFinalPlanDownloadStatus] = useState('idle')
   const todaysSignal = signals[0]
 
   const feedSignals = useMemo(
@@ -350,6 +360,7 @@ function App() {
     setFinalPlan(null)
     setFinalPlanError('')
     setFinalPlanCopyStatus('idle')
+    setFinalPlanDownloadStatus('idle')
 
     setIsPlanLoading(true)
 
@@ -461,6 +472,7 @@ function App() {
       setFinalPlan(null)
       setFinalPlanError('')
       setFinalPlanCopyStatus('idle')
+      setFinalPlanDownloadStatus('idle')
     } catch (error) {
       setRefineError(
         error instanceof Error ? error.message : 'AI 暂时无法继续完善方案，请稍后再试。',
@@ -479,6 +491,7 @@ function App() {
     setIsFinalizingPlan(true)
     setFinalPlanError('')
     setFinalPlanCopyStatus('idle')
+    setFinalPlanDownloadStatus('idle')
 
     try {
       const response = await fetch('/api/finalize-plan', {
@@ -522,7 +535,7 @@ function App() {
     if (!finalPlan) return
 
     try {
-      await navigator.clipboard.writeText(buildFinalPlanText(finalPlan))
+      await navigator.clipboard.writeText(buildFinalPlanText(finalPlan, submittedPlanQuery || planQuery))
       setFinalPlanCopyStatus('copied')
     } catch (error) {
       setFinalPlanCopyStatus('failed')
@@ -530,6 +543,29 @@ function App() {
 
     window.setTimeout(() => {
       setFinalPlanCopyStatus('idle')
+    }, 1500)
+  }
+
+  const downloadFinalPlan = () => {
+    if (!finalPlan) return
+
+    const markdownContent = buildFinalPlanText(finalPlan, submittedPlanQuery || planQuery)
+    const safeTitle = sanitizeFilename(finalPlan.title || 'AI-Creative-Radar-方案草稿')
+    const filename = `${safeTitle || 'AI-Creative-Radar-方案草稿'}.md`
+    const blob = new Blob([markdownContent], { type: 'text/markdown;charset=utf-8' })
+    const url = URL.createObjectURL(blob)
+    const link = document.createElement('a')
+
+    link.href = url
+    link.download = filename
+    document.body.appendChild(link)
+    link.click()
+    link.remove()
+    URL.revokeObjectURL(url)
+
+    setFinalPlanDownloadStatus('downloaded')
+    window.setTimeout(() => {
+      setFinalPlanDownloadStatus('idle')
     }, 1500)
   }
 
@@ -682,6 +718,7 @@ function App() {
                     setFinalPlan(null)
                     setFinalPlanError('')
                     setFinalPlanCopyStatus('idle')
+                    setFinalPlanDownloadStatus('idle')
                   }}
                   onKeyDown={(event) => {
                     if (event.key === 'Enter') {
@@ -979,9 +1016,8 @@ function App() {
                           保存到我的方案库
                           <small>即将开放</small>
                         </button>
-                        <button type="button" disabled>
-                          下载为文档
-                          <small>即将开放</small>
+                        <button className="finalize-button" type="button" onClick={downloadFinalPlan}>
+                          {finalPlanDownloadStatus === 'downloaded' ? '已生成下载' : '下载为 Markdown 文档'}
                         </button>
                         <button type="button" disabled>
                           导出 PPT 大纲
