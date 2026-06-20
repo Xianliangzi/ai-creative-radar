@@ -5,7 +5,10 @@ function TodaysSignal({ signal }) {
   return (
     <section className="todays-signal" aria-labelledby="todays-signal-title">
       <div className="section-title">
-        <span>Today's Signal</span>
+        <span>
+          <strong>今日推荐情报</strong>
+          <small>Today&apos;s Signal</small>
+        </span>
         <span>{signal.id}</span>
       </div>
       <div className="todays-content">
@@ -16,9 +19,9 @@ function TodaysSignal({ signal }) {
           <p>{signal.signal}</p>
         </div>
         <div className="todays-side">
-          <span>user: @creative_radar</span>
-          <span>status: online now</span>
-          <span>for: {signal.target_reader}</span>
+          <span>编辑：@creative_radar</span>
+          <span>状态：在线更新</span>
+          <span>适合：{signal.target_reader}</span>
         </div>
       </div>
     </section>

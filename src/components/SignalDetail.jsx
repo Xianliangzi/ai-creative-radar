@@ -3,10 +3,10 @@ import SignalImage from './SignalImage.jsx'
 
 function renderValue(value) {
   if (Array.isArray(value)) {
-    return value.length > 0 ? value : ['Not available']
+    return value.length > 0 ? value : ['暂无内容']
   }
 
-  return value || 'Not available'
+  return value || '暂无内容'
 }
 
 function SignalDetail({ signal, onClose }) {
@@ -49,9 +49,12 @@ function SignalDetail({ signal, onClose }) {
     <div className="detail-overlay" role="presentation">
       <section className="detail-window" role="dialog" aria-modal="true" aria-labelledby="detail-title">
         <header className="detail-titlebar">
-          <span>SIGNAL DETAIL</span>
+          <span>
+            <strong>情报详情</strong>
+            <small>Signal Detail</small>
+          </span>
           <button type="button" onClick={onClose} aria-label="Close signal detail">
-            CLOSE / X
+            关闭 / X
           </button>
         </header>
 
@@ -74,17 +77,17 @@ function SignalDetail({ signal, onClose }) {
 
           <div className="detail-grid">
             <section className="detail-section">
-              <h3>WHAT HAPPENED</h3>
+              <h3>内容摘要</h3>
               <p>{renderValue(signal.summary)}</p>
             </section>
 
             <section className="detail-section">
-              <h3>CREATOR VALUE</h3>
+              <h3>创作者价值</h3>
               <p>{renderValue(signal.creator_value)}</p>
             </section>
 
             <section className="detail-section detail-section-wide">
-              <h3>PROJECT IDEAS</h3>
+              <h3>项目灵感</h3>
               <ol>
                 {projectIdeas.map((idea) => (
                   <li key={idea}>{idea}</li>
@@ -93,17 +96,17 @@ function SignalDetail({ signal, onClose }) {
             </section>
 
             <section className="detail-section">
-              <h3>BUSINESS POSSIBILITY</h3>
+              <h3>商业可能</h3>
               <p>{renderValue(signal.business_potential)}</p>
             </section>
 
             <section className="detail-section">
-              <h3>PROMPT HINT</h3>
+              <h3>Prompt 灵感</h3>
               <p>{renderValue(signal.prompt_hint)}</p>
             </section>
 
             <section className="detail-section">
-              <h3>TOOLS</h3>
+              <h3>相关工具</h3>
               <div className="detail-chip-row">
                 {tools.map((tool) => (
                   <span key={tool}>{tool}</span>
@@ -112,16 +115,16 @@ function SignalDetail({ signal, onClose }) {
             </section>
 
             <section className="detail-section">
-              <h3>TARGET READER</h3>
+              <h3>适合人群</h3>
               <p>{renderValue(signal.target_reader)}</p>
             </section>
 
             <section className="detail-section detail-section-wide">
-              <h3>SOURCE</h3>
+              <h3>来源</h3>
               <p>{renderValue(signal.source)}</p>
               {sourceUrl ? (
                 <>
-                  <p className="source-url">source url: {sourceUrl}</p>
+                  <p className="source-url">来源链接 / Source URL: {sourceUrl}</p>
                   <div className="source-actions">
                     <a
                       className="source-button"
@@ -129,14 +132,14 @@ function SignalDetail({ signal, onClose }) {
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      OPEN SOURCE
+                      打开来源
                     </a>
                     <button className="source-button" type="button" onClick={copySourceUrl}>
                       {copyStatus === 'copied'
-                        ? 'COPIED'
+                        ? '已复制链接'
                         : copyStatus === 'failed'
-                          ? 'COPY FAILED'
-                          : 'COPY LINK'}
+                          ? '复制失败'
+                          : '复制链接'}
                     </button>
                     <button
                       className="source-button signal-json-button"
@@ -144,26 +147,26 @@ function SignalDetail({ signal, onClose }) {
                       onClick={copySignalJson}
                     >
                       {jsonCopyStatus === 'copied'
-                        ? 'SIGNAL COPIED'
+                        ? '已复制 Signal'
                         : jsonCopyStatus === 'failed'
-                          ? 'COPY FAILED'
-                          : 'COPY SIGNAL JSON'}
+                          ? '复制失败'
+                          : '复制 Signal JSON'}
                     </button>
                   </div>
                 </>
               ) : (
                 <div className="source-actions">
-                  <span className="source-button is-disabled">Source not available</span>
+                  <span className="source-button is-disabled">暂无来源链接</span>
                   <button
                     className="source-button signal-json-button"
                     type="button"
                     onClick={copySignalJson}
                   >
                     {jsonCopyStatus === 'copied'
-                      ? 'SIGNAL COPIED'
+                      ? '已复制 Signal'
                       : jsonCopyStatus === 'failed'
-                        ? 'COPY FAILED'
-                        : 'COPY SIGNAL JSON'}
+                        ? '复制失败'
+                        : '复制 Signal JSON'}
                   </button>
                 </div>
               )}

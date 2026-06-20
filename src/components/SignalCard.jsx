@@ -12,16 +12,16 @@ function SignalCard({ signal, onOpen }) {
       <div className="card-body">
         <SignalImage signal={signal} variant="thumb" label="SIGNAL IMAGE" />
         <div className="card-file-meta" aria-label="Signal archive metadata">
-          <span>file: {signal.id}</span>
-          <span>type: {signal.category}</span>
-          <span>status: creator-useful</span>
-          <span>scan date: {signal.date}</span>
+          <span>文件：{signal.id}</span>
+          <span>类型：{signal.category}</span>
+          <span>状态：创作者可用</span>
+          <span>扫描日期：{signal.date}</span>
         </div>
         <h3>{signal.title}</h3>
         <p className="signal-text">{signal.signal}</p>
 
         <div className="card-block">
-          <span className="block-label">For</span>
+          <span className="block-label">适合人群 / For</span>
           <p>{signal.target_reader}</p>
         </div>
 
@@ -42,7 +42,7 @@ function SignalCard({ signal, onOpen }) {
         </div>
 
         <button className="open-button" type="button" onClick={onOpen}>
-          Open signal
+          打开情报
         </button>
       </div>
     </article>

@@ -77,28 +77,28 @@ function App() {
 
         <div className="hero-panel">
           <div className="hero-copy">
-            <p className="eyebrow">daily creative signals</p>
+            <p className="eyebrow">每日 AI 创意情报 / daily creative signals</p>
             <h1>AI Creative Radar</h1>
-            <p className="subtitle">Visual AI signals for creators</p>
+            <p className="subtitle">给视觉创作者看的 AI 灵感雷达</p>
             <p className="intro-copy">
-              A retro signal board for AI visual tools, creative cases and tiny business ideas.
+              收集 AI 视觉工具、创意案例和小商业玩法，把信息转译成可以动手尝试的 creative signals。
             </p>
             <div className="quick-links" aria-label="Quick links">
-              <button type="button">Tools</button>
-              <button type="button">Cases</button>
-              <button type="button">Prompts</button>
-              <button type="button">Business</button>
+              <button type="button">工具 / Tools</button>
+              <button type="button">案例 / Cases</button>
+              <button type="button">Prompt</button>
+              <button type="button">商业 / Business</button>
             </div>
             <div className="hero-status-grid" aria-label="Radar status">
-              <span>Online now</span>
+              <span>在线更新 / Online</span>
               <span>Archive 008</span>
-              <span>Last scan {todaysSignal.date}</span>
+              <span>最近扫描 {todaysSignal.date}</span>
             </div>
             <div className="personal-file-strip" aria-label="Personal project notes">
-              <span>curated by Xian</span>
-              <span>personal AI visual archive</span>
-              <span>student-built / non-profit</span>
-              <span>notes for creators learning AI</span>
+              <span>贤整理 / curated by Xian</span>
+              <span>个人 AI 视觉档案</span>
+              <span>学生项目 / 非商业实验</span>
+              <span>给正在学习 AI 的创作者</span>
             </div>
           </div>
           <div className="visual-panel" aria-label="Visual archive placeholder">
@@ -125,11 +125,17 @@ function App() {
 
         <section className="search-panel" aria-label="Search creative signals">
           <div className="section-title">
-            <span>Search archive</span>
-            <span>{searchQuery ? 'query active' : 'waiting input'}</span>
+            <span>
+              <strong>搜索情报库</strong>
+              <small>Search Archive</small>
+            </span>
+            <span>{searchQuery ? '正在搜索' : '等待输入'}</span>
           </div>
           <label className="search-field">
-            <span>keyword</span>
+            <span>
+              关键词
+              <small>Keyword</small>
+            </span>
             <input
               type="search"
               value={searchQuery}
@@ -147,11 +153,11 @@ function App() {
 
         <div className={`search-result-status ${filteredSignals.length === 0 ? 'is-empty' : ''}`}>
           {filteredSignals.length > 0 ? (
-            <span>SEARCH RESULT / 找到 {filteredSignals.length} 条相关 Signal</span>
+            <span>搜索结果 / 找到 {filteredSignals.length} 条相关 Signal</span>
           ) : (
             <>
-              <span>NO SIGNAL FOUND / 暂时没有找到相关内容</span>
-              <small>可以尝试搜索工具名、视觉风格、项目方向或 Prompt 关键词。</small>
+              <span>没有找到相关情报</span>
+              <small>No Signal Found / 可以尝试搜索工具名、视觉风格、项目方向或 Prompt 关键词。</small>
             </>
           )}
         </div>

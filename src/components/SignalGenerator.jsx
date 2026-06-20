@@ -1,10 +1,10 @@
 import React, { useMemo, useState } from 'react'
 
 const templateOptions = [
-  { id: 'tool', label: 'AI Tool', category: 'AI视觉工具' },
-  { id: 'case', label: 'Creative Case', category: '创意案例' },
-  { id: 'trend', label: 'Trend', category: '潮流趋势' },
-  { id: 'business', label: 'Business', category: '商业玩法' },
+  { id: 'tool', label: 'AI 工具 / AI Tool', category: 'AI视觉工具' },
+  { id: 'case', label: '创意案例 / Creative Case', category: '创意案例' },
+  { id: 'trend', label: '趋势观察 / Trend', category: '潮流趋势' },
+  { id: 'business', label: '商业玩法 / Business', category: '商业玩法' },
 ]
 
 const templateCopy = {
@@ -130,7 +130,7 @@ function SignalGenerator({ onAddSignal }) {
       category: activeOption.category,
       tools: template.tools(keyword),
       prompt_hint: template.prompt_hint(keyword),
-      source: hasUrl ? 'User submitted source' : 'Manual keyword draft',
+      source: hasUrl ? '用户提交来源' : '手动关键词草稿',
       url: hasUrl ? inputValue.trim() : '',
       date,
       visual_tag: template.visual_tag,
@@ -152,14 +152,20 @@ function SignalGenerator({ onAddSignal }) {
   return (
     <section className="generator-panel" aria-label="Signal Generator">
       <div className="section-title">
-        <span>SIGNAL GENERATOR / 生成一条创意情报</span>
+        <span>
+          <strong>生成一条创意情报</strong>
+          <small>Signal Generator</small>
+        </span>
         <span>MVP 0.6 mock only</span>
       </div>
 
       <div className="generator-body">
         <div className="generator-machine">
           <label className="generator-input">
-            <span>source / keyword</span>
+            <span>
+              来源 / 关键词
+              <small>Source / Keyword</small>
+            </span>
             <input
               type="text"
               value={inputValue}
@@ -182,19 +188,22 @@ function SignalGenerator({ onAddSignal }) {
           </div>
 
           <button className="generate-button" type="button" onClick={generateSignal}>
-            GENERATE DRAFT
+            生成草稿
           </button>
         </div>
 
         <div className="draft-preview" aria-live="polite">
           <div className="draft-titlebar">
-            <span>DRAFT SIGNAL PREVIEW</span>
-            <span>{draftSignal ? draftSignal.category : 'waiting'}</span>
+            <span>
+              <strong>草稿预览</strong>
+              <small>Draft Signal Preview</small>
+            </span>
+            <span>{draftSignal ? draftSignal.category : '等待生成'}</span>
           </div>
           <p className="draft-review-note">
-            This is a draft signal generated from your input. Please review it before publishing.
-            <br />
             这是一条根据输入生成的草稿情报，发布前请先人工检查。
+            <br />
+            <small>Draft generated from your input. Review before publishing.</small>
           </p>
 
           {draftSignal ? (
@@ -204,25 +213,25 @@ function SignalGenerator({ onAddSignal }) {
 
               <div className="draft-grid">
                 <div>
-                  <span className="draft-label">summary</span>
+                  <span className="draft-label">内容摘要 / Summary</span>
                   <p>{draftSignal.summary}</p>
                 </div>
                 <div>
-                  <span className="draft-label">creator value</span>
+                  <span className="draft-label">创作者价值 / Creator Value</span>
                   <p>{draftSignal.creator_value}</p>
                 </div>
                 <div>
-                  <span className="draft-label">business potential</span>
+                  <span className="draft-label">商业可能 / Business</span>
                   <p>{draftSignal.business_potential}</p>
                 </div>
                 <div>
-                  <span className="draft-label">target reader</span>
+                  <span className="draft-label">适合人群 / Target Reader</span>
                   <p>{draftSignal.target_reader}</p>
                 </div>
               </div>
 
               <div className="draft-list-block">
-                <span className="draft-label">project ideas</span>
+                <span className="draft-label">项目灵感 / Project Ideas</span>
                 <ol>
                   {draftSignal.project_ideas.map((idea) => (
                     <li key={idea}>{idea}</li>
@@ -231,7 +240,7 @@ function SignalGenerator({ onAddSignal }) {
               </div>
 
               <div className="draft-list-block">
-                <span className="draft-label">prompt hint</span>
+                <span className="draft-label">Prompt 灵感 / Prompt Hint</span>
                 <p>{draftSignal.prompt_hint}</p>
               </div>
 
@@ -247,22 +256,22 @@ function SignalGenerator({ onAddSignal }) {
               </div>
 
               <div className="draft-source-line">
-                <span>source: {draftSignal.source}</span>
-                <span>url: {draftSignal.url || 'Not available'}</span>
+                <span>来源 / Source: {draftSignal.source}</span>
+                <span>链接 / URL: {draftSignal.url || '暂无链接'}</span>
               </div>
 
               <p className="publish-note">
-                Temporary publish only. It will disappear after refresh.
-                <br />
                 当前只会临时加入页面，刷新后会消失。
+                <br />
+                <small>Temporary publish only.</small>
               </p>
               <button className="add-library-button" type="button" onClick={addToLibrary}>
-                {addStatus === 'added' ? 'SIGNAL PUBLISHED TO TEMP LIBRARY' : 'PUBLISH SIGNAL'}
+                {addStatus === 'added' ? '已临时加入情报列表' : '临时发布'}
               </button>
             </div>
           ) : (
             <div className="draft-empty">
-              <strong>NO DRAFT YET</strong>
+              <strong>还没有草稿</strong>
               <p>输入一个工具名、文章链接或创意关键词，再生成一条 mock Signal 草稿。</p>
             </div>
           )}

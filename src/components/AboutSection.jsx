@@ -4,37 +4,37 @@ function AboutSection() {
   return (
     <section className="about-section" id="about" aria-labelledby="about-title">
       <div className="about-header">
-        <span>about.txt</span>
-        <span>MVP 0.1 / personal archive</span>
+        <span>关于项目 / about.txt</span>
+        <span>个人档案 / personal archive</span>
       </div>
 
       <div className="about-grid">
         <article className="profile-card" aria-label="Author profile">
           <div className="profile-window-bar">
-            <span>author_file.sys</span>
-            <span>online</span>
+            <span>作者档案 / author_file.sys</span>
+            <span>在线 / online</span>
           </div>
           <div className="profile-body">
             <div className="profile-avatar" aria-hidden="true">贤</div>
             <dl>
               <div>
-                <dt>name</dt>
+                <dt>姓名</dt>
                 <dd>贤</dd>
               </div>
               <div>
-                <dt>role</dt>
-                <dd>student / AI visual learner</dd>
+                <dt>身份</dt>
+                <dd>学生 / AI 视觉学习者</dd>
               </div>
               <div>
-                <dt>project</dt>
+                <dt>项目</dt>
                 <dd>AI Creative Radar</dd>
               </div>
               <div>
-                <dt>status</dt>
-                <dd>non-profit personal experiment</dd>
+                <dt>状态</dt>
+                <dd>非商业个人实验</dd>
               </div>
               <div>
-                <dt>contact</dt>
+                <dt>联系</dt>
                 <dd>
                   <a href="mailto:2728172670@qq.com">2728172670@qq.com</a>
                 </dd>

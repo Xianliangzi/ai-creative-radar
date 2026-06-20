@@ -8,19 +8,19 @@ function Header() {
       </div>
       <nav className="nav-links" aria-label="Primary navigation">
         <a href="#home" className="nav-link active">
-          Home
+          首页
         </a>
         <a href="#signals" className="nav-link">
-          Signals
+          情报
         </a>
         <a href="#about" className="nav-link">
-          About
+          关于
         </a>
       </nav>
 
       <div className="address-bar" aria-label="Current address">
-        <span className="address-caret">search</span>
-        type a signal here...
+        <span className="address-caret">Search</span>
+        输入关键词，搜索 AI 创意情报...
       </div>
 
       <div className="window-controls" aria-hidden="true">

@@ -734,10 +734,30 @@ h1 {
   display: flex;
   justify-content: space-between;
   gap: 14px;
+  align-items: center;
   padding: 9px 12px;
   border-bottom: 2px solid #8faf8a;
   background: #9bb89c;
   color: #050805;
+}
+
+.section-title strong,
+.detail-titlebar strong {
+  display: block;
+  font-weight: 700;
+}
+
+.section-title small,
+.detail-titlebar small,
+.generator-input small,
+.draft-review-note small,
+.publish-note small {
+  display: block;
+  margin-top: 2px;
+  color: inherit;
+  font-size: 0.72rem;
+  opacity: 0.72;
+  text-transform: none;
 }
 
 .todays-content {
@@ -837,6 +857,10 @@ h1 {
   background: #aec7aa;
   font-size: 0.74rem;
   text-transform: uppercase;
+}
+
+.generator-input span {
+  text-transform: none;
 }
 
 .generator-input input {
