@@ -84,6 +84,18 @@ function App() {
             <p className="intro-copy">
               收集 AI 视觉工具、创意案例和小商业玩法，把信息转译成可以动手尝试的 creative signals。
             </p>
+            <div className="primary-actions" aria-label="Primary actions">
+              <a href="#signals" className="primary-action-card">
+                <small>Browse AI Signals</small>
+                <strong>看最新 AI 情报</strong>
+                <span>浏览 AI 工具、创意案例、趋势观察和商业玩法。</span>
+              </a>
+              <a href="#search" className="primary-action-card">
+                <small>Search Creative Ideas</small>
+                <strong>搜索创意方案</strong>
+                <span>输入 AI 视频、作品集、海报、虚拟人等关键词，找到相关工具、案例和 Prompt 灵感。</span>
+              </a>
+            </div>
             <div className="quick-links" aria-label="Quick links">
               <button type="button">工具 / Tools</button>
               <button type="button">案例 / Cases</button>
@@ -126,7 +138,7 @@ function App() {
 
         <QuickGuide />
 
-        <section className="search-panel" aria-label="Search creative signals">
+        <section className="search-panel" id="search" aria-label="Search creative signals">
           <div className="section-title">
             <span>
               <strong>搜索情报库</strong>
@@ -156,7 +168,7 @@ function App() {
 
         <div className={`search-result-status ${filteredSignals.length === 0 ? 'is-empty' : ''}`}>
           {filteredSignals.length > 0 ? (
-            <span>搜索结果 / 找到 {filteredSignals.length} 条相关 Signal</span>
+            <span>搜索结果 / 找到 {filteredSignals.length} 条相关情报</span>
           ) : (
             <>
               <span>没有找到相关情报</span>

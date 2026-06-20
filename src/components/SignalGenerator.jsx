@@ -1,10 +1,10 @@
 import React, { useMemo, useState } from 'react'
 
 const templateOptions = [
-  { id: 'tool', label: 'AI 工具 / AI Tool', category: 'AI视觉工具' },
-  { id: 'case', label: '创意案例 / Creative Case', category: '创意案例' },
-  { id: 'trend', label: '趋势观察 / Trend', category: '潮流趋势' },
-  { id: 'business', label: '商业玩法 / Business', category: '商业玩法' },
+  { id: 'tool', label: 'AI 工具', category: 'AI视觉工具' },
+  { id: 'case', label: '创意案例', category: '创意案例' },
+  { id: 'trend', label: '趋势观察', category: '潮流趋势' },
+  { id: 'business', label: '商业玩法', category: '商业玩法' },
 ]
 
 const templateCopy = {
@@ -12,7 +12,7 @@ const templateCopy = {
     title: (keyword) => `${keyword} 可以成为视觉作品集的实验入口`,
     signal: (keyword) => `${keyword} 的价值不只在工具更新，而在于帮助创作者更快验证视觉风格和动态概念。`,
     summary: (keyword) =>
-      `这是一条基于「${keyword}」生成的 mock Signal，用来模拟 AI 工具链接或关键词被转译成创意情报后的样子。`,
+      `这是一条基于「${keyword}」生成的模拟情报草稿，用来测试 AI 工具链接或关键词如何被转译成创意情报。`,
     creator_value:
       '适合用来整理工具能力、拆解适合练习的视觉方向，并快速判断它能不能放进作品集或日常创作流程。',
     project_ideas: [
@@ -32,7 +32,7 @@ const templateCopy = {
     title: (keyword) => `${keyword} 可以被拆成一个 AI 创意案例档案`,
     signal: (keyword) => `创意案例的重点不是复刻 ${keyword}，而是提取它的视觉策略、叙事结构和可迁移方法。`,
     summary: (keyword) =>
-      `这是一条围绕「${keyword}」生成的 mock 案例 Signal，用来展示 AI 广告、AI MV、AI fashion 或艺术案例如何被转译。`,
+      `这是一条围绕「${keyword}」生成的模拟案例情报，用来展示 AI 广告、AI MV、AI fashion 或艺术案例如何被转译。`,
     creator_value:
       '帮助创作者从案例中提取构图、节奏、媒介组合和视觉语言，而不是只停留在“这个案例很酷”。',
     project_ideas: [
@@ -52,7 +52,7 @@ const templateCopy = {
     title: (keyword) => `${keyword} 正在变成可以持续观察的视觉趋势`,
     signal: (keyword) => `${keyword} 适合被整理成趋势板：它可能影响内容选题、作品集方向和视觉风格实验。`,
     summary: (keyword) =>
-      `这是一条围绕「${keyword}」生成的 mock 趋势 Signal，用来模拟 AI fashion、Y2K、虚拟人或数字身份趋势观察。`,
+      `这是一条围绕「${keyword}」生成的模拟趋势情报，用来测试 AI fashion、Y2K、虚拟人或数字身份趋势观察。`,
     creator_value:
       '帮助创作者把零散的风格信息整理成趋势语言，形成自己的参考库、选题库和视觉实验方向。',
     project_ideas: [
@@ -72,7 +72,7 @@ const templateCopy = {
     title: (keyword) => `${keyword} 可以被包装成一个轻量 AI 创意服务`,
     signal: (keyword) => `${keyword} 的重点是把能力产品化：从一次练习变成模板、服务、账号或小项目。`,
     summary: (keyword) =>
-      `这是一条围绕「${keyword}」生成的 mock 商业玩法 Signal，用来测试 AI 接单、副业、模板售卖或内容服务的表达方式。`,
+      `这是一条围绕「${keyword}」生成的模拟商业玩法情报，用来测试 AI 接单、副业、模板售卖或内容服务的表达方式。`,
     creator_value:
       '帮助创作者从“我会用一个工具”转向“我能提供一个清楚的小服务”，更容易整理报价、案例和交付方式。',
     project_ideas: [
@@ -135,8 +135,9 @@ function SignalGenerator({ onAddSignal }) {
       date,
       visual_tag: template.visual_tag,
       image: '',
-      image_alt: `${activeOption.label} mock signal preview`,
+      image_alt: `${activeOption.label} 情报草稿预览`,
       image_mode: 'cover',
+      confidence_level: 'LOW',
     })
     setAddStatus('idle')
   }
@@ -150,21 +151,25 @@ function SignalGenerator({ onAddSignal }) {
   }
 
   return (
-    <section className="generator-panel" aria-label="Signal Generator">
+    <section className="generator-panel prototype-panel" aria-label="情报草稿生成器">
       <div className="section-title">
         <span>
-          <strong>生成一条创意情报</strong>
-          <small>Signal Generator</small>
+          <strong>实验功能：生成情报草稿</strong>
+          <small>Prototype Generator</small>
         </span>
-        <span>MVP 0.6 mock only</span>
+        <span>实验区</span>
       </div>
+
+      <p className="generator-explain">
+        这是一个原型功能，用来测试未来 AI 自动生成情报的流程。当前生成内容为模拟草稿，发布前需要人工检查。
+      </p>
 
       <div className="generator-body">
         <div className="generator-machine">
           <label className="generator-input">
             <span>
               来源 / 关键词
-              <small>Source / Keyword</small>
+              <small>Tool, link or keyword</small>
             </span>
             <input
               type="text"
@@ -174,7 +179,7 @@ function SignalGenerator({ onAddSignal }) {
             />
           </label>
 
-          <div className="template-switcher" aria-label="Signal template">
+          <div className="template-switcher" aria-label="情报类型">
             {templateOptions.map((option) => (
               <button
                 key={option.id}
@@ -188,23 +193,18 @@ function SignalGenerator({ onAddSignal }) {
           </div>
 
           <button className="generate-button" type="button" onClick={generateSignal}>
-            生成草稿
+            生成情报草稿
           </button>
         </div>
 
         <div className="draft-preview" aria-live="polite">
           <div className="draft-titlebar">
             <span>
-              <strong>草稿预览</strong>
-              <small>Draft Signal Preview</small>
+              <strong>情报草稿预览</strong>
+              <small>Draft Preview</small>
             </span>
             <span>{draftSignal ? draftSignal.category : '等待生成'}</span>
           </div>
-          <p className="draft-review-note">
-            这是一条根据输入生成的草稿情报，发布前请先人工检查。
-            <br />
-            <small>Draft generated from your input. Review before publishing.</small>
-          </p>
 
           {draftSignal ? (
             <div className="draft-content">
@@ -213,25 +213,25 @@ function SignalGenerator({ onAddSignal }) {
 
               <div className="draft-grid">
                 <div>
-                  <span className="draft-label">内容摘要 / Summary</span>
+                  <span className="draft-label">内容摘要</span>
                   <p>{draftSignal.summary}</p>
                 </div>
                 <div>
-                  <span className="draft-label">创作者价值 / Creator Value</span>
+                  <span className="draft-label">创作者价值</span>
                   <p>{draftSignal.creator_value}</p>
                 </div>
                 <div>
-                  <span className="draft-label">商业可能 / Business</span>
+                  <span className="draft-label">商业可能</span>
                   <p>{draftSignal.business_potential}</p>
                 </div>
                 <div>
-                  <span className="draft-label">适合人群 / Target Reader</span>
+                  <span className="draft-label">适合人群</span>
                   <p>{draftSignal.target_reader}</p>
                 </div>
               </div>
 
               <div className="draft-list-block">
-                <span className="draft-label">项目灵感 / Project Ideas</span>
+                <span className="draft-label">项目灵感</span>
                 <ol>
                   {draftSignal.project_ideas.map((idea) => (
                     <li key={idea}>{idea}</li>
@@ -240,39 +240,23 @@ function SignalGenerator({ onAddSignal }) {
               </div>
 
               <div className="draft-list-block">
-                <span className="draft-label">Prompt 灵感 / Prompt Hint</span>
+                <span className="draft-label">Prompt 灵感</span>
                 <p>{draftSignal.prompt_hint}</p>
-              </div>
-
-              <div className="draft-chip-row">
-                {draftSignal.tools.map((tool) => (
-                  <span key={tool}>{tool}</span>
-                ))}
-              </div>
-              <div className="draft-chip-row muted">
-                {draftSignal.visual_tag.map((tag) => (
-                  <span key={tag}>{tag}</span>
-                ))}
-              </div>
-
-              <div className="draft-source-line">
-                <span>来源 / Source: {draftSignal.source}</span>
-                <span>链接 / URL: {draftSignal.url || '暂无链接'}</span>
               </div>
 
               <p className="publish-note">
                 当前只会临时加入页面，刷新后会消失。
                 <br />
-                <small>Temporary publish only.</small>
+                <small>Prototype only.</small>
               </p>
               <button className="add-library-button" type="button" onClick={addToLibrary}>
-                {addStatus === 'added' ? '已临时加入情报列表' : '临时发布'}
+                {addStatus === 'added' ? '已加入临时情报列表' : '临时加入列表'}
               </button>
             </div>
           ) : (
             <div className="draft-empty">
-              <strong>还没有草稿</strong>
-              <p>输入一个工具名、文章链接或创意关键词，再生成一条 mock Signal 草稿。</p>
+              <strong>还没有情报草稿</strong>
+              <p>输入一个工具名、文章链接或创意关键词，再生成一条模拟草稿。</p>
             </div>
           )}
         </div>

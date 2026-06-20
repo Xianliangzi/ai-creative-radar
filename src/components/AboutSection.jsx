@@ -1,6 +1,21 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 function AboutSection() {
+  const [emailCopyStatus, setEmailCopyStatus] = useState('idle')
+
+  const copyFeedbackEmail = async () => {
+    try {
+      await navigator.clipboard.writeText('2728172670@qq.com')
+      setEmailCopyStatus('copied')
+    } catch {
+      setEmailCopyStatus('failed')
+    }
+
+    window.setTimeout(() => {
+      setEmailCopyStatus('idle')
+    }, 1500)
+  }
+
   return (
     <section className="about-section" id="about" aria-labelledby="about-title">
       <div className="about-header">
@@ -146,18 +161,28 @@ function AboutSection() {
           <a className="mail-button" href="mailto:2728172670@qq.com">
             2728172670@qq.com
           </a>
-          <div className="feedback-box">
+          <div className="feedback-box" id="feedback">
             <p className="about-label">FEEDBACK</p>
             <p>
               如果你发现链接打不开、内容不准确，或者希望增加某个 AI 工具，可以通过邮箱反馈。
             </p>
+            <p className="feedback-email">反馈邮箱：2728172670@qq.com</p>
+            <div className="feedback-actions">
+              <button className="mail-button feedback-button" type="button" onClick={copyFeedbackEmail}>
+                {emailCopyStatus === 'copied'
+                  ? '邮箱已复制'
+                  : emailCopyStatus === 'failed'
+                    ? '复制失败'
+                    : '复制邮箱'}
+              </button>
             <a
               className="mail-button feedback-button"
               href="mailto:2728172670@qq.com?subject=AI%20Creative%20Radar%20Feedback"
             >
-              发送反馈
+              打开邮件客户端
               <small>Send Feedback</small>
             </a>
+            </div>
           </div>
           <p>如果这个网站刚好对你有一点帮助，我会很开心。</p>
         </article>

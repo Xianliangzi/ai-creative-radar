@@ -303,6 +303,49 @@ h1 {
   text-transform: uppercase;
 }
 
+.primary-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin: 20px 0 18px;
+}
+
+.primary-action-card {
+  display: grid;
+  gap: 7px;
+  min-width: 0;
+  padding: 15px;
+  border: 2px solid #6f876b;
+  color: #050805;
+  background:
+    linear-gradient(135deg, rgba(220, 232, 202, 0.25), transparent 55%),
+    #aec7aa;
+  text-decoration: none;
+  box-shadow: 6px 6px 0 rgba(5, 8, 5, 0.28);
+}
+
+.primary-action-card:hover {
+  border-color: #050805;
+  background: #dce8ca;
+}
+
+.primary-action-card small {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  opacity: 0.72;
+}
+
+.primary-action-card strong {
+  font-size: 1.08rem;
+  line-height: 1.3;
+}
+
+.primary-action-card span {
+  color: #243527;
+  font-size: 0.86rem;
+  line-height: 1.55;
+}
+
 .hero-status-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -826,6 +869,19 @@ h1 {
     #2e4032;
 }
 
+.prototype-panel {
+  border-style: dashed;
+  opacity: 0.96;
+}
+
+.generator-explain {
+  margin: 0;
+  padding: 12px 16px 0;
+  color: #b8c9aa;
+  font-size: 0.9rem;
+  line-height: 1.7;
+}
+
 .quick-guide {
   overflow: hidden;
   background:
@@ -842,8 +898,16 @@ h1 {
 
 .guide-steps {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 12px;
+}
+
+.guide-body.compact {
+  gap: 10px;
+}
+
+.guide-steps.compact .guide-card {
+  padding: 12px;
 }
 
 .guide-card,
@@ -945,6 +1009,16 @@ h1 {
   background:
     linear-gradient(135deg, rgba(174, 199, 170, 0.12), transparent 46%),
     #243527;
+}
+
+.confidence-strip {
+  margin: 0;
+  padding: 9px 11px;
+  border: 1px solid rgba(143, 175, 138, 0.68);
+  color: #b8c9aa;
+  background: rgba(5, 8, 5, 0.18);
+  font-size: 0.82rem;
+  line-height: 1.55;
 }
 
 .generator-body {
@@ -1848,6 +1922,20 @@ h1 {
   margin-bottom: 12px;
 }
 
+.feedback-email {
+  padding: 8px 10px;
+  border: 1px solid rgba(143, 175, 138, 0.7);
+  color: #dce8ca;
+  background: rgba(5, 8, 5, 0.18);
+  overflow-wrap: anywhere;
+}
+
+.feedback-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
 .feedback-button {
   margin-bottom: 0;
 }
@@ -1949,6 +2037,7 @@ h1 {
   }
 
   .hero-status-grid,
+  .primary-actions,
   .todays-content {
     grid-template-columns: 1fr;
   }
@@ -2159,6 +2248,10 @@ h1 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .primary-action-card {
+    padding: 12px;
+  }
+
   .quick-links button {
     padding: 9px 8px;
   }
@@ -2286,9 +2379,15 @@ h1 {
     grid-template-columns: 1fr;
   }
 
-  .source-actions .source-button {
+  .source-actions .source-button,
+  .feedback-actions .mail-button {
     width: 100%;
     text-align: center;
+  }
+
+  .feedback-actions {
+    display: grid;
+    grid-template-columns: 1fr;
   }
 
   .profile-body,

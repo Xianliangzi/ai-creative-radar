@@ -16,11 +16,7 @@ function Header() {
         <a href="#about" className="nav-link">
           关于
         </a>
-        <a
-          href="mailto:2728172670@qq.com?subject=AI%20Creative%20Radar%20Feedback"
-          className="nav-link nav-feedback"
-          title="Feedback"
-        >
+        <a href="#feedback" className="nav-link nav-feedback" title="Feedback">
           反馈
         </a>
       </nav>
