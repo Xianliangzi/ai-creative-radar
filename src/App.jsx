@@ -5,7 +5,6 @@ import CategoryFilter from './components/CategoryFilter.jsx'
 import SignalDetail from './components/SignalDetail.jsx'
 import SignalImage from './components/SignalImage.jsx'
 import SignalCard from './components/SignalCard.jsx'
-import SignalGenerator from './components/SignalGenerator.jsx'
 import QuickGuide from './components/QuickGuide.jsx'
 import TodaysSignal from './components/TodaysSignal.jsx'
 import signals from './data/news-sample.json'
@@ -50,25 +49,18 @@ function App() {
   const [activeCategory, setActiveCategory] = useState('All')
   const [selectedSignal, setSelectedSignal] = useState(null)
   const [searchQuery, setSearchQuery] = useState('')
-  const [generatedSignals, setGeneratedSignals] = useState([])
   const todaysSignal = signals[0]
-
-  const allSignals = useMemo(() => [...generatedSignals, ...signals], [generatedSignals])
 
   const filteredSignals = useMemo(() => {
     const normalizedQuery = searchQuery.trim().toLowerCase()
 
-    return allSignals.filter((signal) => {
+    return signals.filter((signal) => {
       const matchesCategory = activeCategory === 'All' || signal.category === activeCategory
       const matchesSearch = !normalizedQuery || getSearchText(signal).includes(normalizedQuery)
 
       return matchesCategory && matchesSearch
     })
-  }, [activeCategory, allSignals, searchQuery])
-
-  const addGeneratedSignal = (signal) => {
-    setGeneratedSignals((currentSignals) => [signal, ...currentSignals])
-  }
+  }, [activeCategory, searchQuery])
 
   return (
     <main className="app-shell">
@@ -133,8 +125,6 @@ function App() {
         </div>
 
         <TodaysSignal signal={todaysSignal} />
-
-        <SignalGenerator onAddSignal={addGeneratedSignal} />
 
         <QuickGuide />
 
