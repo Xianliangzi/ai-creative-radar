@@ -1713,6 +1713,78 @@ h1 {
   line-height: 1.7;
 }
 
+.refine-field {
+  display: grid;
+  gap: 8px;
+}
+
+.refine-field span {
+  color: #e5f3d4;
+  font-weight: 700;
+}
+
+.refine-field textarea {
+  width: 100%;
+  min-height: 96px;
+  resize: vertical;
+  border: 2px inset #6f876b;
+  color: #e5f3d4;
+  background: #050805;
+  padding: 10px 11px;
+  font: inherit;
+  line-height: 1.6;
+}
+
+.refine-submit-button {
+  color: #050805 !important;
+  background: #aec7aa !important;
+  cursor: pointer !important;
+}
+
+.refine-submit-button:hover,
+.refine-submit-button:focus-visible {
+  border-color: #050805;
+  background: #7cff9b !important;
+  outline: none;
+}
+
+.refine-submit-button:disabled {
+  color: #b8c9aa !important;
+  background: #243527 !important;
+  cursor: not-allowed !important;
+}
+
+.refine-status {
+  color: #b8c9aa !important;
+  font-size: 0.84rem;
+}
+
+.refine-records {
+  display: grid;
+  gap: 10px;
+}
+
+.refine-record {
+  display: grid;
+  gap: 7px;
+  padding: 12px;
+  border: 1px solid rgba(143, 175, 138, 0.68);
+  background:
+    radial-gradient(circle, rgba(174, 199, 170, 0.08) 1px, transparent 1px) 0 0 / 12px 12px,
+    rgba(5, 8, 5, 0.18);
+}
+
+.refine-record strong {
+  color: #e5f3d4;
+}
+
+.refine-record p {
+  margin: 0;
+  color: #dce8ca;
+  line-height: 1.7;
+  white-space: pre-wrap;
+}
+
 .next-refine-body > span {
   color: #b8c9aa;
   font-size: 0.82rem;

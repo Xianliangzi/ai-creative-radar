@@ -1,3 +1,13 @@
+const SYSTEM_PROMPT = [
+  '你是 AI Creative Radar 的创意方案顾问，面向视觉创作者、学生、内容运营和 AI 创意初学者。',
+  '你的任务是根据用户输入的创意目标，以及系统匹配到的 AI 工具、案例和资讯，整理一份可执行的初步创意方案。',
+  '你输出的是给视觉创作者的初步执行方案，不是概念介绍。',
+  '请尽量具体到工具组合、内容形式、制作步骤、视觉风格、适合发布的平台和作品集呈现方式。',
+  '不要空泛鸡汤，不要只写概念，不要夸大效果。',
+  '必须用中文输出。',
+  '必须返回严格 JSON，不要输出 Markdown，不要输出解释文字。',
+].join('\n')
+
 function cleanJsonContent(content) {
   return content
     .replace(/^```json\s*/i, '')
@@ -6,16 +16,32 @@ function cleanJsonContent(content) {
     .trim()
 }
 
+function normalizeList(value, maxLength) {
+  return Array.isArray(value) ? value.filter(Boolean).slice(0, maxLength) : []
+}
+
 function normalizePlan(plan) {
   return {
-    overview: plan.overview || '',
-    recommended_tools: Array.isArray(plan.recommended_tools) ? plan.recommended_tools : [],
-    related_cases: Array.isArray(plan.related_cases) ? plan.related_cases : [],
-    directions: Array.isArray(plan.directions) ? plan.directions : [],
-    prompt_ideas: Array.isArray(plan.prompt_ideas) ? plan.prompt_ideas : [],
-    business_ideas: Array.isArray(plan.business_ideas) ? plan.business_ideas : [],
-    next_steps: Array.isArray(plan.next_steps) ? plan.next_steps : [],
+    overview: typeof plan.overview === 'string' ? plan.overview : '',
+    recommended_tools: normalizeList(plan.recommended_tools, 6),
+    related_cases: normalizeList(plan.related_cases, 4),
+    directions: normalizeList(plan.directions, 4),
+    prompt_ideas: normalizeList(plan.prompt_ideas, 4),
+    business_ideas: normalizeList(plan.business_ideas, 3),
+    next_steps: normalizeList(plan.next_steps, 5),
   }
+}
+
+function getAiErrorMessage(status, errorText) {
+  const normalizedError = String(errorText || '').toLowerCase()
+
+  if (status === 401) return 'AI API Key 无效或未授权'
+  if (status === 402 || normalizedError.includes('insufficient balance')) return 'AI API 余额不足'
+  if (status === 404 || normalizedError.includes('model')) return 'AI 模型名称可能不正确'
+  if (status === 429) return 'AI 请求过于频繁，请稍后再试'
+  if (status >= 500) return 'AI 服务暂时不可用'
+
+  return `AI API 请求失败，状态码 ${status}`
 }
 
 function buildUserPrompt(query, matchedSignals) {
@@ -34,12 +60,28 @@ function buildUserPrompt(query, matchedSignals) {
     : []
 
   return [
-    `用户输入的创意方向：${query}`,
+    `用户输入的创意目标：${query}`,
+    '',
+    '说明：用户输入的是创意目标，不一定是关键词。请理解用户真正想做的项目方向。',
+    '匹配到的资讯只是参考材料，不要求逐字照搬。',
+    '如果资讯不足，也要根据用户目标生成谨慎、合理、可执行的方案。',
+    '方案要适合学生个人项目、小型作品集项目或内容账号实验。',
+    '尽量给出可以马上开始做的下一步。',
     '',
     signalsForPrompt.length
-      ? '系统匹配到的 AI 工具、案例和资讯如下：'
-      : '当前匹配资讯较少，请基于用户输入给出一个谨慎、可执行的初步方案。',
+      ? '系统匹配到的 AI 工具、案例和资讯如下，最多 5 条：'
+      : '当前匹配资讯较少，请基于用户目标给出一个谨慎、可执行的初步方案。',
     JSON.stringify(signalsForPrompt, null, 2),
+    '',
+    '字段长度要求：',
+    '- overview：1-2 句话',
+    '- recommended_tools：2-6 个',
+    '- related_cases：2-4 条',
+    '- directions：2-4 条',
+    '- prompt_ideas：2-4 条',
+    '- business_ideas：2-3 条',
+    '- next_steps：3-5 条',
+    '- 每条内容不要太长，适合前端卡片展示',
     '',
     '请严格返回以下 JSON 结构，不要输出 Markdown，不要输出解释文字：',
     JSON.stringify(
@@ -99,8 +141,7 @@ export default async function handler(request, response) {
         messages: [
           {
             role: 'system',
-            content:
-              '你是 AI Creative Radar 的创意方案顾问，面向视觉创作者、学生、内容运营和 AI 创意初学者。你的任务是根据用户输入的创意方向，以及系统匹配到的 AI 工具、案例和资讯，整理一份可执行的初步创意方案。请用中文输出，结构清晰，避免空泛鸡汤，尽量给出具体工具、案例方向、Prompt 灵感、商业玩法和下一步行动。你必须返回严格 JSON，不要输出 Markdown，不要输出解释文字。',
+            content: SYSTEM_PROMPT,
           },
           {
             role: 'user',
@@ -116,7 +157,7 @@ export default async function handler(request, response) {
       return response.status(aiResponse.status).json({
         success: false,
         source: 'ai',
-        error: errorText || `AI API request failed with status ${aiResponse.status}`,
+        error: getAiErrorMessage(aiResponse.status, errorText),
       })
     }
 
@@ -127,7 +168,7 @@ export default async function handler(request, response) {
       return response.status(502).json({
         success: false,
         source: 'ai',
-        error: 'Empty AI response',
+        error: 'AI 返回内容为空',
       })
     }
 

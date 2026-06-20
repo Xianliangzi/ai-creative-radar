@@ -223,6 +223,18 @@ function buildInitialPlanText(query, summary, sourceLabel) {
   ].join('\n')
 }
 
+function buildCurrentPlanPayload(summary) {
+  return {
+    overview: summary.overview,
+    recommended_tools: summary.tools,
+    related_cases: summary.relatedCases.map((item) => item.title),
+    directions: summary.ideas,
+    prompt_ideas: summary.prompts,
+    business_ideas: summary.business,
+    next_steps: summary.nextSteps,
+  }
+}
+
 function getPlanSourceLabel(source) {
   if (source === 'ai') return 'AI 生成'
   if (source === 'ai-text') return 'AI 文本结果'
@@ -249,7 +261,11 @@ function App() {
   const [apiPlanSummary, setApiPlanSummary] = useState(null)
   const [planSource, setPlanSource] = useState('local')
   const [isPlanLoading, setIsPlanLoading] = useState(false)
-  const [planApiError, setPlanApiError] = useState(false)
+  const [planApiError, setPlanApiError] = useState('')
+  const [refineQuestion, setRefineQuestion] = useState('')
+  const [refineRecords, setRefineRecords] = useState([])
+  const [isRefineLoading, setIsRefineLoading] = useState(false)
+  const [refineError, setRefineError] = useState('')
   const todaysSignal = signals[0]
 
   const feedSignals = useMemo(
@@ -281,8 +297,11 @@ function App() {
     setSubmittedPlanQuery(nextQuery)
     setApiPlanSummary(null)
     setPlanSource('local')
-    setPlanApiError(false)
+    setPlanApiError('')
     setPlanCopyStatus('idle')
+    setRefineQuestion('')
+    setRefineRecords([])
+    setRefineError('')
 
     setIsPlanLoading(true)
 
@@ -309,7 +328,13 @@ function App() {
     } catch (error) {
       setApiPlanSummary(null)
       setPlanSource('local')
-      setPlanApiError(matchedSignalsForPlan.length > 0)
+      setPlanApiError(
+        matchedSignalsForPlan.length > 0
+          ? error instanceof Error
+            ? error.message
+            : 'AI 接口暂时不可用'
+          : '',
+      )
     } finally {
       setIsPlanLoading(false)
     }
@@ -339,6 +364,59 @@ function App() {
     window.setTimeout(() => {
       setPlanCopyStatus('idle')
     }, 1500)
+  }
+
+  const refineCurrentPlan = async () => {
+    const question = refineQuestion.trim()
+
+    if (!planSummary) {
+      setRefineError('请先生成初步方案。')
+      return
+    }
+
+    if (!question) {
+      setRefineError('请输入你想继续追问的问题。')
+      return
+    }
+
+    setIsRefineLoading(true)
+    setRefineError('')
+
+    try {
+      const response = await fetch('/api/refine-plan', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          query: submittedPlanQuery || planQuery,
+          currentPlan: buildCurrentPlanPayload(planSummary),
+          followUpQuestion: question,
+        }),
+      })
+
+      const data = await response.json()
+
+      if (!response.ok || !data.success || !data.reply) {
+        throw new Error(data.error || 'AI 暂时无法继续完善方案')
+      }
+
+      setRefineRecords((records) => [
+        ...records,
+        {
+          id: `${Date.now()}`,
+          question,
+          reply: data.reply,
+        },
+      ])
+      setRefineQuestion('')
+    } catch (error) {
+      setRefineError(
+        error instanceof Error ? error.message : 'AI 暂时无法继续完善方案，请稍后再试。',
+      )
+    } finally {
+      setIsRefineLoading(false)
+    }
   }
 
   const selectMode = (mode) => {
@@ -482,8 +560,11 @@ function App() {
                     setSubmittedPlanQuery('')
                     setApiPlanSummary(null)
                     setPlanSource('local')
-                    setPlanApiError(false)
+                    setPlanApiError('')
                     setPlanCopyStatus('idle')
+                    setRefineQuestion('')
+                    setRefineRecords([])
+                    setRefineError('')
                   }}
                   onKeyDown={(event) => {
                     if (event.key === 'Enter') {
@@ -541,7 +622,7 @@ function App() {
               <div className="initial-plan-body">
                 <p>这是根据现有 AI 资讯整理出的初步方向，不是最终完整方案。</p>
                 {planApiError && (
-                  <p className="plan-api-warning">AI 接口暂时不可用，已展示本地匹配结果。</p>
+                  <p className="plan-api-warning">AI 暂时不可用：{planApiError}，已展示本地匹配结果。</p>
                 )}
                 <p>{planSummary.overview}</p>
                 <div className="plan-summary-grid">
@@ -626,19 +707,49 @@ function App() {
           <section className="coming-next next-refine-panel" aria-label="Next refine with AI">
             <div className="section-title">
               <span>
-                <strong>下一步：继续完善方案</strong>
-                <small>Next: Refine with AI</small>
+                <strong>继续完善方案</strong>
+                <small>Refine with AI</small>
               </span>
-              <span>即将开放</span>
+              <span>AI follow-up</span>
             </div>
             <div className="next-refine-body">
               <p>
-                未来你可以围绕当前初步方案继续和 AI 对话，让 AI 帮你细化主题、工具链、执行步骤、内容方向和输出形式。
+                你可以继续追问，让 AI 帮你细化执行步骤、视觉风格、发布平台或作品集呈现方式。
               </p>
-              <button type="button" disabled>
-                继续和 AI 完善方案
+              <label className="refine-field">
+                <span>继续追问</span>
+                <textarea
+                  value={refineQuestion}
+                  onChange={(event) => {
+                    setRefineQuestion(event.target.value)
+                    setRefineError('')
+                  }}
+                  placeholder="例如：我想把它做成小红书账号，怎么规划？"
+                  rows="3"
+                />
+              </label>
+              <button
+                className="refine-submit-button"
+                type="button"
+                onClick={refineCurrentPlan}
+                disabled={!refineQuestion.trim() || isRefineLoading}
+              >
+                {isRefineLoading ? 'AI 正在继续完善方案...' : '继续完善'}
               </button>
-              <span>即将开放</span>
+              {isRefineLoading && <p className="refine-status">AI 正在继续完善方案...</p>}
+              {refineError && <p className="plan-api-warning">{refineError}</p>}
+              {refineRecords.length > 0 && (
+                <div className="refine-records" aria-label="Refine history">
+                  {refineRecords.map((record) => (
+                    <article className="refine-record" key={record.id}>
+                      <strong>你问：</strong>
+                      <p>{record.question}</p>
+                      <strong>AI 补充：</strong>
+                      <p>{record.reply}</p>
+                    </article>
+                  ))}
+                </div>
+              )}
               <div className="post-plan-actions">
                 <strong>完善后可以做什么？</strong>
                 <p>这些能力将在后续版本开放。</p>
