@@ -235,6 +235,46 @@ function buildCurrentPlanPayload(summary) {
   }
 }
 
+function formatFinalPlanList(items, fallback = '暂无明确内容') {
+  return items?.length ? items.map((item) => `- ${item}`).join('\n') : `- ${fallback}`
+}
+
+function buildFinalPlanText(finalPlan) {
+  return [
+    `# ${finalPlan.title || '完整方案草稿'}`,
+    '',
+    '## 方案摘要',
+    finalPlan.summary || '暂无摘要',
+    '',
+    '## 项目目标',
+    finalPlan.target || '暂无项目目标',
+    '',
+    '## 核心概念',
+    finalPlan.concept || '暂无核心概念',
+    '',
+    '## 推荐工具',
+    formatFinalPlanList(finalPlan.tools),
+    '',
+    '## 内容结构',
+    formatFinalPlanList(finalPlan.content_structure),
+    '',
+    '## 执行步骤',
+    formatFinalPlanList(finalPlan.execution_steps),
+    '',
+    '## 视觉风格',
+    formatFinalPlanList(finalPlan.visual_style),
+    '',
+    '## 平台建议',
+    formatFinalPlanList(finalPlan.platform_suggestions),
+    '',
+    '## 作品集价值',
+    finalPlan.portfolio_value || '暂无说明',
+    '',
+    '## 下一步行动',
+    formatFinalPlanList(finalPlan.next_actions),
+  ].join('\n')
+}
+
 function getPlanSourceLabel(source) {
   if (source === 'ai') return 'AI 生成'
   if (source === 'ai-text') return 'AI 文本结果'
@@ -266,6 +306,10 @@ function App() {
   const [refineRecords, setRefineRecords] = useState([])
   const [isRefineLoading, setIsRefineLoading] = useState(false)
   const [refineError, setRefineError] = useState('')
+  const [finalPlan, setFinalPlan] = useState(null)
+  const [isFinalizingPlan, setIsFinalizingPlan] = useState(false)
+  const [finalPlanError, setFinalPlanError] = useState('')
+  const [finalPlanCopyStatus, setFinalPlanCopyStatus] = useState('idle')
   const todaysSignal = signals[0]
 
   const feedSignals = useMemo(
@@ -302,6 +346,9 @@ function App() {
     setRefineQuestion('')
     setRefineRecords([])
     setRefineError('')
+    setFinalPlan(null)
+    setFinalPlanError('')
+    setFinalPlanCopyStatus('idle')
 
     setIsPlanLoading(true)
 
@@ -410,6 +457,9 @@ function App() {
         },
       ])
       setRefineQuestion('')
+      setFinalPlan(null)
+      setFinalPlanError('')
+      setFinalPlanCopyStatus('idle')
     } catch (error) {
       setRefineError(
         error instanceof Error ? error.message : 'AI 暂时无法继续完善方案，请稍后再试。',
@@ -417,6 +467,63 @@ function App() {
     } finally {
       setIsRefineLoading(false)
     }
+  }
+
+  const finalizeCurrentPlan = async () => {
+    if (!planSummary) {
+      setFinalPlanError('请先生成初步方案。')
+      return
+    }
+
+    setIsFinalizingPlan(true)
+    setFinalPlanError('')
+    setFinalPlanCopyStatus('idle')
+
+    try {
+      const response = await fetch('/api/finalize-plan', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          query: submittedPlanQuery || planQuery,
+          currentPlan: buildCurrentPlanPayload(planSummary),
+          refineHistory: refineRecords.map((record) => ({
+            question: record.question,
+            answer: record.reply,
+          })),
+        }),
+      })
+
+      const data = await response.json()
+
+      if (!response.ok || !data.success || !data.finalPlan) {
+        throw new Error(data.error || 'AI 暂时无法生成完整方案草稿')
+      }
+
+      setFinalPlan(data.finalPlan)
+    } catch (error) {
+      setFinalPlanError(
+        error instanceof Error ? error.message : 'AI 暂时无法生成完整方案草稿，请稍后再试。',
+      )
+    } finally {
+      setIsFinalizingPlan(false)
+    }
+  }
+
+  const copyFinalPlan = async () => {
+    if (!finalPlan) return
+
+    try {
+      await navigator.clipboard.writeText(buildFinalPlanText(finalPlan))
+      setFinalPlanCopyStatus('copied')
+    } catch (error) {
+      setFinalPlanCopyStatus('failed')
+    }
+
+    window.setTimeout(() => {
+      setFinalPlanCopyStatus('idle')
+    }, 1500)
   }
 
   const selectMode = (mode) => {
@@ -565,6 +672,9 @@ function App() {
                     setRefineQuestion('')
                     setRefineRecords([])
                     setRefineError('')
+                    setFinalPlan(null)
+                    setFinalPlanError('')
+                    setFinalPlanCopyStatus('idle')
                   }}
                   onKeyDown={(event) => {
                     if (event.key === 'Enter') {
@@ -750,6 +860,107 @@ function App() {
                   ))}
                 </div>
               )}
+              <div className="finalize-panel" aria-label="Finalize plan draft">
+                <div className="finalize-header">
+                  <span>
+                    <strong>生成完整方案草稿</strong>
+                    <small>Finalize Plan Draft</small>
+                  </span>
+                </div>
+                <p>
+                  AI 会把初步方案和追问记录整理成一份更完整的方案草稿，方便后续保存、下载或导出。
+                </p>
+                <button
+                  className="finalize-button"
+                  type="button"
+                  onClick={finalizeCurrentPlan}
+                  disabled={isFinalizingPlan}
+                >
+                  {isFinalizingPlan ? 'AI 正在整理完整方案草稿...' : '生成完整方案草稿'}
+                </button>
+                {isFinalizingPlan && (
+                  <p className="refine-status">AI 正在整理完整方案草稿...</p>
+                )}
+                {finalPlanError && <p className="plan-api-warning">{finalPlanError}</p>}
+                {finalPlan && (
+                  <article className="final-plan-card">
+                    <h3>{finalPlan.title || '完整方案草稿'}</h3>
+                    <div className="final-plan-grid">
+                      <section>
+                        <strong>方案摘要</strong>
+                        <p>{finalPlan.summary || '暂无摘要'}</p>
+                      </section>
+                      <section>
+                        <strong>项目目标</strong>
+                        <p>{finalPlan.target || '暂无项目目标'}</p>
+                      </section>
+                      <section>
+                        <strong>核心概念</strong>
+                        <p>{finalPlan.concept || '暂无核心概念'}</p>
+                      </section>
+                      <section>
+                        <strong>推荐工具</strong>
+                        <ul>
+                          {(finalPlan.tools || []).map((item) => (
+                            <li key={item}>{item}</li>
+                          ))}
+                        </ul>
+                      </section>
+                      <section>
+                        <strong>内容结构</strong>
+                        <ul>
+                          {(finalPlan.content_structure || []).map((item) => (
+                            <li key={item}>{item}</li>
+                          ))}
+                        </ul>
+                      </section>
+                      <section>
+                        <strong>执行步骤</strong>
+                        <ul>
+                          {(finalPlan.execution_steps || []).map((item) => (
+                            <li key={item}>{item}</li>
+                          ))}
+                        </ul>
+                      </section>
+                      <section>
+                        <strong>视觉风格</strong>
+                        <ul>
+                          {(finalPlan.visual_style || []).map((item) => (
+                            <li key={item}>{item}</li>
+                          ))}
+                        </ul>
+                      </section>
+                      <section>
+                        <strong>平台建议</strong>
+                        <ul>
+                          {(finalPlan.platform_suggestions || []).map((item) => (
+                            <li key={item}>{item}</li>
+                          ))}
+                        </ul>
+                      </section>
+                      <section>
+                        <strong>作品集价值</strong>
+                        <p>{finalPlan.portfolio_value || '暂无说明'}</p>
+                      </section>
+                      <section>
+                        <strong>下一步行动</strong>
+                        <ul>
+                          {(finalPlan.next_actions || []).map((item) => (
+                            <li key={item}>{item}</li>
+                          ))}
+                        </ul>
+                      </section>
+                    </div>
+                    <button className="finalize-button" type="button" onClick={copyFinalPlan}>
+                      {finalPlanCopyStatus === 'copied'
+                        ? '已复制完整方案'
+                        : finalPlanCopyStatus === 'failed'
+                          ? '复制失败'
+                          : '复制完整方案草稿'}
+                    </button>
+                  </article>
+                )}
+              </div>
               <div className="post-plan-actions">
                 <strong>完善后可以做什么？</strong>
                 <p>这些能力将在后续版本开放。</p>
