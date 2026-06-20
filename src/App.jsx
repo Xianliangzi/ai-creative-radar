@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react'
+import React, { useMemo, useRef, useState } from 'react'
 import AboutSection from './components/AboutSection.jsx'
 import Header from './components/Header.jsx'
 import CategoryFilter from './components/CategoryFilter.jsx'
@@ -292,6 +292,7 @@ function findPlanMatches(query) {
 }
 
 function App() {
+  const finalPlanRef = useRef(null)
   const [activeMode, setActiveMode] = useState('news')
   const [activeCategory, setActiveCategory] = useState('All')
   const [selectedSignal, setSelectedSignal] = useState(null)
@@ -502,6 +503,12 @@ function App() {
       }
 
       setFinalPlan(data.finalPlan)
+      window.setTimeout(() => {
+        finalPlanRef.current?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start',
+        })
+      }, 0)
     } catch (error) {
       setFinalPlanError(
         error instanceof Error ? error.message : 'AI 暂时无法生成完整方案草稿，请稍后再试。',
@@ -883,7 +890,14 @@ function App() {
                 )}
                 {finalPlanError && <p className="plan-api-warning">{finalPlanError}</p>}
                 {finalPlan && (
-                  <article className="final-plan-card">
+                  <article className="final-plan-card" ref={finalPlanRef}>
+                    <div className="final-plan-card-head">
+                      <span className="final-plan-badge">
+                        完整方案草稿
+                        <small>Final Plan Draft</small>
+                      </span>
+                      <p>这份方案由初步方案和你的追问记录整理生成，当前可以复制，未来可保存到方案库或导出为文档。</p>
+                    </div>
                     <h3>{finalPlan.title || '完整方案草稿'}</h3>
                     <div className="final-plan-grid">
                       <section>
@@ -951,13 +965,34 @@ function App() {
                         </ul>
                       </section>
                     </div>
-                    <button className="finalize-button" type="button" onClick={copyFinalPlan}>
-                      {finalPlanCopyStatus === 'copied'
-                        ? '已复制完整方案'
-                        : finalPlanCopyStatus === 'failed'
-                          ? '复制失败'
-                          : '复制完整方案草稿'}
-                    </button>
+                    <div className="final-plan-actions" aria-label="Final plan next actions">
+                      <strong>下一步你可以做什么？</strong>
+                      <div>
+                        <button className="finalize-button" type="button" onClick={copyFinalPlan}>
+                          {finalPlanCopyStatus === 'copied'
+                            ? '已复制完整方案'
+                            : finalPlanCopyStatus === 'failed'
+                              ? '复制失败'
+                              : '复制完整方案草稿'}
+                        </button>
+                        <button type="button" disabled>
+                          保存到我的方案库
+                          <small>即将开放</small>
+                        </button>
+                        <button type="button" disabled>
+                          下载为文档
+                          <small>即将开放</small>
+                        </button>
+                        <button type="button" disabled>
+                          导出 PPT 大纲
+                          <small>即将开放</small>
+                        </button>
+                        <button type="button" disabled>
+                          生成思维导图
+                          <small>即将开放</small>
+                        </button>
+                      </div>
+                    </div>
                   </article>
                 )}
               </div>

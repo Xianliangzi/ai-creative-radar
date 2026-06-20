@@ -1844,6 +1844,36 @@ h1 {
     #1f3024;
 }
 
+.final-plan-card-head {
+  display: grid;
+  gap: 8px;
+  padding: 10px;
+  border: 1px solid rgba(143, 175, 138, 0.68);
+  background: rgba(5, 8, 5, 0.2);
+}
+
+.final-plan-card-head p {
+  margin: 0;
+  color: #dce8ca;
+  line-height: 1.7;
+}
+
+.final-plan-badge {
+  width: fit-content;
+  border: 1px solid #050805;
+  color: #050805;
+  background: #aec7aa;
+  padding: 6px 9px;
+  font-weight: 700;
+}
+
+.final-plan-badge small {
+  display: block;
+  margin-top: 2px;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+}
+
 .final-plan-card h3 {
   margin: 0;
   color: #e5f3d4;
@@ -1883,6 +1913,44 @@ h1 {
 .final-plan-grid ul {
   margin: 0;
   padding-left: 18px;
+}
+
+.final-plan-actions {
+  display: grid;
+  gap: 10px;
+  padding: 12px;
+  border: 1px solid rgba(143, 175, 138, 0.68);
+  background: rgba(5, 8, 5, 0.18);
+}
+
+.final-plan-actions > strong {
+  color: #e5f3d4;
+}
+
+.final-plan-actions > div {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.final-plan-actions button {
+  min-height: 48px;
+  border: 2px solid #6f876b;
+  padding: 8px;
+  font-family: inherit;
+}
+
+.final-plan-actions button:disabled {
+  color: #b8c9aa;
+  background: #243527;
+  cursor: not-allowed;
+}
+
+.final-plan-actions button small {
+  display: block;
+  margin-top: 3px;
+  font-size: 0.68rem;
+  text-transform: uppercase;
 }
 
 .next-refine-body > span {
@@ -2779,6 +2847,7 @@ h1 {
 
   .plan-summary-grid,
   .final-plan-grid,
+  .final-plan-actions > div,
   .future-grid,
   .consult-entry-grid,
   .library-body {
