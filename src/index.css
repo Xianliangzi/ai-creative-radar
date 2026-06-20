@@ -1675,6 +1675,12 @@ h1 {
     #2e4032;
 }
 
+.about-footer {
+  background:
+    linear-gradient(90deg, rgba(5, 8, 5, 0.12) 1px, transparent 1px) 0 0 / 34px 34px,
+    #243527;
+}
+
 .about-header {
   display: flex;
   justify-content: space-between;
@@ -1692,6 +1698,13 @@ h1 {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 16px;
   padding: 18px;
+}
+
+.about-footer-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+  gap: 14px;
+  padding: 14px;
 }
 
 .profile-card {
@@ -1781,6 +1794,11 @@ h1 {
   box-shadow: 6px 6px 0 rgba(5, 8, 5, 0.24);
 }
 
+.about-footer .about-card {
+  padding: 15px;
+  box-shadow: 4px 4px 0 rgba(5, 8, 5, 0.2);
+}
+
 .about-card-large,
 .author-note {
   grid-column: 1 / -1;
@@ -1818,6 +1836,10 @@ h1 {
 .about-card li {
   color: #e5f3d4;
   line-height: 1.86;
+}
+
+.about-footer .about-card p {
+  line-height: 1.72;
 }
 
 .about-visual {
@@ -1918,6 +1940,10 @@ h1 {
     rgba(5, 8, 5, 0.16);
 }
 
+.footer-feedback {
+  margin: 0;
+}
+
 .feedback-box p:not(.about-label) {
   margin-bottom: 12px;
 }
@@ -1928,6 +1954,15 @@ h1 {
   color: #dce8ca;
   background: rgba(5, 8, 5, 0.18);
   overflow-wrap: anywhere;
+}
+
+.author-line {
+  margin: 0;
+  padding: 10px 14px 13px;
+  border-top: 1px solid rgba(143, 175, 138, 0.65);
+  color: #b8c9aa;
+  font-size: 0.82rem;
+  line-height: 1.5;
 }
 
 .feedback-actions {
@@ -2176,6 +2211,12 @@ h1 {
     gap: 12px;
   }
 
+  .about-footer-grid {
+    grid-template-columns: 1fr;
+    padding: 12px;
+    gap: 12px;
+  }
+
   .about-card,
   .profile-card {
     box-shadow: 4px 4px 0 rgba(5, 8, 5, 0.24);
@@ -2391,7 +2432,8 @@ h1 {
   }
 
   .profile-body,
-  .about-grid {
+  .about-grid,
+  .about-footer-grid {
     padding: 10px;
   }
 
