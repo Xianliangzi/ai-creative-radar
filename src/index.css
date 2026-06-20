@@ -1995,9 +1995,125 @@ h1 {
 
 .library-body {
   display: grid;
-  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  grid-template-columns: 1fr;
   gap: 12px;
   padding: 14px;
+}
+
+.library-note-card,
+.saved-plan-card {
+  min-width: 0;
+  padding: 13px;
+  border: 1px solid rgba(143, 175, 138, 0.68);
+  background: rgba(5, 8, 5, 0.2);
+}
+
+.library-note-card h3,
+.saved-plan-card h3 {
+  margin: 0;
+  color: #e5f3d4;
+}
+
+.library-note-card p,
+.saved-plan-card p {
+  color: #dce8ca;
+  line-height: 1.65;
+}
+
+.library-note-card p {
+  margin-bottom: 0;
+}
+
+.saved-plan-list {
+  display: grid;
+  gap: 12px;
+}
+
+.saved-plan-card {
+  display: grid;
+  gap: 12px;
+  box-shadow: 5px 5px 0 rgba(5, 8, 5, 0.24);
+}
+
+.saved-plan-card-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  border-bottom: 1px solid rgba(143, 175, 138, 0.45);
+  padding-bottom: 9px;
+}
+
+.saved-plan-card-head span,
+.saved-plan-card-head time {
+  display: grid;
+  gap: 3px;
+}
+
+.saved-plan-card-head small,
+.saved-plan-card-head time,
+.saved-plan-query {
+  color: #b8c9aa;
+  font-size: 0.78rem;
+}
+
+.saved-plan-card-head strong {
+  color: #e5f3d4;
+  font-size: 1.05rem;
+}
+
+.saved-plan-query,
+.saved-plan-summary {
+  margin: 0;
+}
+
+.saved-plan-tools,
+.saved-plan-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.saved-plan-tools span {
+  padding: 5px 8px;
+  border: 1px solid rgba(143, 175, 138, 0.72);
+  color: #050805;
+  background: #aec7aa;
+  font-size: 0.76rem;
+}
+
+.saved-plan-actions {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.saved-plan-actions button {
+  min-height: 42px;
+  border: 2px solid #6f876b;
+  color: #050805;
+  background: #aec7aa;
+  padding: 8px;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.saved-plan-actions button:hover,
+.saved-plan-actions button:focus-visible {
+  border-color: #050805;
+  background: #7cff9b;
+  outline: none;
+}
+
+.saved-plan-actions .danger-button {
+  color: #e5f3d4;
+  background: #243527;
+}
+
+.saved-plan-detail {
+  display: grid;
+  gap: 12px;
+  padding: 12px;
+  border: 1px solid rgba(143, 175, 138, 0.55);
+  background: rgba(36, 53, 39, 0.78);
 }
 
 .library-feature-list {
@@ -2848,6 +2964,7 @@ h1 {
   .plan-summary-grid,
   .final-plan-grid,
   .final-plan-actions > div,
+  .saved-plan-actions,
   .future-grid,
   .consult-entry-grid,
   .library-body {

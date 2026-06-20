@@ -21,12 +21,12 @@ const categories = [
 
 const planKeywords = ['数字人', 'AI 视频', '作品集', '海报', '小红书 AI 账号', '虚拟人', 'Midjourney', 'Runway']
 
-const postPlanActions = ['生成完整方案文档', '保存到我的方案库', '下载为文档', '导出 PPT 大纲', '生成思维导图']
+const savedPlanStorageKey = 'ai-creative-radar-plans'
+
+const postPlanActions = ['登录云端同步', '导出 PPT 大纲', '生成思维导图']
 
 const libraryFeatures = [
-  '查询历史方案',
-  '继续编辑方案',
-  '下载方案文档',
+  '登录云端同步',
   '导出 PPT 大纲',
   '生成思维导图',
 ]
@@ -243,14 +243,25 @@ function sanitizeFilename(filename) {
   return filename.replace(/[\\/:*?"<>|]/g, '').replace(/\s+/g, ' ').trim()
 }
 
-function buildFinalPlanText(finalPlan, query = '') {
-  const createdAt = new Date().toLocaleDateString('zh-CN')
+function formatSavedPlanDate(createdAt, options = {}) {
+  const date = createdAt ? new Date(createdAt) : new Date()
+  if (Number.isNaN(date.getTime())) return '未知时间'
+
+  return date.toLocaleString('zh-CN', options)
+}
+
+function buildFinalPlanText(finalPlan, query = '', createdAt = new Date().toISOString()) {
+  const displayDate = formatSavedPlanDate(createdAt, {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  })
 
   return [
     `# ${finalPlan.title || '完整方案草稿'}`,
     '',
     `> 原始创意目标：${query || '未填写'}`,
-    `> 生成时间：${createdAt}`,
+    `> 生成时间：${displayDate}`,
     '',
     '## 方案摘要',
     finalPlan.summary || '暂无摘要',
@@ -282,6 +293,41 @@ function buildFinalPlanText(finalPlan, query = '') {
     '## 下一步行动',
     formatFinalPlanList(finalPlan.next_actions),
   ].join('\n')
+}
+
+function getFinalPlanFilename(finalPlan) {
+  const safeTitle = sanitizeFilename(finalPlan?.title || 'AI-Creative-Radar-方案草稿')
+  return `${safeTitle || 'AI-Creative-Radar-方案草稿'}.md`
+}
+
+function downloadMarkdownPlan(finalPlan, query = '', createdAt) {
+  const markdownContent = buildFinalPlanText(finalPlan, query, createdAt)
+  const blob = new Blob([markdownContent], { type: 'text/markdown;charset=utf-8' })
+  const url = URL.createObjectURL(blob)
+  const link = document.createElement('a')
+
+  link.href = url
+  link.download = getFinalPlanFilename(finalPlan)
+  document.body.appendChild(link)
+  link.click()
+  link.remove()
+  URL.revokeObjectURL(url)
+}
+
+function loadSavedPlans() {
+  if (typeof window === 'undefined') return []
+
+  try {
+    const rawPlans = window.localStorage.getItem(savedPlanStorageKey)
+    const parsedPlans = rawPlans ? JSON.parse(rawPlans) : []
+    return Array.isArray(parsedPlans) ? parsedPlans : []
+  } catch (error) {
+    return []
+  }
+}
+
+function persistSavedPlans(plans) {
+  window.localStorage.setItem(savedPlanStorageKey, JSON.stringify(plans))
 }
 
 function getPlanSourceLabel(source) {
@@ -321,6 +367,10 @@ function App() {
   const [finalPlanError, setFinalPlanError] = useState('')
   const [finalPlanCopyStatus, setFinalPlanCopyStatus] = useState('idle')
   const [finalPlanDownloadStatus, setFinalPlanDownloadStatus] = useState('idle')
+  const [savePlanStatus, setSavePlanStatus] = useState('idle')
+  const [savedPlans, setSavedPlans] = useState(loadSavedPlans)
+  const [selectedSavedPlanId, setSelectedSavedPlanId] = useState('')
+  const [savedPlanCopyStatus, setSavedPlanCopyStatus] = useState('')
   const todaysSignal = signals[0]
 
   const feedSignals = useMemo(
@@ -361,6 +411,7 @@ function App() {
     setFinalPlanError('')
     setFinalPlanCopyStatus('idle')
     setFinalPlanDownloadStatus('idle')
+    setSavePlanStatus('idle')
 
     setIsPlanLoading(true)
 
@@ -473,6 +524,7 @@ function App() {
       setFinalPlanError('')
       setFinalPlanCopyStatus('idle')
       setFinalPlanDownloadStatus('idle')
+      setSavePlanStatus('idle')
     } catch (error) {
       setRefineError(
         error instanceof Error ? error.message : 'AI 暂时无法继续完善方案，请稍后再试。',
@@ -492,6 +544,7 @@ function App() {
     setFinalPlanError('')
     setFinalPlanCopyStatus('idle')
     setFinalPlanDownloadStatus('idle')
+    setSavePlanStatus('idle')
 
     try {
       const response = await fetch('/api/finalize-plan', {
@@ -549,24 +602,72 @@ function App() {
   const downloadFinalPlan = () => {
     if (!finalPlan) return
 
-    const markdownContent = buildFinalPlanText(finalPlan, submittedPlanQuery || planQuery)
-    const safeTitle = sanitizeFilename(finalPlan.title || 'AI-Creative-Radar-方案草稿')
-    const filename = `${safeTitle || 'AI-Creative-Radar-方案草稿'}.md`
-    const blob = new Blob([markdownContent], { type: 'text/markdown;charset=utf-8' })
-    const url = URL.createObjectURL(blob)
-    const link = document.createElement('a')
-
-    link.href = url
-    link.download = filename
-    document.body.appendChild(link)
-    link.click()
-    link.remove()
-    URL.revokeObjectURL(url)
+    downloadMarkdownPlan(finalPlan, submittedPlanQuery || planQuery)
 
     setFinalPlanDownloadStatus('downloaded')
     window.setTimeout(() => {
       setFinalPlanDownloadStatus('idle')
     }, 1500)
+  }
+
+  const saveFinalPlanToLibrary = () => {
+    if (!finalPlan) return
+
+    const savedPlan = {
+      id: `plan-${Date.now()}`,
+      title: finalPlan.title || '完整方案草稿',
+      query: submittedPlanQuery || planQuery,
+      createdAt: new Date().toISOString(),
+      finalPlan,
+    }
+
+    setSavedPlans((plans) => {
+      const nextPlans = [savedPlan, ...plans]
+      persistSavedPlans(nextPlans)
+      return nextPlans
+    })
+    setSelectedSavedPlanId(savedPlan.id)
+    setSavePlanStatus('saved')
+    window.setTimeout(() => {
+      setSavePlanStatus('idle')
+    }, 1500)
+  }
+
+  const toggleSavedPlanDetail = (planId) => {
+    setSelectedSavedPlanId((currentId) => (currentId === planId ? '' : planId))
+  }
+
+  const copySavedPlan = async (savedPlan) => {
+    try {
+      await navigator.clipboard.writeText(
+        buildFinalPlanText(savedPlan.finalPlan, savedPlan.query, savedPlan.createdAt),
+      )
+      setSavedPlanCopyStatus(savedPlan.id)
+    } catch (error) {
+      setSavedPlanCopyStatus(`failed-${savedPlan.id}`)
+    }
+
+    window.setTimeout(() => {
+      setSavedPlanCopyStatus('')
+    }, 1500)
+  }
+
+  const downloadSavedPlan = (savedPlan) => {
+    downloadMarkdownPlan(savedPlan.finalPlan, savedPlan.query, savedPlan.createdAt)
+  }
+
+  const deleteSavedPlan = (planId) => {
+    if (!window.confirm('确定要删除这个方案吗？')) return
+
+    setSavedPlans((plans) => {
+      const nextPlans = plans.filter((plan) => plan.id !== planId)
+      persistSavedPlans(nextPlans)
+      return nextPlans
+    })
+
+    if (selectedSavedPlanId === planId) {
+      setSelectedSavedPlanId('')
+    }
   }
 
   const selectMode = (mode) => {
@@ -719,6 +820,7 @@ function App() {
                     setFinalPlanError('')
                     setFinalPlanCopyStatus('idle')
                     setFinalPlanDownloadStatus('idle')
+                    setSavePlanStatus('idle')
                   }}
                   onKeyDown={(event) => {
                     if (event.key === 'Enter') {
@@ -1012,9 +1114,8 @@ function App() {
                               ? '复制失败'
                               : '复制完整方案草稿'}
                         </button>
-                        <button type="button" disabled>
-                          保存到我的方案库
-                          <small>即将开放</small>
+                        <button className="finalize-button" type="button" onClick={saveFinalPlanToLibrary}>
+                          {savePlanStatus === 'saved' ? '已保存到方案库' : '保存到我的方案库'}
                         </button>
                         <button className="finalize-button" type="button" onClick={downloadFinalPlan}>
                           {finalPlanDownloadStatus === 'downloaded' ? '已生成下载' : '下载为 Markdown 文档'}
@@ -1081,16 +1182,134 @@ function App() {
               <strong id="plan-library-title">我的方案库</strong>
               <small>My Plan Library</small>
             </span>
-            <span>即将开放</span>
+            <span>{savedPlans.length} 个本地方案</span>
           </div>
           <div className="library-body">
-            <article className="library-status-card">
-              <h3>历史方案查询即将开放</h3>
-              <p>这里未来会保存你通过 AI 咨询整理出的完整方案。你可以在这里查询历史方案、继续编辑、下载或导出。</p>
+            <article className="library-note-card">
+              <h3>本地保存原型</h3>
+              <p>当前为本地保存原型，方案只保存在当前浏览器中。未来版本将支持登录后云端保存。</p>
             </article>
+            {savedPlans.length > 0 ? (
+              <div className="saved-plan-list" aria-label="Saved plans">
+                {savedPlans.map((savedPlan) => (
+                  <article className="saved-plan-card" key={savedPlan.id}>
+                    <div className="saved-plan-card-head">
+                      <span>
+                        <small>Saved Plan</small>
+                        <strong>{savedPlan.title || '完整方案草稿'}</strong>
+                      </span>
+                      <time dateTime={savedPlan.createdAt}>
+                        {formatSavedPlanDate(savedPlan.createdAt)}
+                      </time>
+                    </div>
+                    <p className="saved-plan-query">原始创意目标：{savedPlan.query || '未填写'}</p>
+                    <p className="saved-plan-summary">{savedPlan.finalPlan?.summary || '暂无方案摘要'}</p>
+                    <div className="saved-plan-tools">
+                      {(savedPlan.finalPlan?.tools?.length ? savedPlan.finalPlan.tools : ['暂无明确工具']).map((tool) => (
+                        <span key={tool}>{tool}</span>
+                      ))}
+                    </div>
+                    <div className="saved-plan-actions">
+                      <button type="button" onClick={() => toggleSavedPlanDetail(savedPlan.id)}>
+                        {selectedSavedPlanId === savedPlan.id ? '收起方案' : '查看方案'}
+                      </button>
+                      <button type="button" onClick={() => copySavedPlan(savedPlan)}>
+                        {savedPlanCopyStatus === savedPlan.id
+                          ? '已复制方案'
+                          : savedPlanCopyStatus === `failed-${savedPlan.id}`
+                            ? '复制失败'
+                            : '复制方案'}
+                      </button>
+                      <button type="button" onClick={() => downloadSavedPlan(savedPlan)}>
+                        下载 Markdown
+                      </button>
+                      <button type="button" className="danger-button" onClick={() => deleteSavedPlan(savedPlan.id)}>
+                        删除
+                      </button>
+                    </div>
+                    {selectedSavedPlanId === savedPlan.id && (
+                      <div className="saved-plan-detail">
+                        <h3>{savedPlan.finalPlan?.title || '完整方案草稿'}</h3>
+                        <div className="final-plan-grid">
+                          <section>
+                            <strong>方案摘要</strong>
+                            <p>{savedPlan.finalPlan?.summary || '暂无摘要'}</p>
+                          </section>
+                          <section>
+                            <strong>项目目标</strong>
+                            <p>{savedPlan.finalPlan?.target || '暂无项目目标'}</p>
+                          </section>
+                          <section>
+                            <strong>核心概念</strong>
+                            <p>{savedPlan.finalPlan?.concept || '暂无核心概念'}</p>
+                          </section>
+                          <section>
+                            <strong>推荐工具</strong>
+                            <ul>
+                              {(savedPlan.finalPlan?.tools || []).map((item) => (
+                                <li key={item}>{item}</li>
+                              ))}
+                            </ul>
+                          </section>
+                          <section>
+                            <strong>内容结构</strong>
+                            <ul>
+                              {(savedPlan.finalPlan?.content_structure || []).map((item) => (
+                                <li key={item}>{item}</li>
+                              ))}
+                            </ul>
+                          </section>
+                          <section>
+                            <strong>执行步骤</strong>
+                            <ul>
+                              {(savedPlan.finalPlan?.execution_steps || []).map((item) => (
+                                <li key={item}>{item}</li>
+                              ))}
+                            </ul>
+                          </section>
+                          <section>
+                            <strong>视觉风格</strong>
+                            <ul>
+                              {(savedPlan.finalPlan?.visual_style || []).map((item) => (
+                                <li key={item}>{item}</li>
+                              ))}
+                            </ul>
+                          </section>
+                          <section>
+                            <strong>平台建议</strong>
+                            <ul>
+                              {(savedPlan.finalPlan?.platform_suggestions || []).map((item) => (
+                                <li key={item}>{item}</li>
+                              ))}
+                            </ul>
+                          </section>
+                          <section>
+                            <strong>作品集价值</strong>
+                            <p>{savedPlan.finalPlan?.portfolio_value || '暂无说明'}</p>
+                          </section>
+                          <section>
+                            <strong>下一步行动</strong>
+                            <ul>
+                              {(savedPlan.finalPlan?.next_actions || []).map((item) => (
+                                <li key={item}>{item}</li>
+                              ))}
+                            </ul>
+                          </section>
+                        </div>
+                      </div>
+                    )}
+                  </article>
+                ))}
+              </div>
+            ) : (
+              <article className="library-status-card">
+                <h3>暂无保存方案</h3>
+                <p>你还没有保存方案。生成完整方案草稿后，可以保存到这里。</p>
+              </article>
+            )}
             <div className="library-feature-list">
               {libraryFeatures.map((feature) => (
-                <span key={feature}>{feature}</span>
+                <span key={feature}>{feature} / 即将开放</span>
               ))}
             </div>
           </div>
