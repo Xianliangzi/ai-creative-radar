@@ -3,22 +3,21 @@ import React from 'react'
 const guideSteps = [
   {
     number: '01',
-    title: '看 AI 情报',
-    label: 'Browse',
-    description: '浏览 AI 工具、创意案例、趋势观察和商业玩法。',
+    title: '看资讯',
+    label: 'News Feed',
+    description: '浏览 AI 工具、案例、趋势和商业玩法。',
   },
   {
     number: '02',
-    title: '搜索创意方案',
-    label: 'Search',
-    description:
-      '输入 AI 视频、作品集、海报、虚拟人等关键词，找到相关工具、案例、Prompt 灵感和商业玩法。',
+    title: '做方案',
+    label: 'Plan Assistant',
+    description: '输入你的创意方向，获得工具、案例、Prompt 和落地建议。',
   },
   {
     number: '03',
-    title: '打开详情并复制',
-    label: 'Open & Copy',
-    description: '查看来源链接、项目灵感和 Prompt 方向，也可以复制链接或情报数据。',
+    title: '存方案',
+    label: 'Plan Library',
+    description: '未来可保存完整方案，并导出为文档或 PPT 大纲。',
   },
 ]
 
@@ -30,7 +29,7 @@ function QuickGuide() {
           <strong id="quick-guide-title">快速使用</strong>
           <small>Quick Guide</small>
         </span>
-        <span>front desk</span>
+        <span>3 modules</span>
       </div>
 
       <div className="guide-body compact">
@@ -46,11 +45,6 @@ function QuickGuide() {
             </article>
           ))}
         </div>
-
-        <p className="confidence-strip">
-          <strong>可信度：</strong>
-          HIGH：官方来源｜MEDIUM：整理转译｜LOW：未来实验内容
-        </p>
       </div>
     </section>
   )

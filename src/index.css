@@ -310,6 +310,10 @@ h1 {
   margin: 20px 0 18px;
 }
 
+.primary-actions.three-actions {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
 .primary-action-card {
   display: grid;
   gap: 7px;
@@ -344,6 +348,12 @@ h1 {
   color: #243527;
   font-size: 0.86rem;
   line-height: 1.55;
+}
+
+.primary-action-card.secondary-action {
+  background:
+    linear-gradient(135deg, rgba(174, 199, 170, 0.2), transparent 55%),
+    #9bb89c;
 }
 
 .hero-status-grid {
@@ -768,6 +778,9 @@ h1 {
 .generator-panel,
 .quick-guide,
 .matched-plan,
+.plan-consult,
+.feed-section,
+.plan-library,
 .search-panel {
   margin: 18px;
   border: 2px solid #8faf8a;
@@ -1345,6 +1358,137 @@ h1 {
 
 .matched-plan-body strong {
   color: #e5f3d4;
+}
+
+.plan-consult,
+.feed-section,
+.plan-library {
+  overflow: hidden;
+}
+
+.plan-consult {
+  background:
+    linear-gradient(90deg, rgba(5, 8, 5, 0.14) 1px, transparent 1px) 0 0 / 24px 24px,
+    #2e4032;
+}
+
+.initial-plan,
+.coming-next {
+  margin: 14px;
+  border: 2px solid #6f876b;
+  background: #1f3024;
+}
+
+.initial-plan-body {
+  display: grid;
+  gap: 12px;
+  padding: 14px;
+}
+
+.initial-plan-body > p,
+.feed-description {
+  margin: 0;
+  color: #dce8ca;
+  font-size: 0.92rem;
+  line-height: 1.7;
+}
+
+.plan-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.plan-summary-grid > div,
+.future-card,
+.library-status-card {
+  min-width: 0;
+  padding: 13px;
+  border: 1px solid rgba(143, 175, 138, 0.68);
+  background: rgba(5, 8, 5, 0.2);
+}
+
+.plan-summary-grid strong,
+.future-card h3,
+.library-status-card h3 {
+  color: #e5f3d4;
+}
+
+.plan-summary-grid p,
+.plan-summary-grid li,
+.future-card p,
+.library-status-card p {
+  color: #dce8ca;
+  line-height: 1.65;
+}
+
+.plan-summary-grid p,
+.future-card p,
+.library-status-card p {
+  margin-bottom: 0;
+}
+
+.plan-summary-grid ul {
+  margin: 8px 0 0;
+  padding-left: 18px;
+}
+
+.future-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  padding: 14px;
+}
+
+.future-card small {
+  color: #b8c9aa;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+}
+
+.future-card button {
+  width: 100%;
+  margin: 12px 0 8px;
+  padding: 10px;
+  border: 2px solid #6f876b;
+  color: #b8c9aa;
+  background: #243527;
+  cursor: not-allowed;
+}
+
+.future-card > span {
+  color: #b8c9aa;
+  font-size: 0.78rem;
+}
+
+.feed-description {
+  padding: 13px 14px 0;
+}
+
+.feed-section .category-console {
+  margin-top: 14px;
+}
+
+.library-body {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: 12px;
+  padding: 14px;
+}
+
+.library-feature-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-content: start;
+}
+
+.library-feature-list span {
+  padding: 7px 9px;
+  border: 1px solid #6f876b;
+  color: #050805;
+  background: #aec7aa;
+  font-size: 0.82rem;
 }
 
 .search-result-status {
@@ -2130,6 +2274,7 @@ h1 {
 
   .hero-status-grid,
   .primary-actions,
+  .primary-actions.three-actions,
   .todays-content {
     grid-template-columns: 1fr;
   }
@@ -2152,6 +2297,9 @@ h1 {
   .generator-panel,
   .quick-guide,
   .matched-plan,
+  .plan-consult,
+  .feed-section,
+  .plan-library,
   .search-panel,
   .about-section {
     margin-right: 14px;
@@ -2168,6 +2316,12 @@ h1 {
   }
 
   .guide-info-row {
+    grid-template-columns: 1fr;
+  }
+
+  .plan-summary-grid,
+  .future-grid,
+  .library-body {
     grid-template-columns: 1fr;
   }
 
@@ -2390,6 +2544,9 @@ h1 {
   .generator-panel,
   .quick-guide,
   .matched-plan,
+  .plan-consult,
+  .feed-section,
+  .plan-library,
   .search-panel,
   .about-section {
     margin-right: 8px;
@@ -2422,9 +2579,17 @@ h1 {
 
   .generator-body,
   .guide-body,
+  .initial-plan-body,
+  .future-grid,
+  .library-body,
   .draft-content,
   .draft-empty {
     padding: 10px;
+  }
+
+  .initial-plan,
+  .coming-next {
+    margin: 10px;
   }
 
   .guide-steps {

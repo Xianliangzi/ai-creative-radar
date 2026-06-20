@@ -19,6 +19,38 @@ const categories = [
   '前沿观察',
 ]
 
+const planKeywords = ['数字人', 'AI 视频', '作品集', '海报', '小红书 AI 账号', '虚拟人', 'Midjourney', 'Runway']
+
+const futureAbilities = [
+  {
+    title: '继续和 AI 聊',
+    label: 'Chat Next',
+    description: '围绕当前方案继续追问，让 AI 帮你细化主题、工具、执行步骤和内容方向。',
+    button: '继续完善方案',
+  },
+  {
+    title: '生成完整方案文档',
+    label: 'Plan Document',
+    description: '把对话内容整理成完整方案，可包含文字方案、执行步骤、结构图、PPT 大纲或思维导图。',
+    button: '生成方案文档',
+  },
+  {
+    title: '保存到我的方案库',
+    label: 'Save Plan',
+    description: '登录后可以保存方案卡片，之后继续编辑、下载或导出。',
+    button: '保存到方案库',
+  },
+]
+
+const libraryFeatures = [
+  '保存方案卡片',
+  '继续编辑方案',
+  '下载方案文档',
+  '导出 PPT 大纲',
+  '生成思维导图',
+  '管理历史方案',
+]
+
 const searchableFields = [
   'title',
   'signal',
@@ -33,8 +65,6 @@ const searchableFields = [
   'source',
   'visual_tag',
 ]
-
-const quickKeywords = ['AI 视频', '作品集', '海报', '虚拟人', 'Midjourney', 'Runway', 'Prompt', '商业玩法']
 
 function getSearchText(signal) {
   return searchableFields
@@ -51,55 +81,55 @@ function uniqueItems(items) {
   return [...new Set(items.filter(Boolean))]
 }
 
-function truncateText(text, maxLength = 32) {
+function truncateText(text, maxLength = 42) {
   if (!text) return ''
   return text.length > maxLength ? `${text.slice(0, maxLength)}...` : text
 }
 
-function buildMatchedPlanSummary(results) {
-  const relatedTools = uniqueItems(results.flatMap((signal) => signal.tools || [])).slice(0, 6)
-  const relatedDirections = uniqueItems(
-    results.flatMap((signal) => [signal.category, ...(signal.visual_tag || [])]),
-  ).slice(0, 8)
-  const projectIdeas = results
-    .flatMap((signal) => signal.project_ideas || [])
-    .map((idea) => truncateText(idea, 28))
-    .slice(0, 3)
-  const promptHints = results
-    .map((signal) => signal.prompt_hint)
-    .filter(Boolean)
-    .map((hint) => truncateText(hint, 54))
-    .slice(0, 2)
-
+function buildPlanSummary(results) {
   return {
-    relatedTools,
-    relatedDirections,
-    projectIdeas,
-    promptHints,
+    tools: uniqueItems(results.flatMap((signal) => signal.tools || [])).slice(0, 7),
+    titles: results.map((signal) => signal.title).slice(0, 4),
+    ideas: results
+      .flatMap((signal) => signal.project_ideas || [])
+      .map((idea) => truncateText(idea, 40))
+      .slice(0, 3),
+    prompts: results
+      .map((signal) => signal.prompt_hint)
+      .filter(Boolean)
+      .map((hint) => truncateText(hint, 62))
+      .slice(0, 2),
+    business: results
+      .map((signal) => signal.business_potential)
+      .filter(Boolean)
+      .map((item) => truncateText(item, 54))
+      .slice(0, 2),
   }
 }
 
 function App() {
   const [activeCategory, setActiveCategory] = useState('All')
   const [selectedSignal, setSelectedSignal] = useState(null)
-  const [searchQuery, setSearchQuery] = useState('')
+  const [planQuery, setPlanQuery] = useState('')
   const todaysSignal = signals[0]
 
-  const filteredSignals = useMemo(() => {
-    const normalizedQuery = searchQuery.trim().toLowerCase()
+  const feedSignals = useMemo(
+    () =>
+      signals.filter((signal) => activeCategory === 'All' || signal.category === activeCategory),
+    [activeCategory],
+  )
 
-    return signals.filter((signal) => {
-      const matchesCategory = activeCategory === 'All' || signal.category === activeCategory
-      const matchesSearch = !normalizedQuery || getSearchText(signal).includes(normalizedQuery)
+  const planResults = useMemo(() => {
+    const normalizedQuery = planQuery.trim().toLowerCase()
+    if (!normalizedQuery) return []
 
-      return matchesCategory && matchesSearch
-    })
-  }, [activeCategory, searchQuery])
+    return signals.filter((signal) => getSearchText(signal).includes(normalizedQuery))
+  }, [planQuery])
 
-  const hasSearchQuery = searchQuery.trim().length > 0
-  const matchedPlanSummary = useMemo(
-    () => (hasSearchQuery ? buildMatchedPlanSummary(filteredSignals) : null),
-    [filteredSignals, hasSearchQuery],
+  const hasPlanQuery = planQuery.trim().length > 0
+  const planSummary = useMemo(
+    () => (hasPlanQuery && planResults.length > 0 ? buildPlanSummary(planResults) : null),
+    [hasPlanQuery, planResults],
   )
 
   return (
@@ -110,29 +140,28 @@ function App() {
 
         <div className="hero-panel">
           <div className="hero-copy">
-            <p className="eyebrow">每日 AI 创意情报 / daily creative signals</p>
+            <p className="eyebrow">AI 创意情报与方案工具 / creative radar</p>
             <h1>AI Creative Radar</h1>
-            <p className="subtitle">给视觉创作者看的 AI 灵感雷达</p>
+            <p className="subtitle">一个面向视觉创作者的 AI 创意情报与方案工具</p>
             <p className="intro-copy">
-              收集 AI 视觉工具、创意案例和小商业玩法，把信息转译成可以动手尝试的 creative signals。
+              浏览最新 AI 工具、案例和趋势；输入你的创意方向，获得工具推荐、案例参考、Prompt 灵感和可落地方案。
             </p>
-            <div className="primary-actions" aria-label="Primary actions">
-              <a href="#signals" className="primary-action-card">
-                <small>Browse AI Signals</small>
-                <strong>看最新 AI 情报</strong>
-                <span>浏览 AI 工具、创意案例、趋势观察和商业玩法。</span>
+            <div className="primary-actions three-actions" aria-label="Primary actions">
+              <a href="#news-feed" className="primary-action-card">
+                <small>AI News Feed</small>
+                <strong>看 AI 资讯</strong>
+                <span>浏览最新 AI 工具、创意案例、趋势观察和商业玩法。</span>
               </a>
-              <a href="#search" className="primary-action-card">
-                <small>Search Creative Ideas</small>
-                <strong>搜索创意方案</strong>
-                <span>输入 AI 视频、作品集、海报、虚拟人等关键词，找到相关工具、案例和 Prompt 灵感。</span>
+              <a href="#plan-consult" className="primary-action-card">
+                <small>Creative Plan Assistant</small>
+                <strong>做创意方案</strong>
+                <span>输入方向，获得工具、案例、Prompt 灵感和下一步建议。</span>
               </a>
-            </div>
-            <div className="quick-links" aria-label="Quick links">
-              <button type="button">工具 / Tools</button>
-              <button type="button">案例 / Cases</button>
-              <button type="button">Prompt</button>
-              <button type="button">商业 / Business</button>
+              <a href="#plan-library" className="primary-action-card secondary-action">
+                <small>My Plan Library</small>
+                <strong>我的方案库</strong>
+                <span>即将开放：保存、继续编辑和导出完整方案。</span>
+              </a>
             </div>
             <div className="hero-status-grid" aria-label="Radar status">
               <span>在线更新 / Online</span>
@@ -140,10 +169,9 @@ function App() {
               <span>最近扫描 {todaysSignal.date}</span>
             </div>
             <div className="personal-file-strip" aria-label="Personal project notes">
-              <span>贤整理 / curated by Xian</span>
-              <span>个人 AI 视觉档案</span>
-              <span>学生项目 / 非商业实验</span>
-              <span>给正在学习 AI 的创作者</span>
+              <span>AI 资讯流</span>
+              <span>AI 创意方案咨询</span>
+              <span>我的方案库 / 即将开放</span>
             </div>
           </div>
           <div className="visual-panel" aria-label="Visual archive placeholder">
@@ -154,12 +182,12 @@ function App() {
               </div>
               <SignalImage signal={todaysSignal} variant="hero" label="CREATIVE FEED" />
               <div className="archive-stamps" aria-hidden="true">
-                <span>ARch</span>
-                <span>Acrid</span>
-                <span>RETRO</span>
+                <span>NEWS</span>
+                <span>PLAN</span>
+                <span>LIB</span>
               </div>
               <strong>VISUAL ARCHIVE</strong>
-              <small>SIGNAL IMAGE / {todaysSignal.date}</small>
+              <small>AI SIGNALS / CREATIVE PLANS</small>
             </div>
           </div>
         </div>
@@ -168,103 +196,172 @@ function App() {
 
         <QuickGuide />
 
-        <section className="search-panel" id="search" aria-label="Search creative signals">
+        <section className="plan-consult" id="plan-consult" aria-labelledby="plan-consult-title">
           <div className="section-title">
             <span>
-              <strong>搜索创意方案</strong>
-              <small>Search Creative Ideas</small>
+              <strong id="plan-consult-title">AI 创意方案咨询</strong>
+              <small>Creative Plan Assistant</small>
             </span>
-            <span>{searchQuery ? '正在搜索' : '等待输入'}</span>
+            <span>local match</span>
           </div>
           <p className="search-description">
-            输入你想做的方向，系统会从现有 AI 情报中匹配相关工具、案例、Prompt 灵感和商业玩法。
+            输入你想做的方向，系统会基于已有 AI 资讯，为你整理工具、案例、Prompt 灵感、商业玩法和下一步建议。
           </p>
           <label className="search-field">
             <span>
-              关键词
-              <small>Keyword</small>
+              创意方向
+              <small>Idea Keyword</small>
             </span>
             <input
               type="search"
-              value={searchQuery}
-              onChange={(event) => setSearchQuery(event.target.value)}
-              placeholder="输入 AI 视频 / 作品集 / 海报 / 虚拟人 / 工具名..."
+              value={planQuery}
+              onChange={(event) => setPlanQuery(event.target.value)}
+              placeholder="例如：我想做数字人 / AI 视频作品集 / 小红书 AI 账号 / 海报视觉实验..."
             />
           </label>
-          <div className="quick-keywords" aria-label="Quick search keywords">
-            {quickKeywords.map((keyword) => (
-              <button key={keyword} type="button" onClick={() => setSearchQuery(keyword)}>
+          <div className="quick-keywords" aria-label="Creative plan quick keywords">
+            {planKeywords.map((keyword) => (
+              <button key={keyword} type="button" onClick={() => setPlanQuery(keyword)}>
                 {keyword}
               </button>
             ))}
           </div>
-        </section>
 
-        <CategoryFilter
-          categories={categories}
-          activeCategory={activeCategory}
-          onChange={setActiveCategory}
-        />
+          {hasPlanQuery && planResults.length > 0 && planSummary && (
+            <section className="initial-plan" aria-label="Initial plan summary">
+              <div className="section-title">
+                <span>
+                  <strong>初步方案总结</strong>
+                  <small>Initial Plan Summary</small>
+                </span>
+                <span>{planResults.length} 条参考情报</span>
+              </div>
+              <div className="initial-plan-body">
+                <p>根据当前情报库，以下内容可以作为你这个方向的初步参考。</p>
+                <div className="plan-summary-grid">
+                  <div>
+                    <strong>推荐工具</strong>
+                    <p>{planSummary.tools.length ? planSummary.tools.join(' / ') : '暂无明确工具'}</p>
+                  </div>
+                  <div>
+                    <strong>相关案例 / 情报</strong>
+                    <ul>
+                      {planSummary.titles.map((title) => (
+                        <li key={title}>{title}</li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div>
+                    <strong>可落地方向</strong>
+                    <ul>
+                      {planSummary.ideas.map((idea) => (
+                        <li key={idea}>{idea}</li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div>
+                    <strong>Prompt 灵感</strong>
+                    <ul>
+                      {planSummary.prompts.map((prompt) => (
+                        <li key={prompt}>{prompt}</li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div>
+                    <strong>商业玩法</strong>
+                    <ul>
+                      {planSummary.business.map((item) => (
+                        <li key={item}>{item}</li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div>
+                    <strong>下一步建议</strong>
+                    <p>
+                      你可以先选择一个工具和一个落地方向，做一个小型视觉实验或作品集项目。未来这里会支持继续和 AI
+                      对话，帮助你把想法整理成完整方案。
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </section>
+          )}
 
-        {hasSearchQuery && filteredSignals.length > 0 && matchedPlanSummary && (
-          <section className="matched-plan" aria-label="Matched creative plan summary">
+          {hasPlanQuery && planResults.length === 0 && (
+            <div className="search-result-status is-empty in-panel">
+              <span>暂时没有匹配到方案</span>
+              <small>可以换一个关键词试试，例如 AI 视频、作品集、海报、虚拟人、Runway、Midjourney。</small>
+            </div>
+          )}
+
+          <section className="coming-next" aria-label="Coming next abilities">
             <div className="section-title">
               <span>
-                <strong>方案匹配结果</strong>
-                <small>Matched Creative Plan</small>
+                <strong>下一阶段能力</strong>
+                <small>Coming Next</small>
               </span>
-              <span>{filteredSignals.length} 条情报</span>
+              <span>即将开放</span>
             </div>
-            <div className="matched-plan-body">
-              <p>
-                <strong>相关工具：</strong>
-                {matchedPlanSummary.relatedTools.length > 0
-                  ? matchedPlanSummary.relatedTools.join(' / ')
-                  : '暂无明确工具，可查看下方情报。'}
-              </p>
-              <p>
-                <strong>相关方向：</strong>
-                {matchedPlanSummary.relatedDirections.length > 0
-                  ? matchedPlanSummary.relatedDirections.join(' / ')
-                  : '暂无明确方向，可查看下方情报。'}
-              </p>
-              <p>
-                <strong>可以尝试：</strong>
-                {matchedPlanSummary.projectIdeas.length > 0
-                  ? matchedPlanSummary.projectIdeas.join(' / ')
-                  : '可以先查看下方情报里的项目灵感。'}
-              </p>
-              <p>
-                <strong>Prompt 灵感：</strong>
-                {matchedPlanSummary.promptHints.length > 0
-                  ? matchedPlanSummary.promptHints.join(' / ')
-                  : '暂无明确 Prompt，可查看下方情报。'}
-              </p>
+            <div className="future-grid">
+              {futureAbilities.map((ability) => (
+                <article className="future-card" key={ability.title}>
+                  <small>{ability.label}</small>
+                  <h3>{ability.title}</h3>
+                  <p>{ability.description}</p>
+                  <button type="button" disabled>
+                    {ability.button}
+                  </button>
+                  <span>即将开放</span>
+                </article>
+              ))}
             </div>
           </section>
-        )}
+        </section>
 
-        <div className={`search-result-status ${filteredSignals.length === 0 ? 'is-empty' : ''}`}>
-          {filteredSignals.length > 0 ? (
+        <section className="feed-section" id="news-feed" aria-labelledby="news-feed-title">
+          <div className="section-title">
             <span>
-              {hasSearchQuery
-                ? `搜索结果 / 找到 ${filteredSignals.length} 条相关情报`
-                : `当前显示 ${filteredSignals.length} 条情报`}
+              <strong id="news-feed-title">AI 资讯流</strong>
+              <small>AI News Feed</small>
             </span>
-          ) : (
-            <>
-              <span>暂时没有匹配到方案</span>
-              <small>
-                可以换一个关键词试试，例如 AI 视频、海报、作品集、虚拟人、Runway、Midjourney。
-              </small>
-            </>
-          )}
-        </div>
+            <span>{feedSignals.length} 条情报</span>
+          </div>
+          <p className="feed-description">
+            浏览近期 AI 工具、创意案例、趋势观察和商业玩法。点击卡片可以查看摘要、来源链接和创作者可用信息。
+          </p>
 
-        <section className="signal-grid" id="signals" aria-label="Signal Card list">
-          {filteredSignals.map((signal) => (
-            <SignalCard key={signal.id} signal={signal} onOpen={() => setSelectedSignal(signal)} />
-          ))}
+          <CategoryFilter
+            categories={categories}
+            activeCategory={activeCategory}
+            onChange={setActiveCategory}
+          />
+
+          <section className="signal-grid" id="signals" aria-label="Signal Card list">
+            {feedSignals.map((signal) => (
+              <SignalCard key={signal.id} signal={signal} onOpen={() => setSelectedSignal(signal)} />
+            ))}
+          </section>
+        </section>
+
+        <section className="plan-library" id="plan-library" aria-labelledby="plan-library-title">
+          <div className="section-title">
+            <span>
+              <strong id="plan-library-title">我的方案库</strong>
+              <small>My Plan Library</small>
+            </span>
+            <span>即将开放</span>
+          </div>
+          <div className="library-body">
+            <article className="library-status-card">
+              <h3>方案库即将开放</h3>
+              <p>未来你可以把 AI 帮你整理好的完整方案保存到个人账户，并导出为文档、PPT 大纲、思维导图或执行计划。</p>
+            </article>
+            <div className="library-feature-list">
+              {libraryFeatures.map((feature) => (
+                <span key={feature}>{feature}</span>
+              ))}
+            </div>
+          </div>
         </section>
 
         <AboutSection />
