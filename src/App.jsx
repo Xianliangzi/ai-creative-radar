@@ -34,6 +34,8 @@ const searchableFields = [
   'visual_tag',
 ]
 
+const quickKeywords = ['AI 视频', '作品集', '海报', '虚拟人', 'Midjourney', 'Runway', 'Prompt', '商业玩法']
+
 function getSearchText(signal) {
   return searchableFields
     .flatMap((field) => {
@@ -43,6 +45,38 @@ function getSearchText(signal) {
     .filter(Boolean)
     .join(' ')
     .toLowerCase()
+}
+
+function uniqueItems(items) {
+  return [...new Set(items.filter(Boolean))]
+}
+
+function truncateText(text, maxLength = 32) {
+  if (!text) return ''
+  return text.length > maxLength ? `${text.slice(0, maxLength)}...` : text
+}
+
+function buildMatchedPlanSummary(results) {
+  const relatedTools = uniqueItems(results.flatMap((signal) => signal.tools || [])).slice(0, 6)
+  const relatedDirections = uniqueItems(
+    results.flatMap((signal) => [signal.category, ...(signal.visual_tag || [])]),
+  ).slice(0, 8)
+  const projectIdeas = results
+    .flatMap((signal) => signal.project_ideas || [])
+    .map((idea) => truncateText(idea, 28))
+    .slice(0, 3)
+  const promptHints = results
+    .map((signal) => signal.prompt_hint)
+    .filter(Boolean)
+    .map((hint) => truncateText(hint, 54))
+    .slice(0, 2)
+
+  return {
+    relatedTools,
+    relatedDirections,
+    projectIdeas,
+    promptHints,
+  }
 }
 
 function App() {
@@ -61,6 +95,12 @@ function App() {
       return matchesCategory && matchesSearch
     })
   }, [activeCategory, searchQuery])
+
+  const hasSearchQuery = searchQuery.trim().length > 0
+  const matchedPlanSummary = useMemo(
+    () => (hasSearchQuery ? buildMatchedPlanSummary(filteredSignals) : null),
+    [filteredSignals, hasSearchQuery],
+  )
 
   return (
     <main className="app-shell">
@@ -131,11 +171,14 @@ function App() {
         <section className="search-panel" id="search" aria-label="Search creative signals">
           <div className="section-title">
             <span>
-              <strong>搜索情报库</strong>
-              <small>Search Archive</small>
+              <strong>搜索创意方案</strong>
+              <small>Search Creative Ideas</small>
             </span>
             <span>{searchQuery ? '正在搜索' : '等待输入'}</span>
           </div>
+          <p className="search-description">
+            输入你想做的方向，系统会从现有 AI 情报中匹配相关工具、案例、Prompt 灵感和商业玩法。
+          </p>
           <label className="search-field">
             <span>
               关键词
@@ -145,9 +188,16 @@ function App() {
               type="search"
               value={searchQuery}
               onChange={(event) => setSearchQuery(event.target.value)}
-              placeholder="搜索工具 / Prompt / 项目方向..."
+              placeholder="输入 AI 视频 / 作品集 / 海报 / 虚拟人 / 工具名..."
             />
           </label>
+          <div className="quick-keywords" aria-label="Quick search keywords">
+            {quickKeywords.map((keyword) => (
+              <button key={keyword} type="button" onClick={() => setSearchQuery(keyword)}>
+                {keyword}
+              </button>
+            ))}
+          </div>
         </section>
 
         <CategoryFilter
@@ -156,13 +206,57 @@ function App() {
           onChange={setActiveCategory}
         />
 
+        {hasSearchQuery && filteredSignals.length > 0 && matchedPlanSummary && (
+          <section className="matched-plan" aria-label="Matched creative plan summary">
+            <div className="section-title">
+              <span>
+                <strong>方案匹配结果</strong>
+                <small>Matched Creative Plan</small>
+              </span>
+              <span>{filteredSignals.length} 条情报</span>
+            </div>
+            <div className="matched-plan-body">
+              <p>
+                <strong>相关工具：</strong>
+                {matchedPlanSummary.relatedTools.length > 0
+                  ? matchedPlanSummary.relatedTools.join(' / ')
+                  : '暂无明确工具，可查看下方情报。'}
+              </p>
+              <p>
+                <strong>相关方向：</strong>
+                {matchedPlanSummary.relatedDirections.length > 0
+                  ? matchedPlanSummary.relatedDirections.join(' / ')
+                  : '暂无明确方向，可查看下方情报。'}
+              </p>
+              <p>
+                <strong>可以尝试：</strong>
+                {matchedPlanSummary.projectIdeas.length > 0
+                  ? matchedPlanSummary.projectIdeas.join(' / ')
+                  : '可以先查看下方情报里的项目灵感。'}
+              </p>
+              <p>
+                <strong>Prompt 灵感：</strong>
+                {matchedPlanSummary.promptHints.length > 0
+                  ? matchedPlanSummary.promptHints.join(' / ')
+                  : '暂无明确 Prompt，可查看下方情报。'}
+              </p>
+            </div>
+          </section>
+        )}
+
         <div className={`search-result-status ${filteredSignals.length === 0 ? 'is-empty' : ''}`}>
           {filteredSignals.length > 0 ? (
-            <span>搜索结果 / 找到 {filteredSignals.length} 条相关情报</span>
+            <span>
+              {hasSearchQuery
+                ? `搜索结果 / 找到 ${filteredSignals.length} 条相关情报`
+                : `当前显示 ${filteredSignals.length} 条情报`}
+            </span>
           ) : (
             <>
-              <span>没有找到相关情报</span>
-              <small>No Signal Found / 可以尝试搜索工具名、视觉风格、项目方向或 Prompt 关键词。</small>
+              <span>暂时没有匹配到方案</span>
+              <small>
+                可以换一个关键词试试，例如 AI 视频、海报、作品集、虚拟人、Runway、Midjourney。
+              </small>
             </>
           )}
         </div>
