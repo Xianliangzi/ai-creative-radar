@@ -358,5 +358,364 @@
       "frontier"
     ],
     "confidence_level": "HIGH"
+  },
+  {
+    "id": "signal-011",
+    "title": "数字人项目可以从“会说话的头像”升级成作品集里的完整角色系统",
+    "signal": "虚拟人不只是生成一张脸，而是可以被设计成一个有身份、栏目、视觉语言和内容节奏的个人项目。",
+    "summary": "HeyGen、D-ID 等数字人和视频头像工具降低了虚拟角色出镜的门槛。对学生和视觉创作者来说，更有价值的方向不是单纯测试口型同步，而是把数字人做成一个完整角色：人设、视觉风格、栏目脚本、短视频封面和发布节奏都可以成为作品集内容。",
+    "creator_value": "数字人项目适合训练角色设定、视觉统一、内容运营和短视频表达能力。它能把 AI 图像、AI 视频、脚本、声音和社媒发布整合在一起，比单张图更容易展示综合创作流程。",
+    "project_ideas": [
+      "设计一个“AI 视觉情报员”数字人，定期讲解 AI 工具和创意案例。",
+      "为虚拟人制作 7 天栏目计划，包括头像、封面、脚本、口播视频和小红书发布模板。",
+      "把数字人从人设草图到视频成片的流程整理成作品集项目。"
+    ],
+    "business_potential": "适合做内容账号、课程口播、品牌虚拟主播提案和个人 IP 实验。商业化时要明确说明哪些部分由 AI 生成，避免把概念样片包装成完整代运营服务。",
+    "target_reader": "数字媒体艺术学生、AI 视觉创作者、内容运营、想做虚拟人或小红书 AI 账号的人",
+    "category": "AI视觉工具",
+    "tools": [
+      "HeyGen",
+      "D-ID",
+      "Midjourney",
+      "CapCut",
+      "小红书"
+    ],
+    "prompt_hint": "Chinese virtual creator, AI visual news host, dark green old web studio, consistent face, short video cover, creator profile, cyber zine identity",
+    "source": "HeyGen",
+    "url": "https://www.heygen.com/",
+    "date": "2026-06-21",
+    "image": "",
+    "image_alt": "数字人虚拟角色与内容账号项目预览",
+    "image_mode": "cover",
+    "visual_tag": [
+      "avatar",
+      "digital-human",
+      "content",
+      "xiaohongshu"
+    ],
+    "confidence_level": "HIGH"
+  },
+  {
+    "id": "signal-012",
+    "title": "AI 视频短片适合先做 15 秒概念片，而不是一开始挑战完整叙事",
+    "signal": "AI 视频对学生最友好的切入点，是用短镜头验证氛围、人物、场景和剪辑节奏。",
+    "summary": "Pika、Runway、Luma 等 AI 视频工具都在持续强化图生视频、镜头运动和风格控制。现阶段它们还不适合直接完成长片，但非常适合制作 10-30 秒的概念短片、作品集片头、情绪影像和短视频视觉实验。",
+    "creator_value": "创作者可以用 AI 视频快速测试一个影像方向是否成立：角色是否有记忆点、场景是否统一、镜头是否能支撑主题。它尤其适合数字媒体艺术课程、毕业设计前期和短片提案。",
+    "project_ideas": [
+      "做一个 15 秒 AI 视频短片，主题是“旧电脑里的虚拟人醒来”。",
+      "为作品集首页制作一段动态开场影像，展示个人视觉风格。",
+      "把同一段 Prompt 在 Pika、Runway、Luma 中测试，比较镜头稳定性和风格差异。"
+    ],
+    "business_potential": "适合做短片概念提案、音乐视觉预演、活动预告和社媒短视频视觉服务。当前更适合卖创意方向和概念样片，不适合承诺完全替代专业拍摄。",
+    "target_reader": "AI 视频创作者、影像方向学生、视觉设计师、想做作品集动态内容的人",
+    "category": "AI视觉工具",
+    "tools": [
+      "Pika",
+      "Runway",
+      "Luma Dream Machine",
+      "CapCut"
+    ],
+    "prompt_hint": "15-second AI short film, virtual human inside an old computer, dark green screen glow, slow camera push, dreamcore hallway, cinematic edit",
+    "source": "Pika",
+    "url": "https://pika.art/",
+    "date": "2026-06-21",
+    "image": "",
+    "image_alt": "AI 视频短片与作品集动态影像预览",
+    "image_mode": "cover",
+    "visual_tag": [
+      "video",
+      "short-film",
+      "portfolio",
+      "motion"
+    ],
+    "confidence_level": "HIGH"
+  },
+  {
+    "id": "signal-013",
+    "title": "AI 海报实验可以从单张效果图变成一套视觉系统",
+    "signal": "海报方向最适合把 AI 生图、排版、局部修改和品牌视觉整合成完整练习。",
+    "summary": "Adobe Firefly、Krea、Canva 等工具让海报创作更容易从灵感图进入可编辑的设计流程。对学生来说，可以先用 AI 生成视觉方向，再用设计软件做标题、层级、字体、留白和系列化处理。",
+    "creator_value": "AI 海报不应该只停留在“好看的图”，而应该训练你对视觉主题、版式系统和系列表达的控制。它很适合作为作品集里的一个独立章节，展示从 Prompt 到设计落地的完整过程。",
+    "project_ideas": [
+      "围绕“AI 视觉创意展”制作 6 张系列海报，统一色彩和字体系统。",
+      "用 Krea 生成氛围图，再用 Figma 或 Photoshop 完成中文标题排版。",
+      "做一组小红书封面模板，把海报语言转成内容运营场景。"
+    ],
+    "business_potential": "适合做活动海报草案、社媒封面、课程作业、品牌 moodboard 和模板产品。商业使用时需要检查字体、素材和 AI 工具授权。",
+    "target_reader": "视觉设计师、平面设计学生、内容运营、想做海报作品集的人",
+    "category": "灵感Prompt",
+    "tools": [
+      "Adobe Firefly",
+      "Krea",
+      "Canva",
+      "Figma",
+      "Photoshop"
+    ],
+    "prompt_hint": "Chinese visual poster system, AI creative exhibition, dark sage green, halftone portrait, bold typography, old web archive, editable layout",
+    "source": "Adobe Firefly",
+    "url": "https://www.adobe.com/products/firefly.html",
+    "date": "2026-06-21",
+    "image": "",
+    "image_alt": "AI 海报与视觉系统 Prompt 实验预览",
+    "image_mode": "cover",
+    "visual_tag": [
+      "poster",
+      "prompt",
+      "design",
+      "system"
+    ],
+    "confidence_level": "HIGH"
+  },
+  {
+    "id": "signal-014",
+    "title": "作品集网页可以成为 AI 创作流程的展示容器",
+    "signal": "比起只上传 PDF，把 AI 工具链、过程图和结果做成网页，更能体现创作者的结构化表达能力。",
+    "summary": "Figma、Framer、Spline 等工具让学生更容易搭建可浏览的作品集页面。AI 视觉项目往往包含 Prompt、参考图、生成过程、筛选逻辑、后期处理和最终应用，网页比静态 PDF 更适合呈现这种链路。",
+    "creator_value": "作品集网页可以把你的 AI 创作能力变得更清楚：你不是只会生成图片，而是能组织信息、设计交互、解释方法，并把项目包装成可访问的体验。",
+    "project_ideas": [
+      "把 3 个 AI 视觉项目做成一个 old web 风格作品集网页。",
+      "为每个项目增加工具链、Prompt 片段、失败样张和最终输出对比。",
+      "加入一个互动目录，让面试官可以按 AI 视频、海报、虚拟人分类浏览。"
+    ],
+    "business_potential": "适合用于求职作品集、个人主页、接单展示页和课程项目。商业化方向可以是作品集网页定制、模板售卖或学生作品集辅导。",
+    "target_reader": "数字媒体艺术学生、视觉设计学生、前端视觉学习者、准备求职作品集的人",
+    "category": "商业玩法",
+    "tools": [
+      "Figma",
+      "Framer",
+      "Spline",
+      "React",
+      "Midjourney"
+    ],
+    "prompt_hint": "AI portfolio website, old web browser interface, project archive cards, process images, dark green cyber zine, student visual designer homepage",
+    "source": "Framer",
+    "url": "https://www.framer.com/",
+    "date": "2026-06-21",
+    "image": "",
+    "image_alt": "AI 作品集网页与视觉档案展示预览",
+    "image_mode": "cover",
+    "visual_tag": [
+      "portfolio",
+      "web",
+      "old-web",
+      "business"
+    ],
+    "confidence_level": "HIGH"
+  },
+  {
+    "id": "signal-015",
+    "title": "小红书 AI 账号可以从“晒图”转向工具教程和项目拆解",
+    "signal": "AI 内容账号更可持续的方向，是把工具、案例、Prompt 和作品集方法整理成连续栏目。",
+    "summary": "很多 AI 视觉账号容易只发布生成图，但对用户真正有帮助的内容通常是：这个工具怎么用、适合做什么、Prompt 怎么写、学生能不能放进作品集、有没有商业玩法。小红书、B 站和短视频平台都适合这种轻量教学和案例拆解。",
+    "creator_value": "内容运营和视觉创作者可以把自己的学习过程变成内容资产。每次测试一个工具，都可以转成图文笔记、短视频、Prompt 卡片或作品集方法论。",
+    "project_ideas": [
+      "做一个“小白 AI 视觉工具日记”账号，每周拆解一个工具和一个项目方向。",
+      "围绕 AI 视频、海报、虚拟人、作品集做 4 个固定栏目。",
+      "把工具测试结果整理成可收藏的 Prompt 卡片和案例模板。"
+    ],
+    "business_potential": "适合内容账号起步、课程引流、模板售卖、工具测评和轻量咨询。重点是持续输出真实测试经验，而不是夸大 AI 变现效果。",
+    "target_reader": "内容运营、新媒体运营、AI 视觉初学者、想做小红书 AI 账号的人",
+    "category": "商业玩法",
+    "tools": [
+      "小红书",
+      "Canva",
+      "CapCut",
+      "Midjourney",
+      "Runway"
+    ],
+    "prompt_hint": "xiaohongshu AI visual tutorial cover, tool testing diary, prompt card layout, Chinese creator notes, dark green retro interface, practical workflow",
+    "source": "Canva",
+    "url": "https://www.canva.com/",
+    "date": "2026-06-21",
+    "image": "",
+    "image_alt": "小红书 AI 账号栏目与内容运营玩法预览",
+    "image_mode": "cover",
+    "visual_tag": [
+      "xiaohongshu",
+      "content",
+      "business",
+      "tutorial"
+    ],
+    "confidence_level": "MEDIUM"
+  },
+  {
+    "id": "signal-016",
+    "title": "AI 模板产品可以从一个具体场景开始，而不是做万能模板",
+    "signal": "最容易被学生和个人创作者启动的小产品，是围绕一个具体需求做模板包。",
+    "summary": "Canva、Figma、Notion 等工具都适合把 AI 工作流整理成可复用模板。相比做一个“大而全”的模板库，更实际的方式是选择一个场景：小红书封面、作品集项目页、AI 海报提案、品牌 moodboard 或短视频脚本表。",
+    "creator_value": "模板产品训练的是“把自己的方法讲清楚”的能力。你需要把视觉结果、操作步骤、Prompt、注意事项和可编辑文件整理成别人能直接使用的形式。",
+    "project_ideas": [
+      "制作一套“AI 作品集项目页模板”，包含项目背景、工具链、过程图和反思区。",
+      "做一套小红书 AI 工具测评封面模板，方便连续发布内容。",
+      "整理一个品牌 moodboard 提案模板，把 AI 图像、色彩和关键词放进同一套结构。"
+    ],
+    "business_potential": "适合模板售卖、内容账号引流、课程资料和接单前置产品。它不需要一开始很复杂，但要解决明确人群的明确问题。",
+    "target_reader": "视觉设计师、学生创作者、内容运营、想做副业和模板售卖的人",
+    "category": "商业玩法",
+    "tools": [
+      "Canva",
+      "Figma",
+      "Notion",
+      "Midjourney",
+      "Krea"
+    ],
+    "prompt_hint": "AI creator template kit, portfolio page layout, xiaohongshu cover system, editable blocks, dark green retro archive, practical design toolkit",
+    "source": "Figma",
+    "url": "https://www.figma.com/",
+    "date": "2026-06-21",
+    "image": "",
+    "image_alt": "AI 模板产品与创作者小商业模式预览",
+    "image_mode": "cover",
+    "visual_tag": [
+      "template",
+      "business",
+      "product",
+      "creator"
+    ],
+    "confidence_level": "MEDIUM"
+  },
+  {
+    "id": "signal-017",
+    "title": "AI 时尚 Lookbook 可以成为服装、摄影和视觉设计的交叉作品",
+    "signal": "AI lookbook 不只是时尚图，它可以连接品牌设定、模特人设、场景叙事和社媒传播。",
+    "summary": "Midjourney、Krea、Runway 等工具让个人创作者可以在没有摄影棚的情况下预演一套时尚视觉。对学生来说，可以把它做成虚构品牌项目：品牌故事、服装风格、模特人设、Lookbook、海报和短视频都能串起来。",
+    "creator_value": "这个方向适合展示视觉统筹能力。你需要考虑色彩、服装、人物、镜头、版式和传播场景，而不是只生成几张好看的时尚图。",
+    "project_ideas": [
+      "设计一个虚构街头品牌，制作 8 张 AI Lookbook 和 3 张宣传海报。",
+      "做一个“数字时尚毕业展”视觉方案，包括人物、场景、视频预告和网页展示。",
+      "用同一虚拟模特完成春夏/秋冬两个系列，对比风格延展能力。"
+    ],
+    "business_potential": "适合品牌提案、服装店上新预演、社媒视觉内容和作品集项目。商业使用时要清楚标注它是概念视觉还是最终商品图。",
+    "target_reader": "时尚创作者、摄影学生、视觉设计师、想做 AI fashion 和 lookbook 的人",
+    "category": "创意案例",
+    "tools": [
+      "Midjourney",
+      "Krea",
+      "Runway",
+      "Photoshop"
+    ],
+    "prompt_hint": "AI fashion lookbook, Chinese streetwear brand, virtual model, dark green flash photography, editorial layout, old web magazine, consistent styling",
+    "source": "Krea AI",
+    "url": "https://www.krea.ai/",
+    "date": "2026-06-21",
+    "image": "",
+    "image_alt": "AI 时尚 Lookbook 与虚构品牌视觉案例预览",
+    "image_mode": "cover",
+    "visual_tag": [
+      "fashion",
+      "lookbook",
+      "branding",
+      "case"
+    ],
+    "confidence_level": "MEDIUM"
+  },
+  {
+    "id": "signal-018",
+    "title": "AI MV 可以先从音乐人的封面、歌词视频和循环视觉做起",
+    "signal": "音乐视觉项目不一定一开始就做完整 MV，封面和短循环更适合个人创作者起步。",
+    "summary": "Runway、Pika、CapCut 等工具让音乐视觉从静态封面扩展到动态背景、歌词视频、预告片和舞台循环视觉。对学生来说，这类项目很适合练习情绪表达、节奏剪辑和视觉叙事。",
+    "creator_value": "AI MV 方向可以把图像、视频、字体、音乐情绪和剪辑节奏结合起来，适合做一个完整的跨媒体作品集案例。即使没有真实客户，也可以选择公开音乐做非商业练习。",
+    "project_ideas": [
+      "为一首虚构单曲制作封面、歌词短视频和 10 秒循环背景。",
+      "拆解一首歌的情绪关键词，用 AI 生成 5 个镜头并剪成 teaser。",
+      "做一个音乐人视觉提案模板，包含封面、短视频、社媒图和演出屏幕参考。"
+    ],
+    "business_potential": "适合独立音乐人视觉合作、动态封面、短视频背景、演出视觉概念和内容账号案例。注意音乐授权和发布平台规则。",
+    "target_reader": "影像学生、音乐视觉设计师、AI 视频创作者、想做 MV 或动态封面的人",
+    "category": "创意案例",
+    "tools": [
+      "Runway",
+      "Pika",
+      "CapCut",
+      "After Effects",
+      "Midjourney"
+    ],
+    "prompt_hint": "AI music video teaser, green CRT light, singer silhouette, lyric video background, slow zoom, analog noise, emotional loop visual",
+    "source": "Runway",
+    "url": "https://runwayml.com/",
+    "date": "2026-06-21",
+    "image": "",
+    "image_alt": "AI MV 音乐视觉与动态封面案例预览",
+    "image_mode": "cover",
+    "visual_tag": [
+      "music",
+      "video",
+      "mv",
+      "motion"
+    ],
+    "confidence_level": "HIGH"
+  },
+  {
+    "id": "signal-019",
+    "title": "AI 视觉工具链正在从单点工具变成“从灵感到发布”的组合流程",
+    "signal": "真正能落地的 AI 创作，通常不是依赖一个工具，而是把生成、编辑、排版、剪辑和发布串起来。",
+    "summary": "一个完整 AI 视觉项目可能会同时用到 Midjourney 或 Krea 做图像方向，Runway 或 Pika 做视频片段，Figma 做版式和信息结构，CapCut 做剪辑，最后发布到小红书或作品集网页。工具链思维比单工具炫技更适合长期学习。",
+    "creator_value": "这能帮助学生从“试工具”转向“做项目”。你可以为每个项目记录工具链、输入、输出、失败点和人工调整，这会让作品集更可信。",
+    "project_ideas": [
+      "为“AI 视频作品集”整理一张工具链流程图，从灵感搜集到最终发布。",
+      "用同一个主题分别输出海报、短片、网页卡片和小红书封面。",
+      "做一份 AI 视觉工具链对比笔记，说明每个工具适合的环节。"
+    ],
+    "business_potential": "适合做工具教程、课程内容、咨询服务、作品集方法论和团队提案流程。商业价值来自流程整合，而不是单个工具本身。",
+    "target_reader": "AI 视觉初学者、视觉设计师、内容运营、想建立稳定创作流程的人",
+    "category": "前沿观察",
+    "tools": [
+      "Midjourney",
+      "Krea",
+      "Runway",
+      "Pika",
+      "Figma",
+      "CapCut"
+    ],
+    "prompt_hint": "AI visual workflow map, tools connected by archive lines, poster video web social media outputs, dark green cyber zine interface, student creator process",
+    "source": "CapCut",
+    "url": "https://www.capcut.com/",
+    "date": "2026-06-21",
+    "image": "",
+    "image_alt": "AI 视觉工具链从灵感到发布的流程预览",
+    "image_mode": "cover",
+    "visual_tag": [
+      "workflow",
+      "toolchain",
+      "video",
+      "design"
+    ],
+    "confidence_level": "MEDIUM"
+  },
+  {
+    "id": "signal-020",
+    "title": "3D 互动作品集可以让 AI 视觉项目更像一个可进入的空间",
+    "signal": "当 AI 图像、视频和 3D 场景结合后，作品集可以从页面展示变成沉浸式视觉档案。",
+    "summary": "Spline 等 3D 网页工具降低了互动空间原型的门槛。学生可以把 AI 生成的海报、视频、角色和工具卡片放进一个 3D 房间或虚拟展厅里，让作品集更有数字媒体感。",
+    "creator_value": "这个方向适合数字媒体艺术学生展示跨媒介能力：视觉设定、空间组织、交互逻辑和网页呈现都能被看见。它不需要一开始很复杂，一个小房间也能成为完整项目。",
+    "project_ideas": [
+      "制作一个“AI 创意档案室”，把海报、视频、Prompt 和工具卡片放进 3D 空间。",
+      "为毕业设计做一个可旋转的虚拟展台，展示数字人、Lookbook 和短片预告。",
+      "把作品集首页做成旧电脑桌面，点击不同物件进入不同项目。"
+    ],
+    "business_potential": "适合作品集差异化、展览预演、品牌互动提案和课程项目。商业化前需要考虑加载速度、移动端体验和 3D 模型优化。",
+    "target_reader": "数字媒体艺术学生、交互设计学生、3D 视觉创作者、想做沉浸式作品集的人",
+    "category": "前沿观察",
+    "tools": [
+      "Spline",
+      "Figma",
+      "Three.js",
+      "Midjourney",
+      "Runway"
+    ],
+    "prompt_hint": "interactive 3D portfolio archive, old computer desk, dark green screens, floating AI posters, virtual exhibition room, cyber zine atmosphere",
+    "source": "Spline",
+    "url": "https://spline.design/",
+    "date": "2026-06-21",
+    "image": "",
+    "image_alt": "3D 互动作品集与 AI 视觉档案空间预览",
+    "image_mode": "cover",
+    "visual_tag": [
+      "3D",
+      "portfolio",
+      "interactive",
+      "archive"
+    ],
+    "confidence_level": "HIGH"
   }
 ]
