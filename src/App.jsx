@@ -67,6 +67,35 @@ const searchableFields = [
   'visual_tag',
 ]
 
+const planKeywordBank = [
+  '数字人',
+  '虚拟人',
+  'AI 视频',
+  'AI短片',
+  '短片',
+  '作品集',
+  '海报',
+  '小红书',
+  'AI 账号',
+  '商业玩法',
+  '模板',
+  'Prompt',
+  'Midjourney',
+  'Runway',
+  'Pika',
+  'HeyGen',
+  'D-ID',
+  'Canva',
+  'Krea',
+  'Figma',
+  'Spline',
+  'MV',
+  '音乐视觉',
+  'lookbook',
+  '3D',
+  '互动作品集',
+]
+
 function getSearchText(signal) {
   return searchableFields
     .flatMap((field) => {
@@ -76,6 +105,29 @@ function getSearchText(signal) {
     .filter(Boolean)
     .join(' ')
     .toLowerCase()
+}
+
+function extractPlanKeywords(query) {
+  const normalizedQuery = query.trim().toLowerCase()
+  const compactQuery = normalizedQuery.replace(/\s+/g, '')
+  if (!normalizedQuery) return []
+
+  const presetKeywords = planKeywordBank.filter((keyword) => {
+    const normalizedKeyword = keyword.toLowerCase()
+    const compactKeyword = normalizedKeyword.replace(/\s+/g, '')
+
+    return normalizedQuery.includes(normalizedKeyword) || compactQuery.includes(compactKeyword)
+  })
+
+  const fallbackKeywords = normalizedQuery
+      .split(/[\s,，.。;；:：、/|｜!?！？'"“”‘’（）()【】\[\]{}<>《》]+/)
+      .map((word) => word.trim())
+      .filter((word) => word.length > 1)
+
+  return uniqueItems([
+    ...presetKeywords.map((keyword) => keyword.toLowerCase()),
+    ...fallbackKeywords,
+  ])
 }
 
 function uniqueItems(items) {
@@ -171,11 +223,20 @@ function buildInitialPlanText(query, summary, sourceLabel) {
   ].join('\n')
 }
 
-function findPlanMatches(query) {
-  const normalizedQuery = query.trim().toLowerCase()
-  if (!normalizedQuery) return []
+function getPlanSourceLabel(source) {
+  if (source === 'ai') return 'AI 生成'
+  if (source === 'ai-text') return 'AI 文本结果'
+  return '本地匹配'
+}
 
-  return signals.filter((signal) => getSearchText(signal).includes(normalizedQuery))
+function findPlanMatches(query) {
+  const keywords = extractPlanKeywords(query)
+  if (keywords.length === 0) return []
+
+  return signals.filter((signal) => {
+    const searchText = getSearchText(signal)
+    return keywords.some((keyword) => searchText.includes(keyword))
+  })
 }
 
 function App() {
@@ -207,9 +268,11 @@ function App() {
     [hasPlanQuery, planResults],
   )
   const planSummary = apiPlanSummary || localPlanSummary
-  const planSourceLabel = planSource === 'api' ? 'AI 接口测试' : '本地匹配'
+  const planSourceLabel = getPlanSourceLabel(planSource)
 
   const generatePlanForQuery = async (query) => {
+    if (isPlanLoading) return
+
     const nextQuery = query.trim()
     if (!nextQuery) return
 
@@ -220,8 +283,6 @@ function App() {
     setPlanSource('local')
     setPlanApiError(false)
     setPlanCopyStatus('idle')
-
-    if (matchedSignalsForPlan.length === 0) return
 
     setIsPlanLoading(true)
 
@@ -244,11 +305,11 @@ function App() {
       }
 
       setApiPlanSummary(buildApiPlanSummary(data.plan, matchedSignalsForPlan))
-      setPlanSource(data.source === 'mock' ? 'api' : 'local')
+      setPlanSource(data.source === 'ai-text' ? 'ai-text' : 'ai')
     } catch (error) {
       setApiPlanSummary(null)
       setPlanSource('local')
-      setPlanApiError(true)
+      setPlanApiError(matchedSignalsForPlan.length > 0)
     } finally {
       setIsPlanLoading(false)
     }
@@ -450,6 +511,7 @@ function App() {
                     type="button"
                     className={submittedPlanQuery === keyword ? 'is-active' : ''}
                     onClick={() => choosePlanKeyword(keyword)}
+                    disabled={isPlanLoading}
                   >
                     {keyword}
                   </button>
@@ -467,7 +529,7 @@ function App() {
             </aside>
           </div>
 
-          {hasPlanQuery && planResults.length > 0 && planSummary && (
+          {hasPlanQuery && planSummary && (
             <section className="initial-plan" aria-label="Initial plan summary">
               <div className="section-title">
                 <span>
@@ -553,14 +615,14 @@ function App() {
             </section>
           )}
 
-          {hasPlanQuery && planResults.length === 0 && (
+          {hasPlanQuery && !isPlanLoading && !planSummary && (
             <div className="search-result-status is-empty in-panel">
-              <span>暂时没有匹配到相关方案，可以换一个关键词试试。</span>
+              <span>暂时没有生成方案，可以换一个关键词试试。</span>
               <small>例如 AI 视频、作品集、海报、虚拟人、Runway、Midjourney。</small>
             </div>
           )}
 
-          {hasPlanQuery && planResults.length > 0 && (
+          {hasPlanQuery && planSummary && (
           <section className="coming-next next-refine-panel" aria-label="Next refine with AI">
             <div className="section-title">
               <span>

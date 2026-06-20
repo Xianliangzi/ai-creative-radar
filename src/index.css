@@ -1405,6 +1405,12 @@ h1 {
   background: #7cff9b;
 }
 
+.quick-keywords button:disabled {
+  color: #b8c9aa;
+  background: #243527;
+  cursor: not-allowed;
+}
+
 .quick-keywords button.is-active {
   border-color: #050805;
   color: #050805;
