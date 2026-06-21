@@ -3109,6 +3109,185 @@ h1 {
   }
 }
 
+@media (max-width: 768px) {
+  body {
+    background:
+      radial-gradient(circle at 18% 8%, rgba(174, 199, 170, 0.1), transparent 14rem),
+      linear-gradient(135deg, #0b160f 0%, #101c13 58%, #18271b 100%);
+  }
+
+  body::before,
+  body::after {
+    opacity: 0;
+  }
+
+  .noise-layer {
+    background:
+      repeating-linear-gradient(
+        0deg,
+        rgba(229, 243, 212, 0.018) 0,
+        rgba(229, 243, 212, 0.018) 1px,
+        transparent 1px,
+        transparent 14px
+      );
+    opacity: 0.14;
+  }
+
+  .browser-frame {
+    border-color: rgba(143, 175, 138, 0.45);
+    background: #243527;
+    box-shadow: none;
+  }
+
+  .browser-frame::before {
+    display: none;
+  }
+
+  .hero-panel,
+  .visual-panel,
+  .visual-panel-inner,
+  .todays-signal,
+  .quick-guide,
+  .mode-switcher,
+  .plan-consult,
+  .feed-section,
+  .plan-library,
+  .about-section,
+  .category-console,
+  .initial-plan,
+  .coming-next,
+  .finalize-panel,
+  .final-plan-card,
+  .signal-card,
+  .detail-window,
+  .detail-section,
+  .about-card,
+  .consult-input-card,
+  .history-entry-card,
+  .saved-plan-card,
+  .library-note-card,
+  .library-status-card {
+    border-color: rgba(143, 175, 138, 0.42);
+    background-image: none;
+    box-shadow: none;
+  }
+
+  .section-title {
+    border-bottom-width: 1px;
+    background: #8faf8a;
+  }
+
+  .section-title small,
+  .card-titlebar,
+  .detail-meta,
+  .detail-chip-row,
+  .visual-tag,
+  .tool-chip,
+  .archive-stamps,
+  .personal-file-strip,
+  .hero-status-grid {
+    opacity: 0.72;
+  }
+
+  .card-titlebar {
+    border-bottom-width: 1px;
+  }
+
+  .card-file-meta {
+    display: none;
+  }
+
+  .plan-summary-grid > div,
+  .refine-record,
+  .final-plan-card-head,
+  .final-plan-grid section,
+  .final-plan-actions,
+  .post-plan-actions,
+  .saved-plan-detail,
+  .feedback-box,
+  .search-result-status {
+    border-color: rgba(143, 175, 138, 0.32);
+    background: rgba(5, 8, 5, 0.12);
+  }
+
+  .detail-body > .signal-image-detail,
+  .about-card,
+  .profile-card,
+  .guide-card,
+  .confidence-card,
+  .prototype-note {
+    box-shadow: none;
+  }
+
+  .initial-plan-body,
+  .next-refine-body,
+  .final-plan-card,
+  .saved-plan-detail,
+  .detail-body,
+  .library-body,
+  .about-card {
+    line-height: 1.68;
+  }
+
+  .plan-summary-grid p,
+  .plan-summary-grid li,
+  .refine-record p,
+  .final-plan-card-head p,
+  .final-plan-grid p,
+  .final-plan-grid li,
+  .saved-plan-card p,
+  .detail-section p,
+  .detail-section li {
+    color: #e5f3d4;
+    font-size: 0.98rem;
+    line-height: 1.72;
+  }
+
+  .final-plan-card {
+    gap: 14px;
+    padding: 14px;
+  }
+
+  .final-plan-card-head,
+  .final-plan-grid section,
+  .saved-plan-detail,
+  .detail-section {
+    padding: 14px;
+  }
+
+  .final-plan-badge,
+  .plan-source-tag,
+  .detail-section h3 {
+    border-left-width: 0;
+    opacity: 0.92;
+  }
+
+  .detail-hero,
+  .detail-section {
+    background: rgba(36, 53, 39, 0.82);
+  }
+
+  .detail-titlebar,
+  .detail-body {
+    padding: 12px;
+  }
+
+  .detail-window {
+    border-width: 1px;
+  }
+
+  .source-actions .source-button,
+  .final-plan-actions button,
+  .saved-plan-actions button,
+  .plan-copy-button,
+  .plan-generate-button,
+  .refine-submit-button,
+  .finalize-button {
+    min-height: 44px;
+    border-width: 1px;
+  }
+}
+
 @media (max-width: 460px) {
   .app-shell {
     padding: 8px;
@@ -3116,7 +3295,7 @@ h1 {
 
   .browser-frame {
     border-width: 1px;
-    box-shadow: 4px 4px 0 rgba(5, 8, 5, 0.35);
+    box-shadow: none;
   }
 
   .hero-panel {
@@ -3248,7 +3427,7 @@ h1 {
   .guide-card,
   .confidence-card,
   .prototype-note {
-    box-shadow: 4px 4px 0 rgba(5, 8, 5, 0.24);
+    box-shadow: none;
   }
 
   .search-field span {
