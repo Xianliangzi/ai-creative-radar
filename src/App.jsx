@@ -1214,7 +1214,7 @@ function App() {
               </span>
               <div className="global-search-actions">
                 <button type="button" onClick={runSmartSearch} disabled={isSmartSearchLoading}>
-                  {isSmartSearchLoading ? 'AI 正在分析...' : 'AI 智能推荐'}
+                  {isSmartSearchLoading ? 'AI 正在分析...' : 'AI 灵感推荐'}
                 </button>
                 <button type="button" onClick={clearGlobalSearch}>
                   清除搜索
@@ -1282,7 +1282,7 @@ function App() {
             )}
             <div className="smart-search-area" aria-label="AI smart search recommendation">
               <p className="smart-search-hint">
-                想输入完整需求？可以点击 AI 智能推荐，让 AI 基于资料库整理工具、案例、创意方向和下一步建议。
+                普通搜索用于查找已有资料；AI 灵感推荐适合输入完整创作需求，例如：我想做一个适合小红书发布的 AI 视觉项目。AI 会基于资料库推荐工具、案例和创意方向。
               </p>
               {isSmartSearchLoading && (
                 <p className="smart-search-status">AI 正在基于资料库分析你的需求...</p>
@@ -1813,42 +1813,50 @@ function App() {
                     </div>
                     <div className="final-plan-actions" aria-label="Final plan next actions">
                       <strong>下一步你可以做什么？</strong>
-                      <div>
-                        <button className="finalize-button" type="button" onClick={copyFinalPlan}>
-                          {finalPlanCopyStatus === 'copied'
-                            ? '已复制完整方案'
-                            : finalPlanCopyStatus === 'failed'
-                              ? '复制失败'
-                              : '复制完整方案草稿'}
-                        </button>
-                        <button className="finalize-button" type="button" onClick={saveFinalPlanToLibrary}>
-                          {savePlanStatus === 'saved' ? '已保存到方案库' : '保存到我的方案库'}
-                        </button>
-                        <button className="finalize-button" type="button" onClick={downloadFinalPlan}>
-                          {finalPlanDownloadStatus === 'downloaded'
-                            ? '已生成下载'
-                            : finalPlanDownloadStatus === 'failed'
-                              ? '下载失败'
-                              : '下载 Markdown'}
-                        </button>
-                        <button className="finalize-button" type="button" onClick={downloadFinalPlanWord}>
-                          {finalPlanWordStatus === 'downloaded'
-                            ? '已生成 Word'
-                            : finalPlanWordStatus === 'failed'
-                              ? '下载失败'
-                              : '下载 Word 文档'}
-                        </button>
-                        <button className="finalize-button" type="button" onClick={downloadFinalPlanPptOutline}>
-                          {finalPlanPptStatus === 'downloaded'
-                            ? '已生成大纲'
-                            : finalPlanPptStatus === 'failed'
-                              ? '导出失败'
-                              : '导出 PPT 大纲'}
-                        </button>
-                        <button type="button" disabled>
-                          生成思维导图
-                          <small>即将开放</small>
-                        </button>
+                      <div className="action-section">
+                        <small>常用操作</small>
+                        <div className="action-button-row">
+                          <button className="finalize-button is-primary-action" type="button" onClick={saveFinalPlanToLibrary}>
+                            {savePlanStatus === 'saved' ? '已保存到方案库' : '保存到我的方案库'}
+                          </button>
+                          <button className="finalize-button" type="button" onClick={copyFinalPlan}>
+                            {finalPlanCopyStatus === 'copied'
+                              ? '已复制完整方案'
+                              : finalPlanCopyStatus === 'failed'
+                                ? '复制失败'
+                                : '复制完整方案草稿'}
+                          </button>
+                        </div>
+                      </div>
+                      <div className="action-section">
+                        <small>导出方案</small>
+                        <div className="action-button-row">
+                          <button className="finalize-button" type="button" onClick={downloadFinalPlan}>
+                            {finalPlanDownloadStatus === 'downloaded'
+                              ? '已生成下载'
+                              : finalPlanDownloadStatus === 'failed'
+                                ? '下载失败'
+                                : '下载 Markdown'}
+                          </button>
+                          <button className="finalize-button" type="button" onClick={downloadFinalPlanWord}>
+                            {finalPlanWordStatus === 'downloaded'
+                              ? '已生成 Word'
+                              : finalPlanWordStatus === 'failed'
+                                ? '下载失败'
+                                : '下载 Word 文档'}
+                          </button>
+                          <button className="finalize-button" type="button" onClick={downloadFinalPlanPptOutline}>
+                            {finalPlanPptStatus === 'downloaded'
+                              ? '已生成大纲'
+                              : finalPlanPptStatus === 'failed'
+                                ? '导出失败'
+                                : '导出 PPT 大纲'}
+                          </button>
+                          <button type="button" disabled>
+                            生成思维导图
+                            <small>即将开放</small>
+                          </button>
+                        </div>
                       </div>
                       {savePlanStatus === 'saved' && (
                         <div className="save-path-note">
@@ -1942,36 +1950,51 @@ function App() {
                       ))}
                     </div>
                     <div className="saved-plan-actions">
-                      <button type="button" onClick={() => toggleSavedPlanDetail(savedPlan.id)}>
-                        {selectedSavedPlanId === savedPlan.id ? '收起方案' : '查看方案'}
-                      </button>
-                      <button type="button" onClick={() => copySavedPlan(savedPlan)}>
-                        {savedPlanCopyStatus === savedPlan.id
-                          ? '已复制方案'
-                          : savedPlanCopyStatus === `failed-${savedPlan.id}`
-                            ? '复制失败'
-                            : '复制方案'}
-                      </button>
-                      <button type="button" onClick={() => downloadSavedPlan(savedPlan)}>
-                        下载 Markdown
-                      </button>
-                      <button type="button" onClick={() => downloadSavedPlanWord(savedPlan)}>
-                        {savedPlanExportStatus === `word-${savedPlan.id}`
-                          ? '已生成 Word'
-                          : savedPlanExportStatus === `failed-${savedPlan.id}`
-                            ? '导出失败'
-                            : '下载 Word'}
-                      </button>
-                      <button type="button" onClick={() => downloadSavedPlanPptOutline(savedPlan)}>
-                        {savedPlanExportStatus === `ppt-${savedPlan.id}`
-                          ? '已生成大纲'
-                          : savedPlanExportStatus === `failed-${savedPlan.id}`
-                            ? '导出失败'
-                            : '导出 PPT 大纲'}
-                      </button>
-                      <button type="button" className="danger-button" onClick={() => deleteSavedPlan(savedPlan.id)}>
-                        删除
-                      </button>
+                      <div className="saved-action-group">
+                        <small>常用操作</small>
+                        <div>
+                          <button type="button" onClick={() => toggleSavedPlanDetail(savedPlan.id)}>
+                            {selectedSavedPlanId === savedPlan.id ? '收起方案' : '查看方案'}
+                          </button>
+                          <button type="button" onClick={() => copySavedPlan(savedPlan)}>
+                            {savedPlanCopyStatus === savedPlan.id
+                              ? '已复制方案'
+                              : savedPlanCopyStatus === `failed-${savedPlan.id}`
+                                ? '复制失败'
+                                : '复制方案'}
+                          </button>
+                        </div>
+                      </div>
+                      <div className="saved-action-group">
+                        <small>导出</small>
+                        <div>
+                          <button type="button" onClick={() => downloadSavedPlan(savedPlan)}>
+                            Markdown
+                          </button>
+                          <button type="button" onClick={() => downloadSavedPlanWord(savedPlan)}>
+                            {savedPlanExportStatus === `word-${savedPlan.id}`
+                              ? '已生成 Word'
+                              : savedPlanExportStatus === `failed-${savedPlan.id}`
+                                ? '导出失败'
+                                : 'Word'}
+                          </button>
+                          <button type="button" onClick={() => downloadSavedPlanPptOutline(savedPlan)}>
+                            {savedPlanExportStatus === `ppt-${savedPlan.id}`
+                              ? '已生成大纲'
+                              : savedPlanExportStatus === `failed-${savedPlan.id}`
+                                ? '导出失败'
+                                : 'PPT 大纲'}
+                          </button>
+                        </div>
+                      </div>
+                      <div className="saved-action-group is-manage">
+                        <small>管理</small>
+                        <div>
+                          <button type="button" className="danger-button" onClick={() => deleteSavedPlan(savedPlan.id)}>
+                            删除
+                          </button>
+                        </div>
+                      </div>
                     </div>
                     {selectedSavedPlanId === savedPlan.id && (
                       <div className="saved-plan-detail">

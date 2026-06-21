@@ -339,7 +339,7 @@ p {
 
 .global-search-groups {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: 1fr;
   gap: 12px;
   padding: 14px;
 }
@@ -352,12 +352,15 @@ p {
 
 .global-search-group h3 {
   margin: 0;
+  padding-bottom: 7px;
+  border-bottom: 1px solid rgba(143, 175, 138, 0.42);
   color: #e5f3d4;
   font-size: 0.98rem;
 }
 
 .global-search-list {
   display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 10px;
 }
 
@@ -435,15 +438,16 @@ p {
 .smart-search-hint,
 .smart-search-status {
   margin: 0;
+  padding: 10px 12px;
+  border: 1px dashed rgba(143, 175, 138, 0.42);
+  background: rgba(5, 8, 5, 0.14);
   color: #dce8ca;
   font-size: 0.88rem;
   line-height: 1.7;
 }
 
 .smart-search-status {
-  padding: 10px 12px;
-  border: 1px dashed rgba(143, 175, 138, 0.58);
-  background: rgba(5, 8, 5, 0.16);
+  border-color: rgba(143, 175, 138, 0.58);
 }
 
 .smart-search-result {
@@ -1957,7 +1961,33 @@ h1 {
   text-transform: uppercase;
 }
 
-.history-entry-card button,
+.history-entry-card {
+  align-self: start;
+  display: grid;
+  gap: 10px;
+  background:
+    linear-gradient(135deg, rgba(174, 199, 170, 0.08), transparent 46%),
+    #1f3024;
+}
+
+.history-entry-card p {
+  margin: 0;
+}
+
+.history-entry-card button {
+  margin-top: 2px;
+  color: #050805;
+  background: #aec7aa;
+  cursor: pointer;
+}
+
+.history-entry-card button:hover,
+.history-entry-card button:focus-visible {
+  border-color: #050805;
+  background: #7cff9b;
+  outline: none;
+}
+
 .next-refine-body button {
   color: #b8c9aa;
   background: #243527;
@@ -2380,7 +2410,22 @@ h1 {
   color: #e5f3d4;
 }
 
-.final-plan-actions > div {
+.action-section {
+  display: grid;
+  gap: 8px;
+  padding: 10px;
+  border: 1px solid rgba(143, 175, 138, 0.42);
+  background: rgba(5, 8, 5, 0.14);
+}
+
+.action-section > small,
+.saved-action-group > small {
+  color: #b8c9aa;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+}
+
+.action-button-row {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: 8px;
@@ -2411,6 +2456,11 @@ h1 {
 .final-plan-actions .finalize-button {
   color: #e5f3d4 !important;
   background: #243527 !important;
+}
+
+.final-plan-actions .is-primary-action {
+  color: #050805 !important;
+  background: #aec7aa !important;
 }
 
 .final-plan-actions .finalize-button:hover,
@@ -2587,7 +2637,24 @@ h1 {
 
 .saved-plan-actions {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(128px, 1fr));
+  grid-template-columns: 1fr;
+  gap: 10px;
+  padding-top: 4px;
+}
+
+.saved-action-group {
+  display: grid;
+  gap: 6px;
+}
+
+.saved-action-group > div {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(112px, 1fr));
+  gap: 8px;
+}
+
+.saved-action-group.is-manage > div {
+  grid-template-columns: minmax(112px, 180px);
 }
 
 .saved-plan-actions button {
@@ -2661,14 +2728,14 @@ h1 {
 }
 
 .category-list {
+  flex-wrap: wrap;
   gap: 10px;
   padding: 12px;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
+  overflow-x: visible;
 }
 
 .category-button {
-  flex: 0 0 auto;
+  flex: 0 1 auto;
   padding: 9px 12px;
 }
 
