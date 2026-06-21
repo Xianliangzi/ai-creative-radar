@@ -404,6 +404,16 @@ p {
   line-height: 1.7;
 }
 
+.global-search-more {
+  margin: 0;
+  padding: 9px 10px;
+  border: 1px dashed rgba(143, 175, 138, 0.5);
+  color: #b8c9aa;
+  background: rgba(5, 8, 5, 0.12);
+  font-size: 0.82rem;
+  line-height: 1.55;
+}
+
 .hero-panel {
   display: grid;
   grid-template-columns: minmax(0, 1.05fr) minmax(260px, 0.95fr);

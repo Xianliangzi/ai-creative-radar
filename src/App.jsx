@@ -431,6 +431,10 @@ function App() {
     }
   }, [globalSearchTerm, savedPlans])
   const globalSearchCount = globalSearchResults.signals.length + globalSearchResults.savedPlans.length
+  const visibleSearchSignals = globalSearchResults.signals.slice(0, 5)
+  const visibleSearchSavedPlans = globalSearchResults.savedPlans.slice(0, 5)
+  const hasMoreSearchSignals = globalSearchResults.signals.length > visibleSearchSignals.length
+  const hasMoreSearchSavedPlans = globalSearchResults.savedPlans.length > visibleSearchSavedPlans.length
 
   const generatePlanForQuery = async (query) => {
     if (isPlanLoading) return
@@ -773,7 +777,16 @@ function App() {
             <div className="global-search-header">
               <span>
                 <strong>搜索结果</strong>
-                <small>{globalSearchCount > 0 ? `找到 ${globalSearchCount} 条相关内容` : '没有找到相关内容'}</small>
+                <small>
+                  {globalSearchCount > 0
+                    ? `关键词“${globalSearchQuery.trim()}” · 找到 ${globalSearchCount} 条相关内容`
+                    : `关键词“${globalSearchQuery.trim()}” · 没有找到相关内容`}
+                </small>
+                {globalSearchCount > 0 && (
+                  <small>
+                    AI 资讯 {globalSearchResults.signals.length} 条 / 我的方案 {globalSearchResults.savedPlans.length} 条
+                  </small>
+                )}
               </span>
               <button type="button" onClick={clearGlobalSearch}>
                 清除搜索
@@ -785,7 +798,7 @@ function App() {
                   <div className="global-search-group">
                     <h3>AI 资讯</h3>
                     <div className="global-search-list">
-                      {globalSearchResults.signals.map((signal) => (
+                      {visibleSearchSignals.map((signal) => (
                         <button
                           type="button"
                           className="global-search-result"
@@ -801,6 +814,9 @@ function App() {
                           </small>
                         </button>
                       ))}
+                      {hasMoreSearchSignals && (
+                        <p className="global-search-more">还有更多 AI 资讯结果，请换更具体的关键词。</p>
+                      )}
                     </div>
                   </div>
                 )}
@@ -808,7 +824,7 @@ function App() {
                   <div className="global-search-group">
                     <h3>我的方案</h3>
                     <div className="global-search-list">
-                      {globalSearchResults.savedPlans.map((savedPlan) => (
+                      {visibleSearchSavedPlans.map((savedPlan) => (
                         <button
                           type="button"
                           className="global-search-result"
@@ -823,12 +839,17 @@ function App() {
                           </small>
                         </button>
                       ))}
+                      {hasMoreSearchSavedPlans && (
+                        <p className="global-search-more">还有更多我的方案结果，请换更具体的关键词。</p>
+                      )}
                     </div>
                   </div>
                 )}
               </div>
             ) : (
-              <p className="global-search-empty">没有找到相关内容，可以换一个关键词试试。</p>
+              <p className="global-search-empty">
+                没有找到相关内容，可以换一个关键词试试。例如：数字人、海报、Runway、小红书、作品集。
+              </p>
             )}
           </section>
         )}
