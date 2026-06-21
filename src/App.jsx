@@ -5,7 +5,6 @@ import CategoryFilter from './components/CategoryFilter.jsx'
 import SignalDetail from './components/SignalDetail.jsx'
 import SignalImage from './components/SignalImage.jsx'
 import SignalCard from './components/SignalCard.jsx'
-import QuickGuide from './components/QuickGuide.jsx'
 import TodaysSignal from './components/TodaysSignal.jsx'
 import signals from './data/news-sample.json'
 
@@ -754,8 +753,6 @@ function App() {
         </div>
 
         <TodaysSignal signal={todaysSignal} />
-
-        <QuickGuide />
 
         <section className="quick-start" aria-labelledby="quick-start-title">
           <div className="section-title">
