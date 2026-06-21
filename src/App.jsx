@@ -33,21 +33,21 @@ const libraryFeatures = [
 const modeTabs = [
   {
     id: 'news',
-    title: 'AI 资讯',
+    title: '看 AI 资讯',
     label: 'AI News',
-    description: '浏览工具、案例和趋势',
+    description: '浏览工具、案例、趋势和商业玩法',
   },
   {
     id: 'plan',
-    title: '创意方案',
+    title: '做创意方案',
     label: 'Creative Plan',
-    description: '输入想法，生成初步方案',
+    description: '输入一个模糊想法，生成初步方案并继续完善',
   },
   {
     id: 'library',
-    title: '我的方案',
+    title: '查看我的方案',
     label: 'My Plans',
-    description: '查看本地保存的方案',
+    description: '查看本地保存的方案，继续复制、下载或删除',
   },
 ]
 
@@ -752,57 +752,17 @@ function App() {
           </div>
         </div>
 
-        <TodaysSignal signal={todaysSignal} />
-
-        <section className="quick-start" aria-labelledby="quick-start-title">
-          <div className="section-title">
-            <span>
-              <strong id="quick-start-title">快速开始</strong>
-              <small>Quick Start</small>
-            </span>
-            <span>3 steps</span>
-          </div>
-          <div className="quick-start-body">
-            <p>
-              你可以先浏览 AI 创意资讯，也可以直接输入一个创意方向，让 AI 帮你整理成可执行的视觉项目方案。这里生成的是创意方案、执行路径和作品集/平台建议，不是最终图片成品。
-            </p>
-            <div className="quick-start-steps">
-              <article>
-                <span>01</span>
-                <h3>看资讯找灵感</h3>
-                <p>浏览 AI 工具、案例、平台玩法和视觉趋势，快速扫一遍当前可以参考的方向。</p>
-                <button type="button" onClick={() => selectMode('news')}>
-                  去看 AI 资讯
-                </button>
-              </article>
-              <article>
-                <span>02</span>
-                <h3>输入创意方向</h3>
-                <p>输入一个模糊想法，例如数字人作品集、小红书 AI 账号、AI 海报实验或 AI 视频短片。</p>
-                <button type="button" onClick={() => selectMode('plan')}>
-                  开始做方案
-                </button>
-              </article>
-              <article>
-                <span>03</span>
-                <h3>生成完整方案</h3>
-                <p>AI 会帮你整理工具组合、Prompt 灵感、平台建议、执行步骤和作品集价值，最后可以复制、下载或保存到我的方案库。</p>
-                <button type="button" onClick={() => selectMode('library')}>
-                  查看我的方案
-                </button>
-              </article>
-            </div>
-          </div>
-        </section>
-
         <section className="mode-switcher" id="main-functions" aria-labelledby="mode-switcher-title">
           <div className="section-title">
             <span>
-              <strong id="mode-switcher-title">选择你现在要做什么</strong>
-              <small>Choose a Mode</small>
+              <strong id="mode-switcher-title">开始使用</strong>
+              <small>Start Here</small>
             </span>
             <span>{modeTabs.find((tab) => tab.id === activeMode)?.title}</span>
           </div>
+          <p className="mode-intro">
+            这个网站不会直接帮你生成最终图片或海报，而是帮助你浏览 AI 创意资讯、整理创意方向，并生成可执行的视觉项目方案。请选择你现在最想做的事。
+          </p>
           <div className="mode-tabs" role="tablist" aria-label="Main function tabs">
             {modeTabs.map((tab) => (
               <button
@@ -819,6 +779,7 @@ function App() {
               </button>
             ))}
           </div>
+          <p className="mode-path">推荐路径：先看资讯找灵感 → 再做方案 → 最后保存到我的方案</p>
         </section>
 
         {activeMode === 'plan' && (
@@ -1201,6 +1162,8 @@ function App() {
         )}
 
         {activeMode === 'news' && (
+        <>
+        <TodaysSignal signal={todaysSignal} />
         <section className="feed-section" id="news-feed" aria-labelledby="news-feed-title">
           <div className="section-title">
             <span>
@@ -1225,6 +1188,7 @@ function App() {
             ))}
           </section>
         </section>
+        </>
         )}
 
         {activeMode === 'library' && (
