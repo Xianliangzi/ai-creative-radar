@@ -757,6 +757,47 @@ function App() {
 
         <QuickGuide />
 
+        <section className="quick-start" aria-labelledby="quick-start-title">
+          <div className="section-title">
+            <span>
+              <strong id="quick-start-title">快速开始</strong>
+              <small>Quick Start</small>
+            </span>
+            <span>3 steps</span>
+          </div>
+          <div className="quick-start-body">
+            <p>
+              你可以先浏览 AI 创意资讯，也可以直接输入一个创意方向，让 AI 帮你整理成可执行的视觉项目方案。这里生成的是创意方案、执行路径和作品集/平台建议，不是最终图片成品。
+            </p>
+            <div className="quick-start-steps">
+              <article>
+                <span>01</span>
+                <h3>看资讯找灵感</h3>
+                <p>浏览 AI 工具、案例、平台玩法和视觉趋势，快速扫一遍当前可以参考的方向。</p>
+                <button type="button" onClick={() => selectMode('news')}>
+                  去看 AI 资讯
+                </button>
+              </article>
+              <article>
+                <span>02</span>
+                <h3>输入创意方向</h3>
+                <p>输入一个模糊想法，例如数字人作品集、小红书 AI 账号、AI 海报实验或 AI 视频短片。</p>
+                <button type="button" onClick={() => selectMode('plan')}>
+                  开始做方案
+                </button>
+              </article>
+              <article>
+                <span>03</span>
+                <h3>生成完整方案</h3>
+                <p>AI 会帮你整理工具组合、Prompt 灵感、平台建议、执行步骤和作品集价值，最后可以复制、下载或保存到我的方案库。</p>
+                <button type="button" onClick={() => selectMode('library')}>
+                  查看我的方案
+                </button>
+              </article>
+            </div>
+          </div>
+        </section>
+
         <section className="mode-switcher" id="main-functions" aria-labelledby="mode-switcher-title">
           <div className="section-title">
             <span>

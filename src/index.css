@@ -790,6 +790,7 @@ h1 {
 .category-console,
 .generator-panel,
 .quick-guide,
+.quick-start,
 .mode-switcher,
 .matched-plan,
 .plan-consult,
@@ -994,6 +995,90 @@ h1 {
     radial-gradient(circle, rgba(174, 199, 170, 0.1) 1px, transparent 1px) 0 0 / 13px 13px,
     linear-gradient(135deg, rgba(5, 8, 5, 0.16), transparent 42%),
     #2e4032;
+}
+
+.quick-start {
+  overflow: hidden;
+  background:
+    linear-gradient(90deg, rgba(5, 8, 5, 0.12) 1px, transparent 1px) 0 0 / 28px 28px,
+    linear-gradient(135deg, rgba(174, 199, 170, 0.18), transparent 50%),
+    #2e4032;
+}
+
+.quick-start-body {
+  display: grid;
+  gap: 14px;
+  padding: 16px;
+}
+
+.quick-start-body > p {
+  max-width: 980px;
+  margin: 0;
+  color: #dce8ca;
+  font-size: 0.95rem;
+  line-height: 1.72;
+}
+
+.quick-start-steps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.quick-start-steps article {
+  display: grid;
+  min-width: 0;
+  align-content: start;
+  gap: 9px;
+  padding: 14px;
+  border: 2px solid #6f876b;
+  background:
+    radial-gradient(circle, rgba(174, 199, 170, 0.08) 1px, transparent 1px) 0 0 / 12px 12px,
+    #1f3024;
+  box-shadow: 5px 5px 0 rgba(5, 8, 5, 0.22);
+}
+
+.quick-start-steps span {
+  display: inline-grid;
+  width: 36px;
+  height: 28px;
+  place-items: center;
+  border: 1px solid #050805;
+  color: #050805;
+  background: #aec7aa;
+  font-size: 0.78rem;
+}
+
+.quick-start-steps h3 {
+  margin: 0;
+  color: #e5f3d4;
+  font-size: 1.02rem;
+  line-height: 1.35;
+}
+
+.quick-start-steps p {
+  margin: 0;
+  color: #dce8ca;
+  font-size: 0.9rem;
+  line-height: 1.68;
+}
+
+.quick-start-steps button {
+  width: fit-content;
+  min-height: 40px;
+  margin-top: 4px;
+  border: 2px solid #6f876b;
+  color: #050805;
+  background: #aec7aa;
+  padding: 9px 12px;
+  font-family: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.quick-start-steps button:hover {
+  border-color: #050805;
+  background: #7cff9b;
 }
 
 .guide-body {
@@ -3002,6 +3087,7 @@ h1 {
   .hero-status-grid,
   .primary-actions,
   .primary-actions.three-actions,
+  .quick-start-steps,
   .mode-tabs,
   .todays-content {
     grid-template-columns: 1fr;
@@ -3024,6 +3110,7 @@ h1 {
   .category-console,
   .generator-panel,
   .quick-guide,
+  .quick-start,
   .mode-switcher,
   .matched-plan,
   .plan-consult,
@@ -3235,6 +3322,7 @@ h1 {
   .visual-panel-inner,
   .todays-signal,
   .quick-guide,
+  .quick-start,
   .mode-switcher,
   .plan-consult,
   .feed-section,
@@ -3285,6 +3373,7 @@ h1 {
   }
 
   .plan-summary-grid > div,
+  .quick-start-steps article,
   .refine-record,
   .final-plan-card-head,
   .final-plan-grid section,
@@ -3300,6 +3389,7 @@ h1 {
   .detail-body > .signal-image-detail,
   .about-card,
   .profile-card,
+  .quick-start-steps article,
   .guide-card,
   .confidence-card,
   .prototype-note {
@@ -3307,6 +3397,7 @@ h1 {
   }
 
   .initial-plan-body,
+  .quick-start-body,
   .next-refine-body,
   .final-plan-card,
   .saved-plan-detail,
@@ -3317,6 +3408,8 @@ h1 {
   }
 
   .plan-summary-grid p,
+  .quick-start-body > p,
+  .quick-start-steps p,
   .plan-summary-grid li,
   .refine-record p,
   .final-plan-card-head p,
@@ -3364,6 +3457,7 @@ h1 {
   }
 
   .source-actions .source-button,
+  .quick-start-steps button,
   .final-plan-actions button,
   .saved-plan-actions button,
   .save-path-note button,
@@ -3465,6 +3559,7 @@ h1 {
   .category-console,
   .generator-panel,
   .quick-guide,
+  .quick-start,
   .mode-switcher,
   .matched-plan,
   .plan-consult,
@@ -3501,6 +3596,7 @@ h1 {
   }
 
   .generator-body,
+  .quick-start-body,
   .guide-body,
   .initial-plan-body,
   .future-grid,
