@@ -22,6 +22,7 @@ const categories = [
 const planKeywords = ['数字人', 'AI 视频', '作品集', '海报', '小红书 AI 账号', '虚拟人', 'Midjourney', 'Runway']
 
 const savedPlanStorageKey = 'ai-creative-radar-plans'
+const accessCodeSessionKey = 'ai-creative-radar-access-code'
 
 const postPlanActions = ['登录云端同步', '导出 PPT 大纲', '生成思维导图']
 
@@ -48,7 +49,7 @@ const modeTabs = [
     id: 'library',
     title: '我的方案',
     label: 'My Plans',
-    description: '查询历史方案，即将开放',
+    description: '查看本地保存的方案',
   },
 ]
 
@@ -330,6 +331,32 @@ function persistSavedPlans(plans) {
   window.localStorage.setItem(savedPlanStorageKey, JSON.stringify(plans))
 }
 
+function loadAiAccessCode() {
+  if (typeof window === 'undefined') return ''
+
+  try {
+    return window.sessionStorage.getItem(accessCodeSessionKey) || ''
+  } catch (error) {
+    return ''
+  }
+}
+
+function persistAiAccessCode(accessCode) {
+  try {
+    window.sessionStorage.setItem(accessCodeSessionKey, accessCode)
+  } catch (error) {
+    // Session storage may be unavailable in strict browser privacy modes.
+  }
+}
+
+function clearAiAccessCode() {
+  try {
+    window.sessionStorage.removeItem(accessCodeSessionKey)
+  } catch (error) {
+    // Session storage may be unavailable in strict browser privacy modes.
+  }
+}
+
 function getPlanSourceLabel(source) {
   if (source === 'ai') return 'AI 生成'
   if (source === 'ai-text') return 'AI 文本结果'
@@ -371,6 +398,9 @@ function App() {
   const [savedPlans, setSavedPlans] = useState(loadSavedPlans)
   const [selectedSavedPlanId, setSelectedSavedPlanId] = useState('')
   const [savedPlanCopyStatus, setSavedPlanCopyStatus] = useState('')
+  const [aiAccessCode, setAiAccessCode] = useState(loadAiAccessCode)
+  const [accessCodeInput, setAccessCodeInput] = useState(loadAiAccessCode)
+  const [accessCodeStatus, setAccessCodeStatus] = useState(aiAccessCode ? 'confirmed' : 'idle')
   const todaysSignal = signals[0]
 
   const feedSignals = useMemo(
@@ -388,7 +418,8 @@ function App() {
     () => (hasPlanQuery && planResults.length > 0 ? buildPlanSummary(planResults) : null),
     [hasPlanQuery, planResults],
   )
-  const planSummary = apiPlanSummary || localPlanSummary
+  const hasAccessCodeError = planApiError === '试用口令不正确，请重新输入。'
+  const planSummary = hasAccessCodeError ? null : apiPlanSummary || localPlanSummary
   const planSourceLabel = getPlanSourceLabel(planSource)
 
   const generatePlanForQuery = async (query) => {
@@ -424,6 +455,7 @@ function App() {
         body: JSON.stringify({
           query: nextQuery,
           matchedSignals: matchedSignalsForPlan,
+          accessCode: aiAccessCode,
         }),
       })
 
@@ -438,13 +470,17 @@ function App() {
     } catch (error) {
       setApiPlanSummary(null)
       setPlanSource('local')
-      setPlanApiError(
-        matchedSignalsForPlan.length > 0
-          ? error instanceof Error
-            ? error.message
-            : 'AI 接口暂时不可用'
-          : '',
-      )
+      if (error instanceof Error && error.message === 'Invalid access code') {
+        setPlanApiError('试用口令不正确，请重新输入。')
+      } else {
+        setPlanApiError(
+          matchedSignalsForPlan.length > 0
+            ? error instanceof Error
+              ? error.message
+              : 'AI 接口暂时不可用'
+            : '',
+        )
+      }
     } finally {
       setIsPlanLoading(false)
     }
@@ -502,13 +538,18 @@ function App() {
           query: submittedPlanQuery || planQuery,
           currentPlan: buildCurrentPlanPayload(planSummary),
           followUpQuestion: question,
+          accessCode: aiAccessCode,
         }),
       })
 
       const data = await response.json()
 
       if (!response.ok || !data.success || !data.reply) {
-        throw new Error(data.error || 'AI 暂时无法继续完善方案')
+        throw new Error(
+          data.error === 'Invalid access code'
+            ? '试用口令不正确，请重新输入。'
+            : data.error || 'AI 暂时无法继续完善方案',
+        )
       }
 
       setRefineRecords((records) => [
@@ -559,13 +600,18 @@ function App() {
             question: record.question,
             answer: record.reply,
           })),
+          accessCode: aiAccessCode,
         }),
       })
 
       const data = await response.json()
 
       if (!response.ok || !data.success || !data.finalPlan) {
-        throw new Error(data.error || 'AI 暂时无法生成完整方案草稿')
+        throw new Error(
+          data.error === 'Invalid access code'
+            ? '试用口令不正确，请重新输入。'
+            : data.error || 'AI 暂时无法生成完整方案草稿',
+        )
       }
 
       setFinalPlan(data.finalPlan)
@@ -670,6 +716,27 @@ function App() {
     }
   }
 
+  const confirmAccessCode = () => {
+    const nextAccessCode = accessCodeInput.trim()
+    setAiAccessCode(nextAccessCode)
+    setAccessCodeStatus(nextAccessCode ? 'confirmed' : 'idle')
+    setPlanApiError('')
+
+    if (nextAccessCode) {
+      persistAiAccessCode(nextAccessCode)
+    } else {
+      clearAiAccessCode()
+    }
+  }
+
+  const resetAccessCode = () => {
+    setAiAccessCode('')
+    setAccessCodeInput('')
+    setAccessCodeStatus('idle')
+    setPlanApiError('')
+    clearAiAccessCode()
+  }
+
   const selectMode = (mode) => {
     setActiveMode(mode)
 
@@ -721,7 +788,7 @@ function App() {
               >
                 <small>My Plan Library</small>
                 <strong>我的方案库</strong>
-                <span>即将开放：保存、继续编辑和导出完整方案。</span>
+                <span>查看本地保存的完整方案，云端同步和导出能力后续开放。</span>
               </button>
             </div>
             <div className="hero-status-grid" aria-label="Radar status">
@@ -732,7 +799,7 @@ function App() {
             <div className="personal-file-strip" aria-label="Personal project notes">
               <span>AI 资讯流</span>
               <span>AI 创意方案咨询</span>
-              <span>我的方案库 / 即将开放</span>
+              <span>我的方案库 / 本地保存</span>
             </div>
           </div>
           <div className="visual-panel" aria-label="Visual archive placeholder">
@@ -798,6 +865,38 @@ function App() {
               <p>
                 当前会基于已有 AI 资讯进行本地匹配，整理工具、案例、Prompt 灵感和商业玩法。
               </p>
+              <div className="access-code-card" aria-label="AI access code">
+                <div>
+                  <strong>AI 试用口令</strong>
+                  <small>Access Code</small>
+                </div>
+                <p>为了控制 API 使用成本，当前 AI 生成功能需要输入试用口令。</p>
+                {accessCodeStatus === 'confirmed' ? (
+                  <div className="access-code-confirmed">
+                    <span>试用口令已填写</span>
+                    <button type="button" onClick={resetAccessCode}>
+                      重新输入
+                    </button>
+                  </div>
+                ) : (
+                  <div className="access-code-row">
+                    <input
+                      type="password"
+                      value={accessCodeInput}
+                      onChange={(event) => setAccessCodeInput(event.target.value)}
+                      onKeyDown={(event) => {
+                        if (event.key === 'Enter') {
+                          confirmAccessCode()
+                        }
+                      }}
+                      placeholder="请输入试用口令"
+                    />
+                    <button type="button" onClick={confirmAccessCode}>
+                      确认口令
+                    </button>
+                  </div>
+                )}
+              </div>
               <label className="search-field">
                 <span>
                   创意方向
@@ -859,9 +958,9 @@ function App() {
             <aside className="history-entry-card" aria-label="History plan placeholder">
               <small>Plan History</small>
               <h3>查看历史方案</h3>
-              <p>未来登录后可以查看你保存过的完整方案。</p>
-              <button type="button" disabled>
-                即将开放
+              <p>当前可以查看保存在本浏览器里的方案，未来会支持登录后云端同步。</p>
+              <button type="button" onClick={() => selectMode('library')}>
+                打开我的方案库
               </button>
             </aside>
           </div>
@@ -954,8 +1053,12 @@ function App() {
 
           {hasPlanQuery && !isPlanLoading && !planSummary && (
             <div className="search-result-status is-empty in-panel">
-              <span>暂时没有生成方案，可以换一个关键词试试。</span>
-              <small>例如 AI 视频、作品集、海报、虚拟人、Runway、Midjourney。</small>
+              <span>{planApiError || '暂时没有生成方案，可以换一个关键词试试。'}</span>
+              <small>
+                {planApiError === '试用口令不正确，请重新输入。'
+                  ? '请在上方重新输入试用口令后，再点击生成初步方案。'
+                  : '例如 AI 视频、作品集、海报、虚拟人、Runway、Midjourney。'}
+              </small>
             </div>
           )}
 

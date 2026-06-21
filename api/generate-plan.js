@@ -44,6 +44,11 @@ function getAiErrorMessage(status, errorText) {
   return `AI API 请求失败，状态码 ${status}`
 }
 
+function hasValidAccessCode(requiredAccessCode, providedAccessCode) {
+  if (!requiredAccessCode) return true
+  return String(providedAccessCode || '') === requiredAccessCode
+}
+
 function buildUserPrompt(query, matchedSignals) {
   const signalsForPrompt = Array.isArray(matchedSignals)
     ? matchedSignals.slice(0, 5).map((signal) => ({
@@ -109,7 +114,7 @@ export default async function handler(request, response) {
   }
 
   try {
-    const { query, matchedSignals = [] } = request.body || {}
+    const { query, matchedSignals = [], accessCode } = request.body || {}
 
     if (!query || !String(query).trim()) {
       return response.status(400).json({
@@ -121,6 +126,15 @@ export default async function handler(request, response) {
     const apiKey = process.env.AI_API_KEY
     const baseUrl = process.env.AI_API_BASE_URL
     const model = process.env.AI_MODEL
+    const requiredAccessCode = process.env.AI_ACCESS_CODE
+
+    if (!hasValidAccessCode(requiredAccessCode, accessCode)) {
+      return response.status(401).json({
+        success: false,
+        source: 'server',
+        error: 'Invalid access code',
+      })
+    }
 
     if (!apiKey || !baseUrl || !model) {
       return response.status(500).json({
