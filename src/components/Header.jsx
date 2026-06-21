@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Header({ activeMode, onModeChange }) {
+function Header({ activeMode, onModeChange, searchQuery, onSearchChange, onSearchSubmit }) {
   return (
     <header className="browser-topbar">
       <div className="date-tab" aria-label="Session date">
@@ -33,10 +33,16 @@ function Header({ activeMode, onModeChange }) {
         </a>
       </nav>
 
-      <div className="address-bar" aria-label="Current address">
+      <form className="address-bar" role="search" aria-label="Global search" onSubmit={onSearchSubmit}>
         <span className="address-caret">Search</span>
-        输入关键词，搜索 AI 创意情报...
-      </div>
+        <input
+          type="search"
+          value={searchQuery}
+          onChange={(event) => onSearchChange(event.target.value)}
+          placeholder="输入关键词，搜索 AI 资讯或我的方案..."
+        />
+        <button type="submit">搜索</button>
+      </form>
 
       <div className="window-controls" aria-hidden="true">
         <span />

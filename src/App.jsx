@@ -66,6 +66,19 @@ const searchableFields = [
   'visual_tag',
 ]
 
+const savedPlanSearchFields = [
+  'summary',
+  'target',
+  'concept',
+  'tools',
+  'content_structure',
+  'execution_steps',
+  'visual_style',
+  'platform_suggestions',
+  'portfolio_value',
+  'next_actions',
+]
+
 const planKeywordBank = [
   '数字人',
   '虚拟人',
@@ -104,6 +117,19 @@ function getSearchText(signal) {
     .filter(Boolean)
     .join(' ')
     .toLowerCase()
+}
+
+function getSavedPlanSearchText(savedPlan) {
+  const finalPlan = savedPlan.finalPlan || {}
+  const finalPlanText = savedPlanSearchFields
+    .flatMap((field) => {
+      const value = finalPlan[field]
+      return Array.isArray(value) ? value : [value]
+    })
+    .filter(Boolean)
+    .join(' ')
+
+  return [savedPlan.title, savedPlan.query, finalPlanText].filter(Boolean).join(' ').toLowerCase()
 }
 
 function extractPlanKeywords(query) {
@@ -370,6 +396,7 @@ function App() {
   const [savedPlans, setSavedPlans] = useState(loadSavedPlans)
   const [selectedSavedPlanId, setSelectedSavedPlanId] = useState('')
   const [savedPlanCopyStatus, setSavedPlanCopyStatus] = useState('')
+  const [globalSearchQuery, setGlobalSearchQuery] = useState('')
   const todaysSignal = signals[0]
 
   const feedSignals = useMemo(
@@ -389,6 +416,21 @@ function App() {
   )
   const planSummary = apiPlanSummary || localPlanSummary
   const planSourceLabel = getPlanSourceLabel(planSource)
+  const globalSearchTerm = globalSearchQuery.trim().toLowerCase()
+  const globalSearchResults = useMemo(() => {
+    if (!globalSearchTerm) {
+      return {
+        signals: [],
+        savedPlans: [],
+      }
+    }
+
+    return {
+      signals: signals.filter((signal) => getSearchText(signal).includes(globalSearchTerm)),
+      savedPlans: savedPlans.filter((savedPlan) => getSavedPlanSearchText(savedPlan).includes(globalSearchTerm)),
+    }
+  }, [globalSearchTerm, savedPlans])
+  const globalSearchCount = globalSearchResults.signals.length + globalSearchResults.savedPlans.length
 
   const generatePlanForQuery = async (query) => {
     if (isPlanLoading) return
@@ -680,11 +722,116 @@ function App() {
     }, 0)
   }
 
+  const handleGlobalSearchSubmit = (event) => {
+    event.preventDefault()
+  }
+
+  const clearGlobalSearch = () => {
+    setGlobalSearchQuery('')
+  }
+
+  const openSignalFromSearch = (signal) => {
+    setActiveMode('news')
+    setSelectedSignal(signal)
+    clearGlobalSearch()
+
+    window.setTimeout(() => {
+      document.getElementById('news-feed')?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      })
+    }, 80)
+  }
+
+  const openSavedPlanFromSearch = (savedPlan) => {
+    setActiveMode('library')
+    setSelectedSavedPlanId(savedPlan.id)
+    clearGlobalSearch()
+
+    window.setTimeout(() => {
+      document.getElementById('plan-library')?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      })
+    }, 80)
+  }
+
   return (
     <main className="app-shell">
       <div className="noise-layer" aria-hidden="true" />
       <section className="browser-frame" id="home" aria-label="AI Creative Radar Home">
-        <Header activeMode={activeMode} onModeChange={selectMode} />
+        <Header
+          activeMode={activeMode}
+          onModeChange={selectMode}
+          searchQuery={globalSearchQuery}
+          onSearchChange={setGlobalSearchQuery}
+          onSearchSubmit={handleGlobalSearchSubmit}
+        />
+
+        {globalSearchTerm && (
+          <section className="global-search-panel" aria-label="Global search results">
+            <div className="global-search-header">
+              <span>
+                <strong>搜索结果</strong>
+                <small>{globalSearchCount > 0 ? `找到 ${globalSearchCount} 条相关内容` : '没有找到相关内容'}</small>
+              </span>
+              <button type="button" onClick={clearGlobalSearch}>
+                清除搜索
+              </button>
+            </div>
+            {globalSearchCount > 0 ? (
+              <div className="global-search-groups">
+                {globalSearchResults.signals.length > 0 && (
+                  <div className="global-search-group">
+                    <h3>AI 资讯</h3>
+                    <div className="global-search-list">
+                      {globalSearchResults.signals.map((signal) => (
+                        <button
+                          type="button"
+                          className="global-search-result"
+                          key={signal.id}
+                          onClick={() => openSignalFromSearch(signal)}
+                        >
+                          <span className="result-type">AI 资讯</span>
+                          <strong>{signal.title}</strong>
+                          <p>{signal.summary || signal.signal}</p>
+                          <small>
+                            {signal.category}
+                            {signal.tools?.length ? ` / ${signal.tools.slice(0, 3).join(' / ')}` : ''}
+                          </small>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                {globalSearchResults.savedPlans.length > 0 && (
+                  <div className="global-search-group">
+                    <h3>我的方案</h3>
+                    <div className="global-search-list">
+                      {globalSearchResults.savedPlans.map((savedPlan) => (
+                        <button
+                          type="button"
+                          className="global-search-result"
+                          key={savedPlan.id}
+                          onClick={() => openSavedPlanFromSearch(savedPlan)}
+                        >
+                          <span className="result-type">我的方案</span>
+                          <strong>{savedPlan.title || savedPlan.finalPlan?.title || '完整方案草稿'}</strong>
+                          <p>{savedPlan.finalPlan?.summary || '暂无方案摘要'}</p>
+                          <small>
+                            原始创意目标：{savedPlan.query || '未填写'} / {formatSavedPlanDate(savedPlan.createdAt)}
+                          </small>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <p className="global-search-empty">没有找到相关内容，可以换一个关键词试试。</p>
+            )}
+          </section>
+        )}
 
         <div className="hero-panel">
           <div className="hero-copy">

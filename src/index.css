@@ -208,20 +208,53 @@ p {
 }
 
 .address-bar {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 8px;
+  align-items: center;
   min-width: 0;
-  padding: 8px 12px;
+  padding: 6px 8px;
   overflow: hidden;
   border: 2px inset #6f876b;
   color: #b8c9aa;
   background: #050805;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 .address-caret {
-  margin-right: 10px;
   color: #9bb89c;
   text-transform: uppercase;
+}
+
+.address-bar input {
+  min-width: 0;
+  width: 100%;
+  border: 0;
+  color: #e5f3d4;
+  background: transparent;
+  font: inherit;
+  outline: none;
+}
+
+.address-bar input::placeholder {
+  color: #b8c9aa;
+  opacity: 0.82;
+}
+
+.address-bar button {
+  min-height: 30px;
+  border: 1px solid #6f876b;
+  color: #050805;
+  background: #aec7aa;
+  padding: 4px 9px;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.address-bar button:hover,
+.address-bar button:focus-visible {
+  border-color: #050805;
+  background: #7cff9b;
+  outline: none;
 }
 
 .window-controls {
@@ -242,6 +275,133 @@ p {
 
 .window-controls span:nth-child(3) {
   background: #7cff9b;
+}
+
+.global-search-panel {
+  margin: 12px 18px 18px;
+  overflow: hidden;
+  border: 2px solid #8faf8a;
+  background:
+    linear-gradient(135deg, rgba(174, 199, 170, 0.14), transparent 48%),
+    #243527;
+  box-shadow: 6px 6px 0 rgba(5, 8, 5, 0.24);
+}
+
+.global-search-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(143, 175, 138, 0.68);
+  background: #9bb89c;
+  color: #050805;
+}
+
+.global-search-header strong,
+.global-search-header small {
+  display: block;
+}
+
+.global-search-header small {
+  margin-top: 2px;
+  font-size: 0.76rem;
+  opacity: 0.76;
+}
+
+.global-search-header button {
+  min-height: 34px;
+  border: 2px solid #050805;
+  color: #050805;
+  background: #aec7aa;
+  padding: 6px 10px;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.global-search-header button:hover,
+.global-search-header button:focus-visible {
+  background: #7cff9b;
+  outline: none;
+}
+
+.global-search-groups {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  padding: 14px;
+}
+
+.global-search-group {
+  display: grid;
+  min-width: 0;
+  gap: 10px;
+}
+
+.global-search-group h3 {
+  margin: 0;
+  color: #e5f3d4;
+  font-size: 0.98rem;
+}
+
+.global-search-list {
+  display: grid;
+  gap: 10px;
+}
+
+.global-search-result {
+  display: grid;
+  min-width: 0;
+  gap: 7px;
+  width: 100%;
+  border: 1px solid rgba(143, 175, 138, 0.62);
+  color: #dce8ca;
+  background: rgba(5, 8, 5, 0.18);
+  padding: 12px;
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.global-search-result:hover,
+.global-search-result:focus-visible {
+  border-color: #aec7aa;
+  background: rgba(174, 199, 170, 0.16);
+  outline: none;
+}
+
+.global-search-result .result-type {
+  width: fit-content;
+  padding: 4px 7px;
+  border: 1px solid rgba(143, 175, 138, 0.72);
+  color: #050805;
+  background: #aec7aa;
+  font-size: 0.72rem;
+}
+
+.global-search-result strong {
+  color: #e5f3d4;
+  line-height: 1.4;
+}
+
+.global-search-result p {
+  margin: 0;
+  color: #dce8ca;
+  font-size: 0.88rem;
+  line-height: 1.62;
+}
+
+.global-search-result small {
+  color: #b8c9aa;
+  font-size: 0.76rem;
+  line-height: 1.5;
+}
+
+.global-search-empty {
+  margin: 0;
+  padding: 16px;
+  color: #dce8ca;
+  line-height: 1.7;
 }
 
 .hero-panel {
@@ -3053,6 +3213,10 @@ h1 {
     line-height: 1.35;
   }
 
+  .global-search-groups {
+    grid-template-columns: 1fr;
+  }
+
   h1 {
     font-size: clamp(2.15rem, 13vw, 3.6rem);
     line-height: 1.02;
@@ -3131,6 +3295,7 @@ h1 {
   .quick-guide,
   .quick-start,
   .mode-switcher,
+  .global-search-panel,
   .matched-plan,
   .plan-consult,
   .feed-section,
@@ -3393,6 +3558,7 @@ h1 {
 
   .plan-summary-grid > div,
   .quick-start-steps article,
+  .global-search-result,
   .refine-record,
   .final-plan-card-head,
   .final-plan-grid section,
@@ -3477,6 +3643,7 @@ h1 {
 
   .source-actions .source-button,
   .quick-start-steps button,
+  .global-search-header button,
   .final-plan-actions button,
   .saved-plan-actions button,
   .save-path-note button,
@@ -3521,6 +3688,19 @@ h1 {
     justify-content: center;
     padding: 8px 6px;
     text-align: center;
+  }
+
+  .address-bar {
+    grid-template-columns: 1fr auto;
+  }
+
+  .address-caret {
+    display: none;
+  }
+
+  .global-search-header {
+    align-items: stretch;
+    flex-direction: column;
   }
 
   .window-controls {
@@ -3580,6 +3760,7 @@ h1 {
   .quick-guide,
   .quick-start,
   .mode-switcher,
+  .global-search-panel,
   .matched-plan,
   .plan-consult,
   .feed-section,
