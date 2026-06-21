@@ -1,6 +1,6 @@
 const SYSTEM_PROMPT = [
   '你是 AI Creative Radar 的创意方案顾问。',
-  '用户已经有初步方案和多轮追问，现在需要你把这些内容整理成一份完整方案草稿。',
+  '用户已经有初步方案、多轮追问和资料库匹配内容，现在需要你把这些内容整理成一份最终方案草稿。',
   '请面向视觉创作者、学生、内容运营和 AI 创意初学者输出。',
   '方案需要具体、可执行，适合做作品集项目、内容账号实验或课程项目。',
   '不要简单复制原文，要重新整理成一份结构化方案。',
@@ -25,11 +25,13 @@ function normalizeFinalPlan(plan) {
     title: plan.title || '',
     summary: plan.summary || '',
     target: plan.target || '',
+    target_users: normalizeList(plan.target_users),
     concept: plan.concept || '',
     tools: normalizeList(plan.tools),
     content_structure: normalizeList(plan.content_structure),
     execution_steps: normalizeList(plan.execution_steps),
     visual_style: normalizeList(plan.visual_style),
+    prompt_ideas: normalizeList(plan.prompt_ideas),
     platform_suggestions: normalizeList(plan.platform_suggestions),
     portfolio_value: plan.portfolio_value || '',
     next_actions: normalizeList(plan.next_actions),
@@ -53,7 +55,7 @@ function hasValidAccessCode(requiredAccessCode, providedAccessCode) {
   return String(providedAccessCode || '') === requiredAccessCode
 }
 
-function buildUserPrompt(query, currentPlan, refineHistory) {
+function buildUserPrompt(query, currentPlan, refineHistory, matchedResources = []) {
   return [
     `用户原始创意目标：${query}`,
     '',
@@ -63,20 +65,26 @@ function buildUserPrompt(query, currentPlan, refineHistory) {
     '用户追问记录和 AI 补充建议：',
     JSON.stringify(Array.isArray(refineHistory) ? refineHistory : [], null, 2),
     '',
-    '请把以上内容重新整理成一份完整方案草稿。',
+    '资料库匹配内容（可作为参考，不需要逐字照搬）：',
+    JSON.stringify(Array.isArray(matchedResources) ? matchedResources.slice(0, 5) : [], null, 2),
+    '',
+    '请把以上内容重新整理成一份最终方案草稿。',
     '要求：不要简单复制原文；要整合、归纳、补齐执行路径；适合后续保存、下载或导出。',
+    '最终方案需要覆盖：项目标题、一句话概念、适合人群 / 使用场景、核心创意方向、推荐工具链、视觉风格建议、内容结构 / 栏目结构、执行步骤、Prompt 灵感、发布平台建议、作品集包装方式和下一步行动清单。',
     '',
     '请严格返回以下 JSON 结构，不要输出 Markdown，不要输出解释文字：',
     JSON.stringify(
       {
         title: '方案标题',
-        summary: '方案摘要',
+        summary: '一句话方案摘要',
         target: '项目目标',
-        concept: '核心概念',
+        target_users: ['适合人群或使用场景1', '适合人群或使用场景2'],
+        concept: '一句话核心概念',
         tools: ['工具1', '工具2'],
         content_structure: ['内容模块1', '内容模块2'],
         execution_steps: ['步骤1', '步骤2', '步骤3'],
         visual_style: ['视觉风格1', '视觉风格2'],
+        prompt_ideas: ['Prompt 灵感1', 'Prompt 灵感2'],
         platform_suggestions: ['平台建议1', '平台建议2'],
         portfolio_value: '这个项目如何放进作品集',
         next_actions: ['下一步1', '下一步2', '下一步3'],
@@ -96,7 +104,7 @@ export default async function handler(request, response) {
   }
 
   try {
-    const { query, currentPlan, refineHistory = [], accessCode } = request.body || {}
+    const { query, currentPlan, refineHistory = [], matchedResources = [], accessCode } = request.body || {}
 
     if (!query || !String(query).trim()) {
       return response.status(400).json({
@@ -150,7 +158,7 @@ export default async function handler(request, response) {
           },
           {
             role: 'user',
-            content: buildUserPrompt(String(query).trim(), currentPlan, refineHistory),
+            content: buildUserPrompt(String(query).trim(), currentPlan, refineHistory, matchedResources),
           },
         ],
         temperature: 0.7,

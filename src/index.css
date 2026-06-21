@@ -319,10 +319,22 @@ p {
   cursor: pointer;
 }
 
+.global-search-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
 .global-search-header button:hover,
 .global-search-header button:focus-visible {
   background: #7cff9b;
   outline: none;
+}
+
+.global-search-header button:disabled {
+  opacity: 0.66;
+  cursor: not-allowed;
 }
 
 .global-search-groups {
@@ -412,6 +424,112 @@ p {
   background: rgba(5, 8, 5, 0.12);
   font-size: 0.82rem;
   line-height: 1.55;
+}
+
+.smart-search-area {
+  display: grid;
+  gap: 12px;
+  padding: 0 14px 14px;
+}
+
+.smart-search-hint,
+.smart-search-status {
+  margin: 0;
+  color: #dce8ca;
+  font-size: 0.88rem;
+  line-height: 1.7;
+}
+
+.smart-search-status {
+  padding: 10px 12px;
+  border: 1px dashed rgba(143, 175, 138, 0.58);
+  background: rgba(5, 8, 5, 0.16);
+}
+
+.smart-search-result {
+  display: grid;
+  gap: 12px;
+  padding: 13px;
+  border: 1px solid rgba(143, 175, 138, 0.68);
+  background:
+    linear-gradient(135deg, rgba(174, 199, 170, 0.1), transparent 52%),
+    rgba(5, 8, 5, 0.2);
+}
+
+.smart-search-result-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: flex-start;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(143, 175, 138, 0.42);
+}
+
+.smart-search-result-head strong,
+.smart-search-result section > strong,
+.smart-direction-card strong,
+.smart-resource-card strong {
+  color: #e5f3d4;
+}
+
+.smart-search-result-head small,
+.smart-resource-card span,
+.smart-resource-card small {
+  color: #b8c9aa;
+  font-size: 0.76rem;
+  line-height: 1.5;
+}
+
+.smart-search-result section {
+  display: grid;
+  gap: 8px;
+}
+
+.smart-search-result p,
+.smart-search-result li {
+  margin: 0;
+  color: #dce8ca;
+  line-height: 1.68;
+}
+
+.smart-search-result ul {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.smart-resource-list,
+.smart-direction-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 10px;
+}
+
+.smart-resource-card,
+.smart-direction-card {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+  padding: 10px;
+  border: 1px solid rgba(143, 175, 138, 0.54);
+  background: rgba(5, 8, 5, 0.18);
+}
+
+.smart-use-button {
+  width: fit-content;
+  min-height: 42px;
+  border: 2px solid #6f876b;
+  color: #050805;
+  background: #aec7aa;
+  padding: 10px 13px;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.smart-use-button:hover,
+.smart-use-button:focus-visible {
+  border-color: #050805;
+  background: #7cff9b;
+  outline: none;
 }
 
 .hero-panel {
@@ -1790,6 +1908,14 @@ h1 {
   line-height: 1.7;
 }
 
+.consult-flow-note {
+  margin-top: 10px;
+  padding: 10px 12px;
+  border: 1px solid rgba(143, 175, 138, 0.58);
+  color: #e5f3d4 !important;
+  background: rgba(5, 8, 5, 0.18);
+}
+
 .plan-generate-button,
 .history-entry-card button,
 .next-refine-body button {
@@ -2074,7 +2200,7 @@ h1 {
 
 .refine-record {
   display: grid;
-  gap: 7px;
+  gap: 10px;
   padding: 12px;
   border: 1px solid rgba(143, 175, 138, 0.68);
   background:
@@ -2082,11 +2208,28 @@ h1 {
     rgba(5, 8, 5, 0.18);
 }
 
-.refine-record strong {
-  color: #e5f3d4;
+.refine-message {
+  display: grid;
+  gap: 6px;
+  padding: 10px;
+  border: 1px solid rgba(143, 175, 138, 0.5);
 }
 
-.refine-record p {
+.user-message {
+  background: rgba(174, 199, 170, 0.12);
+}
+
+.ai-message {
+  background: rgba(5, 8, 5, 0.22);
+}
+
+.refine-message strong {
+  color: #e5f3d4;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+}
+
+.refine-message p {
   margin: 0;
   color: #dce8ca;
   line-height: 1.7;
@@ -2239,7 +2382,7 @@ h1 {
 
 .final-plan-actions > div {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: 8px;
 }
 
@@ -2263,6 +2406,17 @@ h1 {
   margin-top: 3px;
   font-size: 0.68rem;
   text-transform: uppercase;
+}
+
+.final-plan-actions .finalize-button {
+  color: #e5f3d4 !important;
+  background: #243527 !important;
+}
+
+.final-plan-actions .finalize-button:hover,
+.final-plan-actions .finalize-button:focus-visible {
+  color: #050805 !important;
+  background: #aec7aa !important;
 }
 
 .save-path-note {
@@ -2433,7 +2587,7 @@ h1 {
 
 .saved-plan-actions {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(128px, 1fr));
 }
 
 .saved-plan-actions button {
@@ -3606,7 +3760,7 @@ h1 {
   .quick-start-body > p,
   .quick-start-steps p,
   .plan-summary-grid li,
-  .refine-record p,
+  .refine-message p,
   .final-plan-card-head p,
   .final-plan-grid p,
   .final-plan-grid li,

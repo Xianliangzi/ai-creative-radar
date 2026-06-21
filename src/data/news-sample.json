@@ -1,18 +1,14 @@
 [
   {
-    "id": "signal-001",
+    "id": "resource-001",
     "title": "Runway 风格视频工作流更适合做作品集里的动态视觉实验",
-    "signal": "AI 视频工具正在从一次性生成短片，变成适合学生做分镜、情绪板和动态提案的创作流程。",
+    "type": "tool",
+    "category": "AI 视频",
     "summary": "近期 AI 视频工具的角色一致性、镜头运动和风格保持能力持续提升，创作者可以用文字、参考图和短片段快速测试影像方向。它还不能完全替代拍摄和剪辑，但已经很适合做早期概念片、动态 moodboard 和作品集实验。",
-    "creator_value": "对视觉创作者来说，这类工具最有价值的地方不是直接产出最终大片，而是帮助你更快验证一个影像概念：角色是否成立、场景是否有氛围、镜头语言是否能支撑主题。",
-    "project_ideas": [
-      "做一个 45 秒 AI 影像概念片，用 5 个镜头表现同一个虚拟角色的情绪变化。",
-      "为服装、香水或音乐人设计一套动态视觉提案，包含 moodboard、分镜和 AI 预演片段。",
-      "把 AI 视频生成过程整理成作品集章节，展示从提示词、参考图到后期剪辑的完整流程。"
-    ],
-    "business_potential": "适合用于作品集、短视频账号、广告提案预演和视觉接单前期方案。现阶段更适合卖“创意预演”和“视觉方向探索”，不适合承诺完全替代商业拍摄。",
-    "target_reader": "数字媒体艺术学生、影像方向创作者、AI 视觉创作者、视觉设计师",
-    "category": "AI视觉工具",
+    "source_name": "Runway",
+    "source_url": "https://runwayml.com/",
+    "published_at": "2026-06-18",
+    "collected_at": "2026-06-18",
     "tools": [
       "Runway",
       "Pika",
@@ -20,35 +16,53 @@
       "CapCut",
       "After Effects"
     ],
-    "prompt_hint": "a lonely virtual model walking through an old shopping mall at night, dark sage green lighting, retro surveillance camera look, slow dolly shot, cinematic visual diary",
-    "source": "Runway",
-    "url": "https://runwayml.com/",
-    "date": "2026-06-18",
-    "image": "",
-    "image_alt": "AI 视频工作流动态视觉实验预览",
-    "image_mode": "cover",
-    "visual_tag": [
+    "related_concepts": [
       "video",
       "cinematic",
       "portfolio",
-      "workflow"
+      "workflow",
+      "image-to-video"
     ],
-    "confidence_level": "HIGH"
+    "target_users": [
+      "数字媒体艺术学生",
+      "影像方向创作者",
+      "AI 视觉创作者",
+      "视觉设计师"
+    ],
+    "creator_value": "对视觉创作者来说，这类工具最有价值的地方不是直接产出最终大片，而是帮助你更快验证一个影像概念：角色是否成立、场景是否有氛围、镜头语言是否能支撑主题。",
+    "project_ideas": [
+      "做一个 45 秒 AI 影像概念片，用 5 个镜头表现同一个虚拟角色的情绪变化。",
+      "为服装、香水或音乐人设计一套动态视觉提案，包含 moodboard、分镜和 AI 预演片段。",
+      "把 AI 视频生成过程整理成作品集章节，展示从提示词、参考图到后期剪辑的完整流程。"
+    ],
+    "prompt_hint": "a lonely virtual model walking through an old shopping mall at night, dark sage green lighting, retro surveillance camera look, slow dolly shot, cinematic visual diary",
+    "workflow_hint": "适合用于作品集、短视频账号、广告提案预演和视觉接单前期方案。现阶段更适合卖“创意预演”和“视觉方向探索”，不适合承诺完全替代商业拍摄。",
+    "platform_suggestions": [
+      "抖音",
+      "视频号",
+      "作品集",
+      "课程作业",
+      "商业提案"
+    ],
+    "difficulty": "中级",
+    "freshness_score": 5,
+    "credibility_score": 5,
+    "relevance_score": 5,
+    "creator_value_score": 5,
+    "actionability_score": 5,
+    "trend_score": 4,
+    "status": "已入库"
   },
   {
-    "id": "signal-002",
+    "id": "resource-002",
     "title": "图像生成与局部编辑结合，正在改变海报草图的制作方式",
-    "signal": "AI 生图的重点开始从“生成一张好看的图”，转向“反复修改、局部控制和设计落地”。",
+    "type": "tool",
+    "category": "AI 海报",
     "summary": "越来越多图像工具支持参考图、局部重绘、文字排版辅助和风格迁移。设计师可以先用 AI 生成视觉方向，再进入 Photoshop、Figma 或 Illustrator 做排版、修图和细节控制。",
-    "creator_value": "这对学生和设计师很实用：你可以用 AI 快速探索 10 个海报方向，再选择 1–2 个进行人工深化。这样作品集里不仅有结果，也能展示设计判断和迭代过程。",
-    "project_ideas": [
-      "为一个虚构展览做 12 张 AI 海报草图，再挑选 3 张进行字体和版式精修。",
-      "做一个品牌视觉实验项目，比较 AI 生成图、局部重绘和人工排版的差异。",
-      "整理一套“AI 海报从草图到成稿”的课程作业或作品集页面。"
-    ],
-    "business_potential": "适合做社媒封面、活动海报草案、品牌 moodboard 和小型视觉提案服务。商用时需要检查字体、素材版权和品牌使用风险。",
-    "target_reader": "视觉设计师、平面设计学生、内容运营、品牌视觉方向创作者",
-    "category": "AI视觉工具",
+    "source_name": "Adobe Firefly",
+    "source_url": "https://www.adobe.com/products/firefly.html",
+    "published_at": "2026-06-18",
+    "collected_at": "2026-06-18",
     "tools": [
       "Midjourney",
       "Adobe Photoshop",
@@ -56,35 +70,49 @@
       "Figma",
       "Illustrator"
     ],
-    "prompt_hint": "experimental exhibition poster, dark green old web aesthetic, scanned paper texture, halftone portrait, strong grid layout, editable title area, student design portfolio",
-    "source": "Adobe Firefly",
-    "url": "https://www.adobe.com/products/firefly.html",
-    "date": "2026-06-18",
-    "image": "",
-    "image_alt": "AI 图像生成与海报局部编辑工作流预览",
-    "image_mode": "cover",
-    "visual_tag": [
+    "related_concepts": [
       "design",
       "poster",
       "branding",
-      "editing"
+      "editing",
+      "text-to-image"
     ],
-    "confidence_level": "HIGH"
+    "target_users": [
+      "视觉设计师",
+      "平面设计学生",
+      "内容运营",
+      "品牌视觉方向创作者"
+    ],
+    "creator_value": "这对学生和设计师很实用：你可以用 AI 快速探索 10 个海报方向，再选择 1–2 个进行人工深化。这样作品集里不仅有结果，也能展示设计判断和迭代过程。",
+    "project_ideas": [
+      "为一个虚构展览做 12 张 AI 海报草图，再挑选 3 张进行字体和版式精修。",
+      "做一个品牌视觉实验项目，比较 AI 生成图、局部重绘和人工排版的差异。",
+      "整理一套“AI 海报从草图到成稿”的课程作业或作品集页面。"
+    ],
+    "prompt_hint": "experimental exhibition poster, dark green old web aesthetic, scanned paper texture, halftone portrait, strong grid layout, editable title area, student design portfolio",
+    "workflow_hint": "适合做社媒封面、活动海报草案、品牌 moodboard 和小型视觉提案服务。商用时需要检查字体、素材版权和品牌使用风险。",
+    "platform_suggestions": [
+      "商业提案"
+    ],
+    "difficulty": "入门",
+    "freshness_score": 5,
+    "credibility_score": 5,
+    "relevance_score": 5,
+    "creator_value_score": 5,
+    "actionability_score": 5,
+    "trend_score": 4,
+    "status": "已入库"
   },
   {
-    "id": "signal-003",
+    "id": "resource-003",
     "title": "AI Lookbook 案例让小品牌也能先做视觉预演",
-    "signal": "AI 时尚视觉最适合的落点之一，是帮助独立品牌在拍摄前验证造型、场景和传播风格。",
+    "type": "case",
+    "category": "AI 时尚",
     "summary": "一些独立服装品牌和视觉创作者开始使用 AI 生成 Lookbook 概念图，用来测试模特气质、场景氛围、色彩方向和社媒传播感。它不一定替代真实拍摄，但可以降低前期提案成本。",
-    "creator_value": "时尚、摄影和视觉设计方向的学生可以借鉴这个流程，把一个虚构品牌做成完整项目：品牌设定、服装风格、AI Lookbook、海报、短视频和社媒发布计划。",
-    "project_ideas": [
-      "创建一个虚构街头服装品牌，生成 8 张 Lookbook 主图和 3 张社媒海报。",
-      "做一份拍摄前视觉预演方案，包含 AI 场景、造型参考、镜头说明和后期风格。",
-      "用同一虚拟模特完成四季穿搭系列，训练角色一致性和视觉叙事能力。"
-    ],
-    "business_potential": "适合做小品牌视觉提案、服装店上新预演、小红书内容账号和作品集项目。真正商业交付时，应明确这是概念预演还是正式素材。",
-    "target_reader": "时尚创作者、摄影学生、视觉设计师、内容运营",
-    "category": "创意案例",
+    "source_name": "Krea AI",
+    "source_url": "https://www.krea.ai/",
+    "published_at": "2026-06-18",
+    "collected_at": "2026-06-18",
     "tools": [
       "Midjourney",
       "Krea",
@@ -92,35 +120,52 @@
       "Runway",
       "小红书"
     ],
-    "prompt_hint": "independent streetwear lookbook, young model in oversized jacket, old shopping street at night, dark sage green color grade, flash photography, editorial layout",
-    "source": "Krea AI",
-    "url": "https://www.krea.ai/",
-    "date": "2026-06-18",
-    "image": "",
-    "image_alt": "AI Lookbook 独立品牌视觉预演案例",
-    "image_mode": "cover",
-    "visual_tag": [
+    "related_concepts": [
       "fashion",
       "lookbook",
       "editorial",
       "case"
     ],
-    "confidence_level": "MEDIUM"
+    "target_users": [
+      "时尚创作者",
+      "摄影学生",
+      "视觉设计师",
+      "内容运营"
+    ],
+    "creator_value": "时尚、摄影和视觉设计方向的学生可以借鉴这个流程，把一个虚构品牌做成完整项目：品牌设定、服装风格、AI Lookbook、海报、短视频和社媒发布计划。",
+    "project_ideas": [
+      "创建一个虚构街头服装品牌，生成 8 张 Lookbook 主图和 3 张社媒海报。",
+      "做一份拍摄前视觉预演方案，包含 AI 场景、造型参考、镜头说明和后期风格。",
+      "用同一虚拟模特完成四季穿搭系列，训练角色一致性和视觉叙事能力。"
+    ],
+    "prompt_hint": "independent streetwear lookbook, young model in oversized jacket, old shopping street at night, dark sage green color grade, flash photography, editorial layout",
+    "workflow_hint": "适合做小品牌视觉提案、服装店上新预演、小红书内容账号和作品集项目。真正商业交付时，应明确这是概念预演还是正式素材。",
+    "platform_suggestions": [
+      "小红书",
+      "抖音",
+      "视频号",
+      "作品集",
+      "课程作业"
+    ],
+    "difficulty": "入门",
+    "freshness_score": 5,
+    "credibility_score": 4,
+    "relevance_score": 5,
+    "creator_value_score": 5,
+    "actionability_score": 5,
+    "trend_score": 4,
+    "status": "已入库"
   },
   {
-    "id": "signal-004",
+    "id": "resource-004",
     "title": "AI MV 和视觉循环短片成为音乐人内容合作的新入口",
-    "signal": "AI 影像案例正在从单张封面扩展到短循环、歌词视觉和低成本 MV 概念片。",
+    "type": "case",
+    "category": "AI 视频",
     "summary": "不少独立音乐人、播客和内容创作者需要封面、预告片、动态背景和短循环视觉。AI 视频与图像工具可以帮助视觉创作者快速生成氛围素材，再通过剪辑和排版变成可发布内容。",
-    "creator_value": "如果你是学生或视觉创作者，可以把音乐人视觉作为一个练习场景：既有情绪、节奏和画面统一问题，也很适合展示跨媒介创作能力。",
-    "project_ideas": [
-      "为一首虚构单曲设计封面、歌词短视频和 15 秒循环视觉。",
-      "选择一位独立音乐人的公开作品，做一套非商业视觉改造练习并整理成作品集。",
-      "制作一个 AI MV 概念提案，展示色彩板、角色、场景、镜头和剪辑节奏。"
-    ],
-    "business_potential": "适合发展成音乐封面、动态海报、短视频背景和 MV 概念片服务。可以从低价小单或个人合作开始，但需要注意音乐授权和素材版权。",
-    "target_reader": "数字媒体艺术学生、影像创作者、音乐视觉设计师、内容运营",
-    "category": "创意案例",
+    "source_name": "Pika",
+    "source_url": "https://pika.art/",
+    "published_at": "2026-06-18",
+    "collected_at": "2026-06-18",
     "tools": [
       "Runway",
       "Pika",
@@ -128,35 +173,50 @@
       "CapCut",
       "After Effects"
     ],
-    "prompt_hint": "looping music visual, lonely singer silhouette, green CRT monitor light, rain on window, analog video texture, slow motion, album teaser",
-    "source": "Pika",
-    "url": "https://pika.art/",
-    "date": "2026-06-18",
-    "image": "",
-    "image_alt": "AI MV 与音乐视觉循环短片案例",
-    "image_mode": "cover",
-    "visual_tag": [
+    "related_concepts": [
       "video",
       "music",
       "motion",
-      "case"
+      "case",
+      "image-to-video"
     ],
-    "confidence_level": "MEDIUM"
+    "target_users": [
+      "数字媒体艺术学生",
+      "影像创作者",
+      "音乐视觉设计师",
+      "内容运营"
+    ],
+    "creator_value": "如果你是学生或视觉创作者，可以把音乐人视觉作为一个练习场景：既有情绪、节奏和画面统一问题，也很适合展示跨媒介创作能力。",
+    "project_ideas": [
+      "为一首虚构单曲设计封面、歌词短视频和 15 秒循环视觉。",
+      "选择一位独立音乐人的公开作品，做一套非商业视觉改造练习并整理成作品集。",
+      "制作一个 AI MV 概念提案，展示色彩板、角色、场景、镜头和剪辑节奏。"
+    ],
+    "prompt_hint": "looping music visual, lonely singer silhouette, green CRT monitor light, rain on window, analog video texture, slow motion, album teaser",
+    "workflow_hint": "适合发展成音乐封面、动态海报、短视频背景和 MV 概念片服务。可以从低价小单或个人合作开始，但需要注意音乐授权和素材版权。",
+    "platform_suggestions": [
+      "抖音",
+      "视频号"
+    ],
+    "difficulty": "入门",
+    "freshness_score": 5,
+    "credibility_score": 4,
+    "relevance_score": 5,
+    "creator_value_score": 5,
+    "actionability_score": 5,
+    "trend_score": 4,
+    "status": "已入库"
   },
   {
-    "id": "signal-005",
+    "id": "resource-005",
     "title": "旧网页和个人主页美学回潮，适合做差异化作品集",
-    "signal": "视觉作品集正在从干净模板，转向更有个人记忆点的 old web 档案站。",
+    "type": "news",
+    "category": "作品集",
     "summary": "Y2K、旧浏览器窗口、像素图、扫描线、低清图像和个人主页式排版正在重新出现。它们不一定适合所有商业品牌，但很适合视觉创作者表达个人审美和实验态度。",
-    "creator_value": "这对学生尤其有用：一个有明确风格的作品集网页，可能比普通 PDF 更能展示你的审美、信息组织和网页表达能力。",
-    "project_ideas": [
-      "把自己的 AI 视觉实验整理成一个 old web 档案站，按工具、主题和风格分类。",
-      "为毕业设计做一个复古浏览器式展示页面，包含项目说明、过程图、影像和互动入口。",
-      "设计一套 weird web UI 组件：窗口、按钮、标签、档案卡、图像占位和留言板。"
-    ],
-    "business_potential": "适合做个人作品集、视觉模板包、网页视觉定制和内容账号风格定位。商业化重点不是大众通用，而是服务有独特审美需求的小众项目。",
-    "target_reader": "视觉设计师、数字媒体艺术学生、前端初学者、个人创作者",
-    "category": "潮流趋势",
+    "source_name": "Figma Make",
+    "source_url": "https://www.figma.com/make/",
+    "published_at": "2026-06-18",
+    "collected_at": "2026-06-18",
     "tools": [
       "Figma",
       "React",
@@ -164,35 +224,52 @@
       "Framer",
       "Midjourney"
     ],
-    "prompt_hint": "old web personal homepage, dark sage green browser window, pixel image archive, student portfolio, cyber zine layout, small buttons and profile card",
-    "source": "Figma Make",
-    "url": "https://www.figma.com/make/",
-    "date": "2026-06-18",
-    "image": "",
-    "image_alt": "旧网页个人主页美学与作品集趋势",
-    "image_mode": "cover",
-    "visual_tag": [
+    "related_concepts": [
       "y2k",
       "old-web",
       "portfolio",
       "design"
     ],
-    "confidence_level": "HIGH"
+    "target_users": [
+      "视觉设计师",
+      "数字媒体艺术学生",
+      "前端初学者",
+      "个人创作者"
+    ],
+    "creator_value": "这对学生尤其有用：一个有明确风格的作品集网页，可能比普通 PDF 更能展示你的审美、信息组织和网页表达能力。",
+    "project_ideas": [
+      "把自己的 AI 视觉实验整理成一个 old web 档案站，按工具、主题和风格分类。",
+      "为毕业设计做一个复古浏览器式展示页面，包含项目说明、过程图、影像和互动入口。",
+      "设计一套 weird web UI 组件：窗口、按钮、标签、档案卡、图像占位和留言板。"
+    ],
+    "prompt_hint": "old web personal homepage, dark sage green browser window, pixel image archive, student portfolio, cyber zine layout, small buttons and profile card",
+    "workflow_hint": "适合做个人作品集、视觉模板包、网页视觉定制和内容账号风格定位。商业化重点不是大众通用，而是服务有独特审美需求的小众项目。",
+    "platform_suggestions": [
+      "抖音",
+      "视频号",
+      "作品集",
+      "课程作业",
+      "商业提案"
+    ],
+    "difficulty": "入门",
+    "freshness_score": 5,
+    "credibility_score": 5,
+    "relevance_score": 5,
+    "creator_value_score": 5,
+    "actionability_score": 5,
+    "trend_score": 5,
+    "status": "已入库"
   },
   {
-    "id": "signal-006",
+    "id": "resource-006",
     "title": "虚拟人内容从单张照片转向角色日记和连续栏目",
-    "signal": "虚拟人项目的关键不再只是脸和穿搭，而是稳定角色、世界观和持续内容。",
+    "type": "news",
+    "category": "数字人",
     "summary": "越来越多 AI 虚拟人内容开始强调固定人设、生活方式、视觉语言和栏目化发布。相比只发单张 AI 图，连续叙事更容易形成记忆点，也更适合内容平台。",
-    "creator_value": "视觉创作者可以把虚拟人当成完整 IP 练习：角色设定、穿搭系统、房间场景、口吻、图像风格和短视频栏目都能放进作品集。",
-    "project_ideas": [
-      "创建一个“AI 视觉情报员”虚拟角色，每周发布工具观察和灵感卡片。",
-      "为虚拟人设计 7 天生活日记，包括房间、穿搭、道具、封面和短视频脚本。",
-      "做一套虚拟人品牌合作提案，展示角色定位、受众、视觉样张和内容计划。"
-    ],
-    "business_potential": "适合做内容账号、个人 IP、虚拟模特视觉服务和品牌联名提案。需要长期更新和角色一致性，不适合只靠一次出图变现。",
-    "target_reader": "AI 视觉创作者、内容运营、时尚创作者、个人 IP 创作者",
-    "category": "潮流趋势",
+    "source_name": "Midjourney",
+    "source_url": "https://www.midjourney.com/",
+    "published_at": "2026-06-18",
+    "collected_at": "2026-06-18",
     "tools": [
       "Midjourney",
       "Runway",
@@ -200,35 +277,51 @@
       "小红书",
       "Instagram"
     ],
-    "prompt_hint": "AI visual archivist character, dark green old computer room, personal diary photo, consistent outfit, weird web profile page, soft flash photography",
-    "source": "Midjourney",
-    "url": "https://www.midjourney.com/",
-    "date": "2026-06-18",
-    "image": "",
-    "image_alt": "虚拟人角色日记与连续内容趋势",
-    "image_mode": "cover",
-    "visual_tag": [
+    "related_concepts": [
       "avatar",
       "content",
       "fashion",
-      "storytelling"
+      "storytelling",
+      "digital human"
     ],
-    "confidence_level": "MEDIUM"
+    "target_users": [
+      "AI 视觉创作者",
+      "内容运营",
+      "时尚创作者",
+      "个人 IP 创作者"
+    ],
+    "creator_value": "视觉创作者可以把虚拟人当成完整 IP 练习：角色设定、穿搭系统、房间场景、口吻、图像风格和短视频栏目都能放进作品集。",
+    "project_ideas": [
+      "创建一个“AI 视觉情报员”虚拟角色，每周发布工具观察和灵感卡片。",
+      "为虚拟人设计 7 天生活日记，包括房间、穿搭、道具、封面和短视频脚本。",
+      "做一套虚拟人品牌合作提案，展示角色定位、受众、视觉样张和内容计划。"
+    ],
+    "prompt_hint": "AI visual archivist character, dark green old computer room, personal diary photo, consistent outfit, weird web profile page, soft flash photography",
+    "workflow_hint": "适合做内容账号、个人 IP、虚拟模特视觉服务和品牌联名提案。需要长期更新和角色一致性，不适合只靠一次出图变现。",
+    "platform_suggestions": [
+      "抖音",
+      "视频号",
+      "商业提案"
+    ],
+    "difficulty": "入门",
+    "freshness_score": 5,
+    "credibility_score": 4,
+    "relevance_score": 5,
+    "creator_value_score": 5,
+    "actionability_score": 5,
+    "trend_score": 5,
+    "status": "已入库"
   },
   {
-    "id": "signal-007",
+    "id": "resource-007",
     "title": "AI 视觉模板包适合成为设计师的第一个小产品",
-    "signal": "把 AI 工作流整理成模板，比只展示生成图更容易变成可售卖的小产品。",
+    "type": "business",
+    "category": "商业化",
     "summary": "一些个人创作者开始出售 AI 海报模板、Prompt 包、封面版式、Notion 灵感库和工作流教程。这类产品不需要很复杂，但需要解决具体人群的具体问题。",
-    "creator_value": "如果你会整理流程、做视觉样张和写清楚步骤，就可以把自己的 AI 创作方法产品化。对学生来说，这也是理解设计商业化的一种练习。",
-    "project_ideas": [
-      "做一套小红书封面 AI 模板包，包含 Prompt、版式、字体建议和示例图。",
-      "整理一个 AI 海报实验工作流，做成 PDF 教程或 Notion 模板。",
-      "围绕“毕业展主视觉”设计一套可复用的 AI moodboard 和提案模板。"
-    ],
-    "business_potential": "适合模板售卖、内容账号引流、轻量咨询和接单前的标准化服务。不要承诺一键变现，重点是帮助特定人群节省时间。",
-    "target_reader": "视觉设计师、内容运营、想做副业的学生、个人创意创业者",
-    "category": "商业玩法",
+    "source_name": "Gumroad",
+    "source_url": "https://gumroad.com/",
+    "published_at": "2026-06-18",
+    "collected_at": "2026-06-18",
     "tools": [
       "Notion",
       "Figma",
@@ -236,35 +329,52 @@
       "Midjourney",
       "Gumroad"
     ],
-    "prompt_hint": "AI social media cover template, reusable layout, dark green cyber zine style, editable text area, student creator toolkit, visual system preview",
-    "source": "Gumroad",
-    "url": "https://gumroad.com/",
-    "date": "2026-06-18",
-    "image": "",
-    "image_alt": "AI 视觉模板包小产品商业玩法",
-    "image_mode": "cover",
-    "visual_tag": [
+    "related_concepts": [
       "business",
       "template",
       "creator",
-      "product"
+      "product",
+      "Prompt",
+      "workflow"
     ],
-    "confidence_level": "MEDIUM"
+    "target_users": [
+      "视觉设计师",
+      "内容运营",
+      "想做副业的学生",
+      "个人创意创业者"
+    ],
+    "creator_value": "如果你会整理流程、做视觉样张和写清楚步骤，就可以把自己的 AI 创作方法产品化。对学生来说，这也是理解设计商业化的一种练习。",
+    "project_ideas": [
+      "做一套小红书封面 AI 模板包，包含 Prompt、版式、字体建议和示例图。",
+      "整理一个 AI 海报实验工作流，做成 PDF 教程或 Notion 模板。",
+      "围绕“毕业展主视觉”设计一套可复用的 AI moodboard 和提案模板。"
+    ],
+    "prompt_hint": "AI social media cover template, reusable layout, dark green cyber zine style, editable text area, student creator toolkit, visual system preview",
+    "workflow_hint": "适合模板售卖、内容账号引流、轻量咨询和接单前的标准化服务。不要承诺一键变现，重点是帮助特定人群节省时间。",
+    "platform_suggestions": [
+      "抖音",
+      "视频号",
+      "商业提案"
+    ],
+    "difficulty": "中级",
+    "freshness_score": 5,
+    "credibility_score": 4,
+    "relevance_score": 5,
+    "creator_value_score": 5,
+    "actionability_score": 5,
+    "trend_score": 4,
+    "status": "已入库"
   },
   {
-    "id": "signal-008",
+    "id": "resource-008",
     "title": "AI 视觉接单可以从“提案预演”而不是“最终成片”开始",
-    "signal": "对刚起步的创作者来说，AI 更现实的商业切口是低成本提案、视觉方向探索和样片预演。",
+    "type": "business",
+    "category": "商业化",
     "summary": "很多小品牌、社群活动、音乐人和内容账号并不一定需要完整大片，但需要快速看到方向。AI 可以帮助创作者在前期提供 moodboard、关键视觉、短片预演和社媒样张。",
-    "creator_value": "这对学生和新手友好，因为你不必一开始就承接完整商业项目，而是可以从“小范围视觉方案”开始积累案例和客户沟通经验。",
-    "project_ideas": [
-      "设计一个“品牌视觉预演套餐”，包含 6 张 moodboard、2 张主视觉和 1 个短视频概念。",
-      "为校园活动或小型展览提供 AI 海报方向探索，并记录修改过程。",
-      "做一个接单案例页面，展示客户需求、AI 草图、人工筛选和最终提案。"
-    ],
-    "business_potential": "适合接单入门、内容账号展示、作品集商业模拟和低成本视觉咨询。要明确交付边界，避免把 AI 草图包装成完整商业成片。",
-    "target_reader": "想接单的学生、视觉设计师、内容运营、AI 视觉创作者",
-    "category": "商业玩法",
+    "source_name": "Canva AI Image Generator",
+    "source_url": "https://www.canva.com/ai-image-generator/",
+    "published_at": "2026-06-18",
+    "collected_at": "2026-06-18",
     "tools": [
       "Midjourney",
       "Figma",
@@ -272,35 +382,54 @@
       "Runway",
       "Notion"
     ],
-    "prompt_hint": "brand visual proposal preview, six moodboard frames, dark green archive layout, poster mockup, campaign direction, student design service",
-    "source": "Canva AI Image Generator",
-    "url": "https://www.canva.com/ai-image-generator/",
-    "date": "2026-06-18",
-    "image": "",
-    "image_alt": "AI 视觉提案预演接单玩法",
-    "image_mode": "cover",
-    "visual_tag": [
+    "related_concepts": [
       "business",
       "proposal",
       "service",
-      "branding"
+      "branding",
+      "image-to-video",
+      "text-to-image"
     ],
-    "confidence_level": "MEDIUM"
+    "target_users": [
+      "想接单的学生",
+      "视觉设计师",
+      "内容运营",
+      "AI 视觉创作者"
+    ],
+    "creator_value": "这对学生和新手友好，因为你不必一开始就承接完整商业项目，而是可以从“小范围视觉方案”开始积累案例和客户沟通经验。",
+    "project_ideas": [
+      "设计一个“品牌视觉预演套餐”，包含 6 张 moodboard、2 张主视觉和 1 个短视频概念。",
+      "为校园活动或小型展览提供 AI 海报方向探索，并记录修改过程。",
+      "做一个接单案例页面，展示客户需求、AI 草图、人工筛选和最终提案。"
+    ],
+    "prompt_hint": "brand visual proposal preview, six moodboard frames, dark green archive layout, poster mockup, campaign direction, student design service",
+    "workflow_hint": "适合接单入门、内容账号展示、作品集商业模拟和低成本视觉咨询。要明确交付边界，避免把 AI 草图包装成完整商业成片。",
+    "platform_suggestions": [
+      "抖音",
+      "视频号",
+      "作品集",
+      "课程作业",
+      "商业提案"
+    ],
+    "difficulty": "中级",
+    "freshness_score": 5,
+    "credibility_score": 4,
+    "relevance_score": 5,
+    "creator_value_score": 5,
+    "actionability_score": 5,
+    "trend_score": 4,
+    "status": "已入库"
   },
   {
-    "id": "signal-009",
+    "id": "resource-009",
     "title": "用“风格系统 Prompt”做一组可持续扩展的视觉系列",
-    "signal": "Prompt 的价值不只是生成一张图，而是帮助创作者建立可复用的视觉语言。",
+    "type": "prompt",
+    "category": "工具教程",
     "summary": "很多新手写 Prompt 时只关注单次效果，但作品集和内容账号更需要系列感。可以把主体、色彩、镜头、材质、排版和后期质感整理成一套风格系统，再反复改造。",
-    "creator_value": "这能帮助学生从“会出图”进阶到“会设计视觉系统”。你可以展示同一套 Prompt 如何生成海报、封面、短片分镜和网页视觉。",
-    "project_ideas": [
-      "做一组 9 张同风格海报，主题是 AI 视觉档案、旧电脑和城市夜景。",
-      "把同一 Prompt 系统扩展成封面、网页 Hero、卡片缩略图和短视频镜头。",
-      "写一篇创作记录，解释每个关键词如何影响画面、风格和叙事。"
-    ],
-    "business_potential": "适合做 Prompt 教程、视觉系列账号、作品集章节和模板产品。更适合展示方法论，不建议只售卖未经整理的提示词。",
-    "target_reader": "AI 初学者、视觉设计学生、Prompt 练习者、内容运营",
-    "category": "灵感Prompt",
+    "source_name": "Midjourney Docs",
+    "source_url": "https://docs.midjourney.com/",
+    "published_at": "2026-06-18",
+    "collected_at": "2026-06-18",
     "tools": [
       "Midjourney",
       "Krea",
@@ -308,35 +437,52 @@
       "Photoshop",
       "Pinterest"
     ],
-    "prompt_hint": "dark sage green visual archive, old browser interface, halftone portrait, pixel collage, Chinese student portfolio, cyber zine, consistent layout system",
-    "source": "Midjourney Docs",
-    "url": "https://docs.midjourney.com/",
-    "date": "2026-06-18",
-    "image": "",
-    "image_alt": "风格系统 Prompt 视觉系列方法",
-    "image_mode": "cover",
-    "visual_tag": [
+    "related_concepts": [
       "prompt",
       "system",
       "portfolio",
-      "visual-style"
+      "visual-style",
+      "Prompt"
     ],
-    "confidence_level": "HIGH"
+    "target_users": [
+      "AI 初学者",
+      "视觉设计学生",
+      "Prompt 练习者",
+      "内容运营"
+    ],
+    "creator_value": "这能帮助学生从“会出图”进阶到“会设计视觉系统”。你可以展示同一套 Prompt 如何生成海报、封面、短片分镜和网页视觉。",
+    "project_ideas": [
+      "做一组 9 张同风格海报，主题是 AI 视觉档案、旧电脑和城市夜景。",
+      "把同一 Prompt 系统扩展成封面、网页 Hero、卡片缩略图和短视频镜头。",
+      "写一篇创作记录，解释每个关键词如何影响画面、风格和叙事。"
+    ],
+    "prompt_hint": "dark sage green visual archive, old browser interface, halftone portrait, pixel collage, Chinese student portfolio, cyber zine, consistent layout system",
+    "workflow_hint": "适合做 Prompt 教程、视觉系列账号、作品集章节和模板产品。更适合展示方法论，不建议只售卖未经整理的提示词。",
+    "platform_suggestions": [
+      "抖音",
+      "视频号",
+      "作品集",
+      "课程作业"
+    ],
+    "difficulty": "入门",
+    "freshness_score": 5,
+    "credibility_score": 5,
+    "relevance_score": 5,
+    "creator_value_score": 5,
+    "actionability_score": 5,
+    "trend_score": 4,
+    "status": "已入库"
   },
   {
-    "id": "signal-010",
+    "id": "resource-010",
     "title": "3D 生成与网页交互结合，可能成为数字媒体作品集的新方向",
-    "signal": "AI 3D 工具降低了空间原型门槛，也让学生更容易把概念装置变成可浏览的网页体验。",
+    "type": "news",
+    "category": "作品集",
     "summary": "AI 3D 生成工具可以从文本或图片生成基础模型，虽然还需要清理和优化，但已经适合早期空间概念、虚拟展陈和交互原型。结合网页技术后，它可以成为数字媒体作品集里的沉浸式展示方向。",
-    "creator_value": "数字媒体艺术学生可以用它快速搭建一个可讨论的空间草图，再用网页、视频或交互说明展示项目概念。这比只放几张效果图更完整。",
-    "project_ideas": [
-      "做一个 AI 视觉情报站的 3D 虚拟房间，里面有档案墙、旧电脑和影像屏幕。",
-      "为毕业设计制作一个虚拟展览预演，用 AI 3D 模型搭建空间草图。",
-      "把 3D 场景截图、交互线框和 AI 生成过程整理成作品集页面。"
-    ],
-    "business_potential": "适合做展陈提案、虚拟快闪店概念、互动网页作品和课程项目。商业化还需要 3D 清模、性能优化和前端实现能力。",
-    "target_reader": "数字媒体艺术学生、交互设计学生、空间视觉创作者、前端视觉方向学习者",
-    "category": "前沿观察",
+    "source_name": "Spline AI",
+    "source_url": "https://spline.design/ai-generate",
+    "published_at": "2026-06-18",
+    "collected_at": "2026-06-18",
     "tools": [
       "Spline",
       "Tripo",
@@ -344,35 +490,50 @@
       "Blender",
       "Three.js"
     ],
-    "prompt_hint": "interactive 3D archive room, dark green old computer interface, floating image cards, student digital media installation, low light, web experience concept",
-    "source": "Spline AI",
-    "url": "https://spline.design/ai-generate",
-    "date": "2026-06-18",
-    "image": "",
-    "image_alt": "AI 3D 与网页交互作品集前沿观察",
-    "image_mode": "cover",
-    "visual_tag": [
+    "related_concepts": [
       "3D",
       "interactive",
       "web",
       "frontier"
     ],
-    "confidence_level": "HIGH"
+    "target_users": [
+      "数字媒体艺术学生",
+      "交互设计学生",
+      "空间视觉创作者",
+      "前端视觉方向学习者"
+    ],
+    "creator_value": "数字媒体艺术学生可以用它快速搭建一个可讨论的空间草图，再用网页、视频或交互说明展示项目概念。这比只放几张效果图更完整。",
+    "project_ideas": [
+      "做一个 AI 视觉情报站的 3D 虚拟房间，里面有档案墙、旧电脑和影像屏幕。",
+      "为毕业设计制作一个虚拟展览预演，用 AI 3D 模型搭建空间草图。",
+      "把 3D 场景截图、交互线框和 AI 生成过程整理成作品集页面。"
+    ],
+    "prompt_hint": "interactive 3D archive room, dark green old computer interface, floating image cards, student digital media installation, low light, web experience concept",
+    "workflow_hint": "适合做展陈提案、虚拟快闪店概念、互动网页作品和课程项目。商业化还需要 3D 清模、性能优化和前端实现能力。",
+    "platform_suggestions": [
+      "作品集",
+      "课程作业",
+      "商业提案"
+    ],
+    "difficulty": "进阶",
+    "freshness_score": 5,
+    "credibility_score": 5,
+    "relevance_score": 5,
+    "creator_value_score": 5,
+    "actionability_score": 5,
+    "trend_score": 5,
+    "status": "已入库"
   },
   {
-    "id": "signal-011",
+    "id": "resource-011",
     "title": "数字人项目可以从“会说话的头像”升级成作品集里的完整角色系统",
-    "signal": "虚拟人不只是生成一张脸，而是可以被设计成一个有身份、栏目、视觉语言和内容节奏的个人项目。",
+    "type": "tool",
+    "category": "数字人",
     "summary": "HeyGen、D-ID 等数字人和视频头像工具降低了虚拟角色出镜的门槛。对学生和视觉创作者来说，更有价值的方向不是单纯测试口型同步，而是把数字人做成一个完整角色：人设、视觉风格、栏目脚本、短视频封面和发布节奏都可以成为作品集内容。",
-    "creator_value": "数字人项目适合训练角色设定、视觉统一、内容运营和短视频表达能力。它能把 AI 图像、AI 视频、脚本、声音和社媒发布整合在一起，比单张图更容易展示综合创作流程。",
-    "project_ideas": [
-      "设计一个“AI 视觉情报员”数字人，定期讲解 AI 工具和创意案例。",
-      "为虚拟人制作 7 天栏目计划，包括头像、封面、脚本、口播视频和小红书发布模板。",
-      "把数字人从人设草图到视频成片的流程整理成作品集项目。"
-    ],
-    "business_potential": "适合做内容账号、课程口播、品牌虚拟主播提案和个人 IP 实验。商业化时要明确说明哪些部分由 AI 生成，避免把概念样片包装成完整代运营服务。",
-    "target_reader": "数字媒体艺术学生、AI 视觉创作者、内容运营、想做虚拟人或小红书 AI 账号的人",
-    "category": "AI视觉工具",
+    "source_name": "HeyGen",
+    "source_url": "https://www.heygen.com/",
+    "published_at": "2026-06-21",
+    "collected_at": "2026-06-21",
     "tools": [
       "HeyGen",
       "D-ID",
@@ -380,70 +541,107 @@
       "CapCut",
       "小红书"
     ],
-    "prompt_hint": "Chinese virtual creator, AI visual news host, dark green old web studio, consistent face, short video cover, creator profile, cyber zine identity",
-    "source": "HeyGen",
-    "url": "https://www.heygen.com/",
-    "date": "2026-06-21",
-    "image": "",
-    "image_alt": "数字人虚拟角色与内容账号项目预览",
-    "image_mode": "cover",
-    "visual_tag": [
+    "related_concepts": [
       "avatar",
       "digital-human",
       "content",
-      "xiaohongshu"
+      "xiaohongshu",
+      "image-to-video",
+      "digital human"
     ],
-    "confidence_level": "HIGH"
+    "target_users": [
+      "数字媒体艺术学生",
+      "AI 视觉创作者",
+      "内容运营",
+      "想做虚拟人或小红书 AI 账号的人"
+    ],
+    "creator_value": "数字人项目适合训练角色设定、视觉统一、内容运营和短视频表达能力。它能把 AI 图像、AI 视频、脚本、声音和社媒发布整合在一起，比单张图更容易展示综合创作流程。",
+    "project_ideas": [
+      "设计一个“AI 视觉情报员”数字人，定期讲解 AI 工具和创意案例。",
+      "为虚拟人制作 7 天栏目计划，包括头像、封面、脚本、口播视频和小红书发布模板。",
+      "把数字人从人设草图到视频成片的流程整理成作品集项目。"
+    ],
+    "prompt_hint": "Chinese virtual creator, AI visual news host, dark green old web studio, consistent face, short video cover, creator profile, cyber zine identity",
+    "workflow_hint": "适合做内容账号、课程口播、品牌虚拟主播提案和个人 IP 实验。商业化时要明确说明哪些部分由 AI 生成，避免把概念样片包装成完整代运营服务。",
+    "platform_suggestions": [
+      "抖音",
+      "视频号",
+      "作品集",
+      "课程作业",
+      "商业提案"
+    ],
+    "difficulty": "中级",
+    "freshness_score": 5,
+    "credibility_score": 5,
+    "relevance_score": 5,
+    "creator_value_score": 5,
+    "actionability_score": 5,
+    "trend_score": 4,
+    "status": "已入库"
   },
   {
-    "id": "signal-012",
+    "id": "resource-012",
     "title": "AI 视频短片适合先做 15 秒概念片，而不是一开始挑战完整叙事",
-    "signal": "AI 视频对学生最友好的切入点，是用短镜头验证氛围、人物、场景和剪辑节奏。",
+    "type": "tool",
+    "category": "AI 视频",
     "summary": "Pika、Runway、Luma 等 AI 视频工具都在持续强化图生视频、镜头运动和风格控制。现阶段它们还不适合直接完成长片，但非常适合制作 10-30 秒的概念短片、作品集片头、情绪影像和短视频视觉实验。",
-    "creator_value": "创作者可以用 AI 视频快速测试一个影像方向是否成立：角色是否有记忆点、场景是否统一、镜头是否能支撑主题。它尤其适合数字媒体艺术课程、毕业设计前期和短片提案。",
-    "project_ideas": [
-      "做一个 15 秒 AI 视频短片，主题是“旧电脑里的虚拟人醒来”。",
-      "为作品集首页制作一段动态开场影像，展示个人视觉风格。",
-      "把同一段 Prompt 在 Pika、Runway、Luma 中测试，比较镜头稳定性和风格差异。"
-    ],
-    "business_potential": "适合做短片概念提案、音乐视觉预演、活动预告和社媒短视频视觉服务。当前更适合卖创意方向和概念样片，不适合承诺完全替代专业拍摄。",
-    "target_reader": "AI 视频创作者、影像方向学生、视觉设计师、想做作品集动态内容的人",
-    "category": "AI视觉工具",
+    "source_name": "Pika",
+    "source_url": "https://pika.art/",
+    "published_at": "2026-06-21",
+    "collected_at": "2026-06-21",
     "tools": [
       "Pika",
       "Runway",
       "Luma Dream Machine",
       "CapCut"
     ],
-    "prompt_hint": "15-second AI short film, virtual human inside an old computer, dark green screen glow, slow camera push, dreamcore hallway, cinematic edit",
-    "source": "Pika",
-    "url": "https://pika.art/",
-    "date": "2026-06-21",
-    "image": "",
-    "image_alt": "AI 视频短片与作品集动态影像预览",
-    "image_mode": "cover",
-    "visual_tag": [
+    "related_concepts": [
       "video",
       "short-film",
       "portfolio",
-      "motion"
+      "motion",
+      "image-to-video"
     ],
-    "confidence_level": "HIGH"
+    "target_users": [
+      "AI 视频创作者",
+      "影像方向学生",
+      "视觉设计师",
+      "想做作品集动态内容的人"
+    ],
+    "creator_value": "创作者可以用 AI 视频快速测试一个影像方向是否成立：角色是否有记忆点、场景是否统一、镜头是否能支撑主题。它尤其适合数字媒体艺术课程、毕业设计前期和短片提案。",
+    "project_ideas": [
+      "做一个 15 秒 AI 视频短片，主题是“旧电脑里的虚拟人醒来”。",
+      "为作品集首页制作一段动态开场影像，展示个人视觉风格。",
+      "把同一段 Prompt 在 Pika、Runway、Luma 中测试，比较镜头稳定性和风格差异。"
+    ],
+    "prompt_hint": "15-second AI short film, virtual human inside an old computer, dark green screen glow, slow camera push, dreamcore hallway, cinematic edit",
+    "workflow_hint": "适合做短片概念提案、音乐视觉预演、活动预告和社媒短视频视觉服务。当前更适合卖创意方向和概念样片，不适合承诺完全替代专业拍摄。",
+    "platform_suggestions": [
+      "抖音",
+      "视频号",
+      "作品集",
+      "课程作业",
+      "商业提案"
+    ],
+    "difficulty": "中级",
+    "freshness_score": 5,
+    "credibility_score": 5,
+    "relevance_score": 5,
+    "creator_value_score": 5,
+    "actionability_score": 5,
+    "trend_score": 4,
+    "status": "已入库"
   },
   {
-    "id": "signal-013",
+    "id": "resource-013",
     "title": "AI 海报实验可以从单张效果图变成一套视觉系统",
-    "signal": "海报方向最适合把 AI 生图、排版、局部修改和品牌视觉整合成完整练习。",
+    "type": "prompt",
+    "category": "AI 海报",
     "summary": "Adobe Firefly、Krea、Canva 等工具让海报创作更容易从灵感图进入可编辑的设计流程。对学生来说，可以先用 AI 生成视觉方向，再用设计软件做标题、层级、字体、留白和系列化处理。",
-    "creator_value": "AI 海报不应该只停留在“好看的图”，而应该训练你对视觉主题、版式系统和系列表达的控制。它很适合作为作品集里的一个独立章节，展示从 Prompt 到设计落地的完整过程。",
-    "project_ideas": [
-      "围绕“AI 视觉创意展”制作 6 张系列海报，统一色彩和字体系统。",
-      "用 Krea 生成氛围图，再用 Figma 或 Photoshop 完成中文标题排版。",
-      "做一组小红书封面模板，把海报语言转成内容运营场景。"
-    ],
-    "business_potential": "适合做活动海报草案、社媒封面、课程作业、品牌 moodboard 和模板产品。商业使用时需要检查字体、素材和 AI 工具授权。",
-    "target_reader": "视觉设计师、平面设计学生、内容运营、想做海报作品集的人",
-    "category": "灵感Prompt",
+    "source_name": "Adobe Firefly",
+    "source_url": "https://www.adobe.com/products/firefly.html",
+    "published_at": "2026-06-21",
+    "collected_at": "2026-06-21",
     "tools": [
       "Adobe Firefly",
       "Krea",
@@ -451,35 +649,52 @@
       "Figma",
       "Photoshop"
     ],
-    "prompt_hint": "Chinese visual poster system, AI creative exhibition, dark sage green, halftone portrait, bold typography, old web archive, editable layout",
-    "source": "Adobe Firefly",
-    "url": "https://www.adobe.com/products/firefly.html",
-    "date": "2026-06-21",
-    "image": "",
-    "image_alt": "AI 海报与视觉系统 Prompt 实验预览",
-    "image_mode": "cover",
-    "visual_tag": [
+    "related_concepts": [
       "poster",
       "prompt",
       "design",
-      "system"
+      "system",
+      "workflow",
+      "text-to-image"
     ],
-    "confidence_level": "HIGH"
+    "target_users": [
+      "视觉设计师",
+      "平面设计学生",
+      "内容运营",
+      "想做海报作品集的人"
+    ],
+    "creator_value": "AI 海报不应该只停留在“好看的图”，而应该训练你对视觉主题、版式系统和系列表达的控制。它很适合作为作品集里的一个独立章节，展示从 Prompt 到设计落地的完整过程。",
+    "project_ideas": [
+      "围绕“AI 视觉创意展”制作 6 张系列海报，统一色彩和字体系统。",
+      "用 Krea 生成氛围图，再用 Figma 或 Photoshop 完成中文标题排版。",
+      "做一组小红书封面模板，把海报语言转成内容运营场景。"
+    ],
+    "prompt_hint": "Chinese visual poster system, AI creative exhibition, dark sage green, halftone portrait, bold typography, old web archive, editable layout",
+    "workflow_hint": "适合做活动海报草案、社媒封面、课程作业、品牌 moodboard 和模板产品。商业使用时需要检查字体、素材和 AI 工具授权。",
+    "platform_suggestions": [
+      "作品集",
+      "课程作业",
+      "商业提案"
+    ],
+    "difficulty": "入门",
+    "freshness_score": 5,
+    "credibility_score": 5,
+    "relevance_score": 5,
+    "creator_value_score": 5,
+    "actionability_score": 5,
+    "trend_score": 4,
+    "status": "已入库"
   },
   {
-    "id": "signal-014",
+    "id": "resource-014",
     "title": "作品集网页可以成为 AI 创作流程的展示容器",
-    "signal": "比起只上传 PDF，把 AI 工具链、过程图和结果做成网页，更能体现创作者的结构化表达能力。",
+    "type": "business",
+    "category": "作品集",
     "summary": "Figma、Framer、Spline 等工具让学生更容易搭建可浏览的作品集页面。AI 视觉项目往往包含 Prompt、参考图、生成过程、筛选逻辑、后期处理和最终应用，网页比静态 PDF 更适合呈现这种链路。",
-    "creator_value": "作品集网页可以把你的 AI 创作能力变得更清楚：你不是只会生成图片，而是能组织信息、设计交互、解释方法，并把项目包装成可访问的体验。",
-    "project_ideas": [
-      "把 3 个 AI 视觉项目做成一个 old web 风格作品集网页。",
-      "为每个项目增加工具链、Prompt 片段、失败样张和最终输出对比。",
-      "加入一个互动目录，让面试官可以按 AI 视频、海报、虚拟人分类浏览。"
-    ],
-    "business_potential": "适合用于求职作品集、个人主页、接单展示页和课程项目。商业化方向可以是作品集网页定制、模板售卖或学生作品集辅导。",
-    "target_reader": "数字媒体艺术学生、视觉设计学生、前端视觉学习者、准备求职作品集的人",
-    "category": "商业玩法",
+    "source_name": "Framer",
+    "source_url": "https://www.framer.com/",
+    "published_at": "2026-06-21",
+    "collected_at": "2026-06-21",
     "tools": [
       "Figma",
       "Framer",
@@ -487,35 +702,52 @@
       "React",
       "Midjourney"
     ],
-    "prompt_hint": "AI portfolio website, old web browser interface, project archive cards, process images, dark green cyber zine, student visual designer homepage",
-    "source": "Framer",
-    "url": "https://www.framer.com/",
-    "date": "2026-06-21",
-    "image": "",
-    "image_alt": "AI 作品集网页与视觉档案展示预览",
-    "image_mode": "cover",
-    "visual_tag": [
+    "related_concepts": [
       "portfolio",
       "web",
       "old-web",
-      "business"
+      "business",
+      "Prompt",
+      "workflow"
     ],
-    "confidence_level": "HIGH"
+    "target_users": [
+      "数字媒体艺术学生",
+      "视觉设计学生",
+      "前端视觉学习者",
+      "准备求职作品集的人"
+    ],
+    "creator_value": "作品集网页可以把你的 AI 创作能力变得更清楚：你不是只会生成图片，而是能组织信息、设计交互、解释方法，并把项目包装成可访问的体验。",
+    "project_ideas": [
+      "把 3 个 AI 视觉项目做成一个 old web 风格作品集网页。",
+      "为每个项目增加工具链、Prompt 片段、失败样张和最终输出对比。",
+      "加入一个互动目录，让面试官可以按 AI 视频、海报、虚拟人分类浏览。"
+    ],
+    "prompt_hint": "AI portfolio website, old web browser interface, project archive cards, process images, dark green cyber zine, student visual designer homepage",
+    "workflow_hint": "适合用于求职作品集、个人主页、接单展示页和课程项目。商业化方向可以是作品集网页定制、模板售卖或学生作品集辅导。",
+    "platform_suggestions": [
+      "作品集",
+      "课程作业",
+      "商业提案"
+    ],
+    "difficulty": "入门",
+    "freshness_score": 5,
+    "credibility_score": 5,
+    "relevance_score": 5,
+    "creator_value_score": 5,
+    "actionability_score": 5,
+    "trend_score": 4,
+    "status": "已入库"
   },
   {
-    "id": "signal-015",
+    "id": "resource-015",
     "title": "小红书 AI 账号可以从“晒图”转向工具教程和项目拆解",
-    "signal": "AI 内容账号更可持续的方向，是把工具、案例、Prompt 和作品集方法整理成连续栏目。",
+    "type": "business",
+    "category": "小红书",
     "summary": "很多 AI 视觉账号容易只发布生成图，但对用户真正有帮助的内容通常是：这个工具怎么用、适合做什么、Prompt 怎么写、学生能不能放进作品集、有没有商业玩法。小红书、B 站和短视频平台都适合这种轻量教学和案例拆解。",
-    "creator_value": "内容运营和视觉创作者可以把自己的学习过程变成内容资产。每次测试一个工具，都可以转成图文笔记、短视频、Prompt 卡片或作品集方法论。",
-    "project_ideas": [
-      "做一个“小白 AI 视觉工具日记”账号，每周拆解一个工具和一个项目方向。",
-      "围绕 AI 视频、海报、虚拟人、作品集做 4 个固定栏目。",
-      "把工具测试结果整理成可收藏的 Prompt 卡片和案例模板。"
-    ],
-    "business_potential": "适合内容账号起步、课程引流、模板售卖、工具测评和轻量咨询。重点是持续输出真实测试经验，而不是夸大 AI 变现效果。",
-    "target_reader": "内容运营、新媒体运营、AI 视觉初学者、想做小红书 AI 账号的人",
-    "category": "商业玩法",
+    "source_name": "Canva",
+    "source_url": "https://www.canva.com/",
+    "published_at": "2026-06-21",
+    "collected_at": "2026-06-21",
     "tools": [
       "小红书",
       "Canva",
@@ -523,35 +755,54 @@
       "Midjourney",
       "Runway"
     ],
-    "prompt_hint": "xiaohongshu AI visual tutorial cover, tool testing diary, prompt card layout, Chinese creator notes, dark green retro interface, practical workflow",
-    "source": "Canva",
-    "url": "https://www.canva.com/",
-    "date": "2026-06-21",
-    "image": "",
-    "image_alt": "小红书 AI 账号栏目与内容运营玩法预览",
-    "image_mode": "cover",
-    "visual_tag": [
+    "related_concepts": [
       "xiaohongshu",
       "content",
       "business",
-      "tutorial"
+      "tutorial",
+      "image-to-video",
+      "Prompt"
     ],
-    "confidence_level": "MEDIUM"
+    "target_users": [
+      "内容运营",
+      "新媒体运营",
+      "AI 视觉初学者",
+      "想做小红书 AI 账号的人"
+    ],
+    "creator_value": "内容运营和视觉创作者可以把自己的学习过程变成内容资产。每次测试一个工具，都可以转成图文笔记、短视频、Prompt 卡片或作品集方法论。",
+    "project_ideas": [
+      "做一个“小白 AI 视觉工具日记”账号，每周拆解一个工具和一个项目方向。",
+      "围绕 AI 视频、海报、虚拟人、作品集做 4 个固定栏目。",
+      "把工具测试结果整理成可收藏的 Prompt 卡片和案例模板。"
+    ],
+    "prompt_hint": "xiaohongshu AI visual tutorial cover, tool testing diary, prompt card layout, Chinese creator notes, dark green retro interface, practical workflow",
+    "workflow_hint": "适合内容账号起步、课程引流、模板售卖、工具测评和轻量咨询。重点是持续输出真实测试经验，而不是夸大 AI 变现效果。",
+    "platform_suggestions": [
+      "小红书",
+      "抖音",
+      "视频号",
+      "作品集",
+      "课程作业"
+    ],
+    "difficulty": "入门",
+    "freshness_score": 5,
+    "credibility_score": 4,
+    "relevance_score": 5,
+    "creator_value_score": 5,
+    "actionability_score": 5,
+    "trend_score": 4,
+    "status": "已入库"
   },
   {
-    "id": "signal-016",
+    "id": "resource-016",
     "title": "AI 模板产品可以从一个具体场景开始，而不是做万能模板",
-    "signal": "最容易被学生和个人创作者启动的小产品，是围绕一个具体需求做模板包。",
+    "type": "business",
+    "category": "商业化",
     "summary": "Canva、Figma、Notion 等工具都适合把 AI 工作流整理成可复用模板。相比做一个“大而全”的模板库，更实际的方式是选择一个场景：小红书封面、作品集项目页、AI 海报提案、品牌 moodboard 或短视频脚本表。",
-    "creator_value": "模板产品训练的是“把自己的方法讲清楚”的能力。你需要把视觉结果、操作步骤、Prompt、注意事项和可编辑文件整理成别人能直接使用的形式。",
-    "project_ideas": [
-      "制作一套“AI 作品集项目页模板”，包含项目背景、工具链、过程图和反思区。",
-      "做一套小红书 AI 工具测评封面模板，方便连续发布内容。",
-      "整理一个品牌 moodboard 提案模板，把 AI 图像、色彩和关键词放进同一套结构。"
-    ],
-    "business_potential": "适合模板售卖、内容账号引流、课程资料和接单前置产品。它不需要一开始很复杂，但要解决明确人群的明确问题。",
-    "target_reader": "视觉设计师、学生创作者、内容运营、想做副业和模板售卖的人",
-    "category": "商业玩法",
+    "source_name": "Figma",
+    "source_url": "https://www.figma.com/",
+    "published_at": "2026-06-21",
+    "collected_at": "2026-06-21",
     "tools": [
       "Canva",
       "Figma",
@@ -559,70 +810,108 @@
       "Midjourney",
       "Krea"
     ],
-    "prompt_hint": "AI creator template kit, portfolio page layout, xiaohongshu cover system, editable blocks, dark green retro archive, practical design toolkit",
-    "source": "Figma",
-    "url": "https://www.figma.com/",
-    "date": "2026-06-21",
-    "image": "",
-    "image_alt": "AI 模板产品与创作者小商业模式预览",
-    "image_mode": "cover",
-    "visual_tag": [
+    "related_concepts": [
       "template",
       "business",
       "product",
-      "creator"
+      "creator",
+      "image-to-video",
+      "workflow"
     ],
-    "confidence_level": "MEDIUM"
+    "target_users": [
+      "视觉设计师",
+      "学生创作者",
+      "内容运营",
+      "想做副业和模板售卖的人"
+    ],
+    "creator_value": "模板产品训练的是“把自己的方法讲清楚”的能力。你需要把视觉结果、操作步骤、Prompt、注意事项和可编辑文件整理成别人能直接使用的形式。",
+    "project_ideas": [
+      "制作一套“AI 作品集项目页模板”，包含项目背景、工具链、过程图和反思区。",
+      "做一套小红书 AI 工具测评封面模板，方便连续发布内容。",
+      "整理一个品牌 moodboard 提案模板，把 AI 图像、色彩和关键词放进同一套结构。"
+    ],
+    "prompt_hint": "AI creator template kit, portfolio page layout, xiaohongshu cover system, editable blocks, dark green retro archive, practical design toolkit",
+    "workflow_hint": "适合模板售卖、内容账号引流、课程资料和接单前置产品。它不需要一开始很复杂，但要解决明确人群的明确问题。",
+    "platform_suggestions": [
+      "小红书",
+      "抖音",
+      "视频号",
+      "作品集",
+      "课程作业"
+    ],
+    "difficulty": "中级",
+    "freshness_score": 5,
+    "credibility_score": 4,
+    "relevance_score": 5,
+    "creator_value_score": 5,
+    "actionability_score": 5,
+    "trend_score": 4,
+    "status": "已入库"
   },
   {
-    "id": "signal-017",
+    "id": "resource-017",
     "title": "AI 时尚 Lookbook 可以成为服装、摄影和视觉设计的交叉作品",
-    "signal": "AI lookbook 不只是时尚图，它可以连接品牌设定、模特人设、场景叙事和社媒传播。",
+    "type": "case",
+    "category": "AI 时尚",
     "summary": "Midjourney、Krea、Runway 等工具让个人创作者可以在没有摄影棚的情况下预演一套时尚视觉。对学生来说，可以把它做成虚构品牌项目：品牌故事、服装风格、模特人设、Lookbook、海报和短视频都能串起来。",
-    "creator_value": "这个方向适合展示视觉统筹能力。你需要考虑色彩、服装、人物、镜头、版式和传播场景，而不是只生成几张好看的时尚图。",
-    "project_ideas": [
-      "设计一个虚构街头品牌，制作 8 张 AI Lookbook 和 3 张宣传海报。",
-      "做一个“数字时尚毕业展”视觉方案，包括人物、场景、视频预告和网页展示。",
-      "用同一虚拟模特完成春夏/秋冬两个系列，对比风格延展能力。"
-    ],
-    "business_potential": "适合品牌提案、服装店上新预演、社媒视觉内容和作品集项目。商业使用时要清楚标注它是概念视觉还是最终商品图。",
-    "target_reader": "时尚创作者、摄影学生、视觉设计师、想做 AI fashion 和 lookbook 的人",
-    "category": "创意案例",
+    "source_name": "Krea AI",
+    "source_url": "https://www.krea.ai/",
+    "published_at": "2026-06-21",
+    "collected_at": "2026-06-21",
     "tools": [
       "Midjourney",
       "Krea",
       "Runway",
       "Photoshop"
     ],
-    "prompt_hint": "AI fashion lookbook, Chinese streetwear brand, virtual model, dark green flash photography, editorial layout, old web magazine, consistent styling",
-    "source": "Krea AI",
-    "url": "https://www.krea.ai/",
-    "date": "2026-06-21",
-    "image": "",
-    "image_alt": "AI 时尚 Lookbook 与虚构品牌视觉案例预览",
-    "image_mode": "cover",
-    "visual_tag": [
+    "related_concepts": [
       "fashion",
       "lookbook",
       "branding",
-      "case"
+      "case",
+      "image-to-video",
+      "text-to-image"
     ],
-    "confidence_level": "MEDIUM"
+    "target_users": [
+      "时尚创作者",
+      "摄影学生",
+      "视觉设计师",
+      "想做 AI fashion 和 lookbook 的人"
+    ],
+    "creator_value": "这个方向适合展示视觉统筹能力。你需要考虑色彩、服装、人物、镜头、版式和传播场景，而不是只生成几张好看的时尚图。",
+    "project_ideas": [
+      "设计一个虚构街头品牌，制作 8 张 AI Lookbook 和 3 张宣传海报。",
+      "做一个“数字时尚毕业展”视觉方案，包括人物、场景、视频预告和网页展示。",
+      "用同一虚拟模特完成春夏/秋冬两个系列，对比风格延展能力。"
+    ],
+    "prompt_hint": "AI fashion lookbook, Chinese streetwear brand, virtual model, dark green flash photography, editorial layout, old web magazine, consistent styling",
+    "workflow_hint": "适合品牌提案、服装店上新预演、社媒视觉内容和作品集项目。商业使用时要清楚标注它是概念视觉还是最终商品图。",
+    "platform_suggestions": [
+      "抖音",
+      "视频号",
+      "作品集",
+      "课程作业",
+      "商业提案"
+    ],
+    "difficulty": "入门",
+    "freshness_score": 5,
+    "credibility_score": 4,
+    "relevance_score": 5,
+    "creator_value_score": 5,
+    "actionability_score": 5,
+    "trend_score": 4,
+    "status": "已入库"
   },
   {
-    "id": "signal-018",
+    "id": "resource-018",
     "title": "AI MV 可以先从音乐人的封面、歌词视频和循环视觉做起",
-    "signal": "音乐视觉项目不一定一开始就做完整 MV，封面和短循环更适合个人创作者起步。",
+    "type": "case",
+    "category": "AI 视频",
     "summary": "Runway、Pika、CapCut 等工具让音乐视觉从静态封面扩展到动态背景、歌词视频、预告片和舞台循环视觉。对学生来说，这类项目很适合练习情绪表达、节奏剪辑和视觉叙事。",
-    "creator_value": "AI MV 方向可以把图像、视频、字体、音乐情绪和剪辑节奏结合起来，适合做一个完整的跨媒体作品集案例。即使没有真实客户，也可以选择公开音乐做非商业练习。",
-    "project_ideas": [
-      "为一首虚构单曲制作封面、歌词短视频和 10 秒循环背景。",
-      "拆解一首歌的情绪关键词，用 AI 生成 5 个镜头并剪成 teaser。",
-      "做一个音乐人视觉提案模板，包含封面、短视频、社媒图和演出屏幕参考。"
-    ],
-    "business_potential": "适合独立音乐人视觉合作、动态封面、短视频背景、演出视觉概念和内容账号案例。注意音乐授权和发布平台规则。",
-    "target_reader": "影像学生、音乐视觉设计师、AI 视频创作者、想做 MV 或动态封面的人",
-    "category": "创意案例",
+    "source_name": "Runway",
+    "source_url": "https://runwayml.com/",
+    "published_at": "2026-06-21",
+    "collected_at": "2026-06-21",
     "tools": [
       "Runway",
       "Pika",
@@ -630,35 +919,52 @@
       "After Effects",
       "Midjourney"
     ],
-    "prompt_hint": "AI music video teaser, green CRT light, singer silhouette, lyric video background, slow zoom, analog noise, emotional loop visual",
-    "source": "Runway",
-    "url": "https://runwayml.com/",
-    "date": "2026-06-21",
-    "image": "",
-    "image_alt": "AI MV 音乐视觉与动态封面案例预览",
-    "image_mode": "cover",
-    "visual_tag": [
+    "related_concepts": [
       "music",
       "video",
       "mv",
-      "motion"
+      "motion",
+      "image-to-video"
     ],
-    "confidence_level": "HIGH"
+    "target_users": [
+      "影像学生",
+      "音乐视觉设计师",
+      "AI 视频创作者",
+      "想做 MV 或动态封面的人"
+    ],
+    "creator_value": "AI MV 方向可以把图像、视频、字体、音乐情绪和剪辑节奏结合起来，适合做一个完整的跨媒体作品集案例。即使没有真实客户，也可以选择公开音乐做非商业练习。",
+    "project_ideas": [
+      "为一首虚构单曲制作封面、歌词短视频和 10 秒循环背景。",
+      "拆解一首歌的情绪关键词，用 AI 生成 5 个镜头并剪成 teaser。",
+      "做一个音乐人视觉提案模板，包含封面、短视频、社媒图和演出屏幕参考。"
+    ],
+    "prompt_hint": "AI music video teaser, green CRT light, singer silhouette, lyric video background, slow zoom, analog noise, emotional loop visual",
+    "workflow_hint": "适合独立音乐人视觉合作、动态封面、短视频背景、演出视觉概念和内容账号案例。注意音乐授权和发布平台规则。",
+    "platform_suggestions": [
+      "抖音",
+      "视频号",
+      "作品集",
+      "课程作业"
+    ],
+    "difficulty": "入门",
+    "freshness_score": 5,
+    "credibility_score": 5,
+    "relevance_score": 5,
+    "creator_value_score": 5,
+    "actionability_score": 5,
+    "trend_score": 4,
+    "status": "已入库"
   },
   {
-    "id": "signal-019",
+    "id": "resource-019",
     "title": "AI 视觉工具链正在从单点工具变成“从灵感到发布”的组合流程",
-    "signal": "真正能落地的 AI 创作，通常不是依赖一个工具，而是把生成、编辑、排版、剪辑和发布串起来。",
+    "type": "workflow",
+    "category": "AIGC 趋势",
     "summary": "一个完整 AI 视觉项目可能会同时用到 Midjourney 或 Krea 做图像方向，Runway 或 Pika 做视频片段，Figma 做版式和信息结构，CapCut 做剪辑，最后发布到小红书或作品集网页。工具链思维比单工具炫技更适合长期学习。",
-    "creator_value": "这能帮助学生从“试工具”转向“做项目”。你可以为每个项目记录工具链、输入、输出、失败点和人工调整，这会让作品集更可信。",
-    "project_ideas": [
-      "为“AI 视频作品集”整理一张工具链流程图，从灵感搜集到最终发布。",
-      "用同一个主题分别输出海报、短片、网页卡片和小红书封面。",
-      "做一份 AI 视觉工具链对比笔记，说明每个工具适合的环节。"
-    ],
-    "business_potential": "适合做工具教程、课程内容、咨询服务、作品集方法论和团队提案流程。商业价值来自流程整合，而不是单个工具本身。",
-    "target_reader": "AI 视觉初学者、视觉设计师、内容运营、想建立稳定创作流程的人",
-    "category": "前沿观察",
+    "source_name": "CapCut",
+    "source_url": "https://www.capcut.com/",
+    "published_at": "2026-06-21",
+    "collected_at": "2026-06-21",
     "tools": [
       "Midjourney",
       "Krea",
@@ -667,35 +973,54 @@
       "Figma",
       "CapCut"
     ],
-    "prompt_hint": "AI visual workflow map, tools connected by archive lines, poster video web social media outputs, dark green cyber zine interface, student creator process",
-    "source": "CapCut",
-    "url": "https://www.capcut.com/",
-    "date": "2026-06-21",
-    "image": "",
-    "image_alt": "AI 视觉工具链从灵感到发布的流程预览",
-    "image_mode": "cover",
-    "visual_tag": [
+    "related_concepts": [
       "workflow",
       "toolchain",
       "video",
-      "design"
+      "design",
+      "image-to-video",
+      "text-to-image"
     ],
-    "confidence_level": "MEDIUM"
+    "target_users": [
+      "AI 视觉初学者",
+      "视觉设计师",
+      "内容运营",
+      "想建立稳定创作流程的人"
+    ],
+    "creator_value": "这能帮助学生从“试工具”转向“做项目”。你可以为每个项目记录工具链、输入、输出、失败点和人工调整，这会让作品集更可信。",
+    "project_ideas": [
+      "为“AI 视频作品集”整理一张工具链流程图，从灵感搜集到最终发布。",
+      "用同一个主题分别输出海报、短片、网页卡片和小红书封面。",
+      "做一份 AI 视觉工具链对比笔记，说明每个工具适合的环节。"
+    ],
+    "prompt_hint": "AI visual workflow map, tools connected by archive lines, poster video web social media outputs, dark green cyber zine interface, student creator process",
+    "workflow_hint": "适合做工具教程、课程内容、咨询服务、作品集方法论和团队提案流程。商业价值来自流程整合，而不是单个工具本身。",
+    "platform_suggestions": [
+      "小红书",
+      "抖音",
+      "视频号",
+      "作品集",
+      "课程作业"
+    ],
+    "difficulty": "中级",
+    "freshness_score": 5,
+    "credibility_score": 4,
+    "relevance_score": 5,
+    "creator_value_score": 5,
+    "actionability_score": 5,
+    "trend_score": 5,
+    "status": "已入库"
   },
   {
-    "id": "signal-020",
+    "id": "resource-020",
     "title": "3D 互动作品集可以让 AI 视觉项目更像一个可进入的空间",
-    "signal": "当 AI 图像、视频和 3D 场景结合后，作品集可以从页面展示变成沉浸式视觉档案。",
+    "type": "news",
+    "category": "作品集",
     "summary": "Spline 等 3D 网页工具降低了互动空间原型的门槛。学生可以把 AI 生成的海报、视频、角色和工具卡片放进一个 3D 房间或虚拟展厅里，让作品集更有数字媒体感。",
-    "creator_value": "这个方向适合数字媒体艺术学生展示跨媒介能力：视觉设定、空间组织、交互逻辑和网页呈现都能被看见。它不需要一开始很复杂，一个小房间也能成为完整项目。",
-    "project_ideas": [
-      "制作一个“AI 创意档案室”，把海报、视频、Prompt 和工具卡片放进 3D 空间。",
-      "为毕业设计做一个可旋转的虚拟展台，展示数字人、Lookbook 和短片预告。",
-      "把作品集首页做成旧电脑桌面，点击不同物件进入不同项目。"
-    ],
-    "business_potential": "适合作品集差异化、展览预演、品牌互动提案和课程项目。商业化前需要考虑加载速度、移动端体验和 3D 模型优化。",
-    "target_reader": "数字媒体艺术学生、交互设计学生、3D 视觉创作者、想做沉浸式作品集的人",
-    "category": "前沿观察",
+    "source_name": "Spline",
+    "source_url": "https://spline.design/",
+    "published_at": "2026-06-21",
+    "collected_at": "2026-06-21",
     "tools": [
       "Spline",
       "Figma",
@@ -703,19 +1028,1497 @@
       "Midjourney",
       "Runway"
     ],
-    "prompt_hint": "interactive 3D portfolio archive, old computer desk, dark green screens, floating AI posters, virtual exhibition room, cyber zine atmosphere",
-    "source": "Spline",
-    "url": "https://spline.design/",
-    "date": "2026-06-21",
-    "image": "",
-    "image_alt": "3D 互动作品集与 AI 视觉档案空间预览",
-    "image_mode": "cover",
-    "visual_tag": [
+    "related_concepts": [
       "3D",
       "portfolio",
       "interactive",
-      "archive"
+      "archive",
+      "image-to-video",
+      "text-to-image"
     ],
-    "confidence_level": "HIGH"
+    "target_users": [
+      "数字媒体艺术学生",
+      "交互设计学生",
+      "3D 视觉创作者",
+      "想做沉浸式作品集的人"
+    ],
+    "creator_value": "这个方向适合数字媒体艺术学生展示跨媒介能力：视觉设定、空间组织、交互逻辑和网页呈现都能被看见。它不需要一开始很复杂，一个小房间也能成为完整项目。",
+    "project_ideas": [
+      "制作一个“AI 创意档案室”，把海报、视频、Prompt 和工具卡片放进 3D 空间。",
+      "为毕业设计做一个可旋转的虚拟展台，展示数字人、Lookbook 和短片预告。",
+      "把作品集首页做成旧电脑桌面，点击不同物件进入不同项目。"
+    ],
+    "prompt_hint": "interactive 3D portfolio archive, old computer desk, dark green screens, floating AI posters, virtual exhibition room, cyber zine atmosphere",
+    "workflow_hint": "适合作品集差异化、展览预演、品牌互动提案和课程项目。商业化前需要考虑加载速度、移动端体验和 3D 模型优化。",
+    "platform_suggestions": [
+      "抖音",
+      "视频号",
+      "作品集",
+      "课程作业",
+      "商业提案"
+    ],
+    "difficulty": "进阶",
+    "freshness_score": 5,
+    "credibility_score": 5,
+    "relevance_score": 5,
+    "creator_value_score": 5,
+    "actionability_score": 5,
+    "trend_score": 5,
+    "status": "已入库"
+  },
+  {
+    "id": "resource-021",
+    "title": "Prompt 是什么：把创意意图翻译成 AI 能理解的指令",
+    "type": "concept",
+    "category": "基础概念",
+    "summary": "Prompt 是用户写给 AI 的创作指令，通常包含主体、风格、构图、镜头、材质、光线和限制条件。",
+    "source_name": "AI Creative Radar Notes",
+    "source_url": "",
+    "published_at": "",
+    "collected_at": "2026-06-22",
+    "tools": [
+      "Midjourney",
+      "Runway",
+      "Krea",
+      "Adobe Firefly"
+    ],
+    "related_concepts": [
+      "Prompt",
+      "text-to-image",
+      "image-to-video"
+    ],
+    "target_users": [
+      "AIGC 初学者",
+      "视觉创作者",
+      "数字媒体学生"
+    ],
+    "creator_value": "理解 Prompt 可以帮助创作者把模糊想法拆成可控制的画面元素，而不是只靠随机生成。",
+    "project_ideas": [
+      "整理一套个人常用 Prompt 模板",
+      "为同一个主题测试不同风格关键词",
+      "把 Prompt 迭代过程放进作品集"
+    ],
+    "prompt_hint": "subject + visual style + composition + lighting + material + mood + output format",
+    "workflow_hint": "先写简单 Prompt 得到方向，再逐步增加风格、构图和限制条件。",
+    "platform_suggestions": [
+      "作品集",
+      "课程作业",
+      "小红书"
+    ],
+    "difficulty": "入门",
+    "freshness_score": 5,
+    "credibility_score": 4,
+    "relevance_score": 5,
+    "creator_value_score": 5,
+    "actionability_score": 5,
+    "trend_score": 4,
+    "status": "已入库"
+  },
+  {
+    "id": "resource-022",
+    "title": "image-to-video 是什么：把静态图延展成动态影像",
+    "type": "concept",
+    "category": "基础概念",
+    "summary": "image-to-video 指用一张参考图生成动态视频，让角色、场景或海报视觉产生镜头运动和时间变化。",
+    "source_name": "AI Creative Radar Notes",
+    "source_url": "",
+    "published_at": "",
+    "collected_at": "2026-06-22",
+    "tools": [
+      "Runway",
+      "Pika",
+      "Luma Dream Machine",
+      "可灵"
+    ],
+    "related_concepts": [
+      "image-to-video",
+      "motion prompt",
+      "camera movement",
+      "AI 视频"
+    ],
+    "target_users": [
+      "影像方向创作者",
+      "数字媒体学生",
+      "AI 视觉创作者"
+    ],
+    "creator_value": "它适合把海报、角色设定或 Lookbook 延展成短片预演，帮助作品集从静态视觉升级为动态叙事。",
+    "project_ideas": [
+      "把一组 AI 海报做成 10 秒动态循环",
+      "用角色图生成数字人情绪短片",
+      "制作品牌 moodboard 的动态预演"
+    ],
+    "prompt_hint": "slow camera push in, subtle fabric movement, cinematic lighting, dreamy motion, consistent character",
+    "workflow_hint": "先生成稳定参考图，再用视频工具添加镜头运动，最后用剪辑软件统一节奏和字幕。",
+    "platform_suggestions": [
+      "作品集",
+      "抖音",
+      "小红书",
+      "视频号"
+    ],
+    "difficulty": "入门",
+    "freshness_score": 5,
+    "credibility_score": 4,
+    "relevance_score": 5,
+    "creator_value_score": 5,
+    "actionability_score": 5,
+    "trend_score": 5,
+    "status": "已入库"
+  },
+  {
+    "id": "resource-023",
+    "title": "workflow 是什么：把 AI 创作拆成可复用的流程",
+    "type": "concept",
+    "category": "基础概念",
+    "summary": "workflow 是一套从灵感、生成、筛选、编辑到发布的创作流程，可以帮助 AI 项目稳定复现。",
+    "source_name": "AI Creative Radar Notes",
+    "source_url": "",
+    "published_at": "",
+    "collected_at": "2026-06-22",
+    "tools": [
+      "Midjourney",
+      "Runway",
+      "Photoshop",
+      "Figma",
+      "CapCut"
+    ],
+    "related_concepts": [
+      "workflow",
+      "toolchain",
+      "iteration",
+      "AIGC pipeline"
+    ],
+    "target_users": [
+      "视觉设计师",
+      "内容运营者",
+      "数字媒体学生"
+    ],
+    "creator_value": "有 workflow 的项目更适合放进作品集，因为它展示的不只是结果，还有方法、判断和迭代能力。",
+    "project_ideas": [
+      "整理一个 AI 海报从 Prompt 到排版的流程图",
+      "制作 AI 视频短片的工具链拆解",
+      "把小红书账号内容生产流程做成模板"
+    ],
+    "prompt_hint": "creative workflow board, step by step visual process, toolchain map, portfolio documentation",
+    "workflow_hint": "记录每一步输入、工具、输出和筛选标准，形成可重复的项目流程。",
+    "platform_suggestions": [
+      "作品集",
+      "Notion 文档",
+      "课程作业",
+      "商业提案"
+    ],
+    "difficulty": "入门",
+    "freshness_score": 5,
+    "credibility_score": 4,
+    "relevance_score": 5,
+    "creator_value_score": 5,
+    "actionability_score": 5,
+    "trend_score": 4,
+    "status": "已入库"
+  },
+  {
+    "id": "resource-024",
+    "title": "ComfyUI 是什么：用节点搭建可控的 AI 图像工作流",
+    "type": "concept",
+    "category": "基础概念",
+    "summary": "ComfyUI 是一种节点式 AI 图像工作流工具，适合把模型、Prompt、ControlNet、LoRA 和后处理步骤串联起来。",
+    "source_name": "ComfyUI GitHub",
+    "source_url": "https://github.com/comfyanonymous/ComfyUI",
+    "published_at": "",
+    "collected_at": "2026-06-22",
+    "tools": [
+      "ComfyUI",
+      "Stable Diffusion",
+      "ControlNet",
+      "LoRA"
+    ],
+    "related_concepts": [
+      "workflow",
+      "node graph",
+      "Stable Diffusion",
+      "ControlNet",
+      "LoRA"
+    ],
+    "target_users": [
+      "进阶 AIGC 学习者",
+      "视觉创作者",
+      "数字媒体学生"
+    ],
+    "creator_value": "它适合需要更强控制力的项目，例如固定人物、控制姿势、统一风格或批量生成系列视觉。",
+    "project_ideas": [
+      "搭建一个固定角色海报生成流程",
+      "制作一套可复用的品牌视觉工作流",
+      "把节点图作为作品集里的技术流程展示"
+    ],
+    "prompt_hint": "consistent character, controlled pose, node-based workflow, visual system, batch poster generation",
+    "workflow_hint": "从基础文生图开始，再逐步加入 ControlNet、LoRA、放大和后处理节点。",
+    "platform_suggestions": [
+      "作品集",
+      "课程作业",
+      "技术过程展示"
+    ],
+    "difficulty": "进阶",
+    "freshness_score": 5,
+    "credibility_score": 5,
+    "relevance_score": 5,
+    "creator_value_score": 5,
+    "actionability_score": 4,
+    "trend_score": 5,
+    "status": "已入库"
+  },
+  {
+    "id": "resource-025",
+    "title": "LoRA / ControlNet 是什么：让 AI 图像更稳定和可控",
+    "type": "concept",
+    "category": "基础概念",
+    "summary": "LoRA 常用于学习特定角色或风格，ControlNet 常用于控制姿势、构图、线稿或深度信息。",
+    "source_name": "Hugging Face Docs",
+    "source_url": "https://huggingface.co/docs/diffusers/index",
+    "published_at": "",
+    "collected_at": "2026-06-22",
+    "tools": [
+      "Stable Diffusion",
+      "ComfyUI",
+      "ControlNet",
+      "LoRA"
+    ],
+    "related_concepts": [
+      "LoRA",
+      "ControlNet",
+      "pose control",
+      "style control"
+    ],
+    "target_users": [
+      "进阶 AIGC 学习者",
+      "AI 视觉创作者",
+      "角色设计方向学生"
+    ],
+    "creator_value": "理解 LoRA 和 ControlNet 可以帮助创作者解决角色不一致、构图不可控和系列视觉难统一的问题。",
+    "project_ideas": [
+      "做一个固定数字人角色系列",
+      "用姿势控制生成一组时尚 Lookbook",
+      "把 ControlNet 流程整理成 AI 作品集技术页"
+    ],
+    "prompt_hint": "consistent digital character, controlled pose, fashion lookbook, unified visual identity, style LoRA",
+    "workflow_hint": "先确定角色或构图需求，再选择 LoRA 或 ControlNet 控制对应变量。",
+    "platform_suggestions": [
+      "作品集",
+      "角色设定集",
+      "商业提案",
+      "课程作业"
+    ],
+    "difficulty": "进阶",
+    "freshness_score": 5,
+    "credibility_score": 5,
+    "relevance_score": 5,
+    "creator_value_score": 5,
+    "actionability_score": 4,
+    "trend_score": 5,
+    "status": "已入库"
+  },
+  {
+    "source_name": "AI Creative Radar Notes",
+    "source_url": "",
+    "published_at": "",
+    "collected_at": "2026-06-22",
+    "status": "已入库",
+    "id": "resource-026",
+    "freshness_score": 4,
+    "credibility_score": 4,
+    "relevance_score": 5,
+    "creator_value_score": 5,
+    "actionability_score": 5,
+    "trend_score": 5,
+    "title": "AI 视频短片创作流程：从概念到 15 秒成片",
+    "type": "workflow",
+    "category": "AI 视频",
+    "summary": "把 AI 视频项目拆成主题、参考图、分镜、生成、剪辑和发布六个步骤，更适合学生和个人创作者执行。",
+    "tools": [
+      "Runway",
+      "Pika",
+      "可灵",
+      "CapCut"
+    ],
+    "related_concepts": [
+      "image-to-video",
+      "storyboard",
+      "workflow",
+      "camera movement"
+    ],
+    "target_users": [
+      "数字媒体学生",
+      "AI 视频创作者",
+      "影像方向创作者"
+    ],
+    "creator_value": "帮助创作者避免一开始就追求完整大片，而是先用短时长验证主题、节奏和镜头语言。",
+    "project_ideas": [
+      "制作 15 秒 AI 情绪短片",
+      "为虚构品牌做动态概念预告",
+      "把分镜和生成过程整理成作品集页"
+    ],
+    "prompt_hint": "cinematic 15-second concept film, consistent mood, slow camera movement, visual diary, dark green lighting",
+    "workflow_hint": "先确定一句主题，再做 4-6 张关键画面，逐张生成短视频，最后用剪辑软件统一节奏。",
+    "platform_suggestions": [
+      "作品集",
+      "小红书",
+      "抖音",
+      "课程作业"
+    ],
+    "difficulty": "入门"
+  },
+  {
+    "source_name": "AI Creative Radar Notes",
+    "source_url": "",
+    "published_at": "",
+    "collected_at": "2026-06-22",
+    "status": "已入库",
+    "id": "resource-027",
+    "freshness_score": 4,
+    "credibility_score": 4,
+    "relevance_score": 5,
+    "creator_value_score": 5,
+    "actionability_score": 5,
+    "trend_score": 5,
+    "title": "image-to-video 工具玩法：让海报和角色设定动起来",
+    "type": "workflow",
+    "category": "AI 视频",
+    "summary": "image-to-video 适合把静态海报、角色图、Lookbook 或 moodboard 延展成动态预览。",
+    "tools": [
+      "Runway",
+      "Pika",
+      "Luma Dream Machine",
+      "即梦"
+    ],
+    "related_concepts": [
+      "image-to-video",
+      "motion prompt",
+      "reference image"
+    ],
+    "target_users": [
+      "视觉设计师",
+      "AI 视觉创作者",
+      "内容运营者"
+    ],
+    "creator_value": "让静态视觉方案具备动态展示能力，适合提案、作品集和短视频内容。",
+    "project_ideas": [
+      "把一组 AI 海报做成动态循环",
+      "为数字人角色做开场动画",
+      "制作品牌 moodboard 动态演示"
+    ],
+    "prompt_hint": "subtle motion, slow dolly in, fabric movement, cinematic lighting, preserve original composition",
+    "workflow_hint": "先选择稳定参考图，再用动作提示控制镜头，最后筛选运动最自然的片段。",
+    "platform_suggestions": [
+      "作品集",
+      "商业提案",
+      "小红书",
+      "视频号"
+    ],
+    "difficulty": "入门"
+  },
+  {
+    "source_name": "AI Creative Radar Notes",
+    "source_url": "",
+    "published_at": "",
+    "collected_at": "2026-06-22",
+    "status": "已入库",
+    "id": "resource-028",
+    "freshness_score": 4,
+    "credibility_score": 4,
+    "relevance_score": 5,
+    "creator_value_score": 5,
+    "actionability_score": 5,
+    "trend_score": 5,
+    "title": "AI 音乐 MV 视觉：从歌词情绪到循环视觉系统",
+    "type": "case",
+    "category": "AI 视频",
+    "summary": "AI MV 不一定从完整叙事开始，可以先围绕歌词情绪、封面视觉和循环片段建立统一风格。",
+    "tools": [
+      "Midjourney",
+      "Runway",
+      "Pika",
+      "CapCut"
+    ],
+    "related_concepts": [
+      "AI MV",
+      "loop video",
+      "music visual",
+      "moodboard"
+    ],
+    "target_users": [
+      "音乐视觉创作者",
+      "数字媒体学生",
+      "内容运营者"
+    ],
+    "creator_value": "适合和音乐人合作做低成本视觉实验，也适合放进作品集展示跨媒介能力。",
+    "project_ideas": [
+      "做一首歌的封面和 3 段循环视觉",
+      "设计 AI 歌词视觉短片",
+      "制作音乐人社媒发布视觉包"
+    ],
+    "prompt_hint": "dreamlike music video loop, lyric mood, surreal night city, soft grain, cinematic color palette",
+    "workflow_hint": "先提取歌词关键词，再生成封面主视觉，最后延展成 3-5 个循环短片。",
+    "platform_suggestions": [
+      "小红书",
+      "抖音",
+      "B站",
+      "作品集"
+    ],
+    "difficulty": "中级"
+  },
+  {
+    "source_name": "AI Creative Radar Notes",
+    "source_url": "",
+    "published_at": "",
+    "collected_at": "2026-06-22",
+    "status": "已入库",
+    "id": "resource-029",
+    "freshness_score": 4,
+    "credibility_score": 4,
+    "relevance_score": 5,
+    "creator_value_score": 5,
+    "actionability_score": 5,
+    "trend_score": 5,
+    "title": "AI 广告短片预演：先做提案片而不是最终广告",
+    "type": "business",
+    "category": "AI 视频",
+    "summary": "AI 视频更适合在前期帮助品牌验证创意方向、镜头氛围和视觉调性，而不是直接承诺最终商片。",
+    "tools": [
+      "Runway",
+      "可灵",
+      "Pika",
+      "After Effects"
+    ],
+    "related_concepts": [
+      "commercial previsualization",
+      "mood film",
+      "storyboard"
+    ],
+    "target_users": [
+      "视觉设计师",
+      "广告创意学生",
+      "自由接单创作者"
+    ],
+    "creator_value": "可以把 AI 能力包装成提案预演服务，帮助客户更快理解创意方向。",
+    "project_ideas": [
+      "为香水品牌做 20 秒 AI 概念广告",
+      "制作品牌活动开场视觉预演",
+      "整理广告分镜和 AI 预演对照页"
+    ],
+    "prompt_hint": "luxury product mood film, slow macro shot, atmospheric lighting, premium commercial, storyboard frame",
+    "workflow_hint": "先做脚本和分镜，再为每个镜头生成参考视频，最后剪成提案片。",
+    "platform_suggestions": [
+      "商业提案",
+      "作品集",
+      "课程作业"
+    ],
+    "difficulty": "中级"
+  },
+  {
+    "source_name": "AI Creative Radar Notes",
+    "source_url": "",
+    "published_at": "",
+    "collected_at": "2026-06-22",
+    "status": "已入库",
+    "id": "resource-030",
+    "freshness_score": 4,
+    "credibility_score": 4,
+    "relevance_score": 5,
+    "creator_value_score": 5,
+    "actionability_score": 5,
+    "trend_score": 5,
+    "title": "可灵 / 即梦类中文 AI 视频工具适合本土内容实验",
+    "type": "tool",
+    "category": "AI 视频",
+    "summary": "中文 AI 视频工具适合测试国风、生活方式、小红书内容和短视频平台语境下的视觉表达。",
+    "tools": [
+      "可灵",
+      "即梦",
+      "剪映",
+      "CapCut"
+    ],
+    "related_concepts": [
+      "AI 视频",
+      "中文 Prompt",
+      "short video workflow"
+    ],
+    "target_users": [
+      "内容运营者",
+      "小红书创作者",
+      "AI 初学者"
+    ],
+    "creator_value": "更容易围绕中文平台和本土内容场景做选题，适合初学者快速测试。",
+    "project_ideas": [
+      "做一组小红书风格 AI 视频封面和片头",
+      "测试国风数字人短片",
+      "整理中文 AI 视频工具对比笔记"
+    ],
+    "prompt_hint": "中文生活方式短片, 柔和自然光, 小红书封面感, 轻剧情, 情绪化镜头",
+    "workflow_hint": "用中文描述场景和镜头，再结合剪映做字幕、封面和节奏整理。",
+    "platform_suggestions": [
+      "小红书",
+      "抖音",
+      "视频号"
+    ],
+    "difficulty": "入门"
+  },
+  {
+    "source_name": "AI Creative Radar Notes",
+    "source_url": "",
+    "published_at": "",
+    "collected_at": "2026-06-22",
+    "status": "已入库",
+    "id": "resource-031",
+    "freshness_score": 4,
+    "credibility_score": 4,
+    "relevance_score": 5,
+    "creator_value_score": 5,
+    "actionability_score": 5,
+    "trend_score": 4,
+    "title": "AI 海报系列：从单张好看图片变成统一视觉系统",
+    "type": "workflow",
+    "category": "AI 海报",
+    "summary": "AI 海报项目的重点不是单张效果，而是统一主题、版式、色彩和输出规范。",
+    "tools": [
+      "Midjourney",
+      "Adobe Firefly",
+      "Photoshop",
+      "Figma"
+    ],
+    "related_concepts": [
+      "text-to-image",
+      "poster system",
+      "visual identity"
+    ],
+    "target_users": [
+      "视觉设计学生",
+      "平面设计师",
+      "AIGC 初学者"
+    ],
+    "creator_value": "帮助创作者把 AI 生图变成可展示的设计项目，而不是散乱图片合集。",
+    "project_ideas": [
+      "做 12 张虚构展览海报",
+      "制作城市音乐节 AI 海报系统",
+      "整理海报从 Prompt 到版式的过程页"
+    ],
+    "prompt_hint": "experimental poster series, unified grid, bold typography space, halftone texture, dark sage green palette",
+    "workflow_hint": "先确定主题和视觉规则，再批量生成图像，最后统一字体、版式和输出尺寸。",
+    "platform_suggestions": [
+      "作品集",
+      "Behance",
+      "课程作业"
+    ],
+    "difficulty": "入门"
+  },
+  {
+    "source_name": "AI Creative Radar Notes",
+    "source_url": "",
+    "published_at": "",
+    "collected_at": "2026-06-22",
+    "status": "已入库",
+    "id": "resource-032",
+    "freshness_score": 4,
+    "credibility_score": 4,
+    "relevance_score": 5,
+    "creator_value_score": 5,
+    "actionability_score": 5,
+    "trend_score": 5,
+    "title": "未来复古视觉：Y2K、旧网页和赛博档案感的组合",
+    "type": "concept",
+    "category": "AI 海报",
+    "summary": "未来复古视觉常结合旧互联网、像素、扫描线、低饱和电子色和档案界面，适合做差异化视觉项目。",
+    "tools": [
+      "Midjourney",
+      "Krea",
+      "Photoshop"
+    ],
+    "related_concepts": [
+      "Y2K",
+      "old web",
+      "cyber zine",
+      "visual archive"
+    ],
+    "target_users": [
+      "视觉设计师",
+      "潮流内容创作者",
+      "数字媒体学生"
+    ],
+    "creator_value": "适合建立个人风格，也适合为作品集增加记忆点。",
+    "project_ideas": [
+      "做一套 old web 风格展览视觉",
+      "设计赛博档案感个人主页",
+      "生成一组未来复古角色海报"
+    ],
+    "prompt_hint": "retro internet interface, cyber zine, dark green CRT monitor, pixel texture, halftone portrait, archive layout",
+    "workflow_hint": "先建立风格关键词库，再用图像工具生成素材，最后用排版工具统一视觉层级。",
+    "platform_suggestions": [
+      "作品集",
+      "小红书",
+      "个人网站"
+    ],
+    "difficulty": "入门"
+  },
+  {
+    "source_name": "AI Creative Radar Notes",
+    "source_url": "",
+    "published_at": "",
+    "collected_at": "2026-06-22",
+    "status": "已入库",
+    "id": "resource-033",
+    "freshness_score": 4,
+    "credibility_score": 4,
+    "relevance_score": 5,
+    "creator_value_score": 5,
+    "actionability_score": 5,
+    "trend_score": 4,
+    "title": "拼贴风格 AI 视觉：把图像生成变成编辑设计",
+    "type": "workflow",
+    "category": "AI 海报",
+    "summary": "拼贴风格适合把 AI 生成素材、扫描纹理、字体和照片碎片组合成更有手工感的视觉作品。",
+    "tools": [
+      "Krea",
+      "Photoshop",
+      "Figma",
+      "Canva"
+    ],
+    "related_concepts": [
+      "collage",
+      "editorial design",
+      "texture",
+      "composition"
+    ],
+    "target_users": [
+      "视觉设计学生",
+      "内容运营者",
+      "品牌视觉创作者"
+    ],
+    "creator_value": "可以降低 AI 图像的随机感，让作品更像经过设计判断和编辑的视觉系统。",
+    "project_ideas": [
+      "做一组 AI 拼贴杂志封面",
+      "为小众品牌制作视觉情绪板",
+      "整理一套拼贴素材库和版式规则"
+    ],
+    "prompt_hint": "editorial collage poster, scanned paper texture, cut-out portrait, old magazine layout, mixed media design",
+    "workflow_hint": "先生成主体和背景素材，再用设计软件进行裁切、叠加和字体排版。",
+    "platform_suggestions": [
+      "作品集",
+      "小红书",
+      "商业提案"
+    ],
+    "difficulty": "入门"
+  },
+  {
+    "source_name": "AI Creative Radar Notes",
+    "source_url": "",
+    "published_at": "",
+    "collected_at": "2026-06-22",
+    "status": "已入库",
+    "id": "resource-034",
+    "freshness_score": 4,
+    "credibility_score": 4,
+    "relevance_score": 5,
+    "creator_value_score": 5,
+    "actionability_score": 5,
+    "trend_score": 4,
+    "title": "品牌视觉实验：用 AI 快速验证多个视觉方向",
+    "type": "workflow",
+    "category": "AI 海报",
+    "summary": "AI 可以帮助品牌视觉项目快速生成多个 moodboard，再由设计师筛选和深化。",
+    "tools": [
+      "Midjourney",
+      "Adobe Firefly",
+      "Figma",
+      "Illustrator"
+    ],
+    "related_concepts": [
+      "branding",
+      "moodboard",
+      "visual exploration"
+    ],
+    "target_users": [
+      "品牌设计师",
+      "设计学生",
+      "自由接单创作者"
+    ],
+    "creator_value": "适合展示从发散到收敛的设计过程，让 AI 成为前期探索工具。",
+    "project_ideas": [
+      "为虚构咖啡品牌做 3 套 AI 视觉方向",
+      "制作品牌 moodboard 和海报延展",
+      "比较 AI 生成和人工精修的差异"
+    ],
+    "prompt_hint": "brand moodboard, visual identity exploration, product poster, consistent color palette, editable composition",
+    "workflow_hint": "先定义品牌关键词，再生成多组方向，最后选择一组做 logo、海报和社媒延展。",
+    "platform_suggestions": [
+      "作品集",
+      "商业提案",
+      "课程作业"
+    ],
+    "difficulty": "中级"
+  },
+  {
+    "source_name": "AI Creative Radar Notes",
+    "source_url": "",
+    "published_at": "",
+    "collected_at": "2026-06-22",
+    "status": "已入库",
+    "id": "resource-035",
+    "freshness_score": 4,
+    "credibility_score": 4,
+    "relevance_score": 5,
+    "creator_value_score": 5,
+    "actionability_score": 5,
+    "trend_score": 5,
+    "title": "数字人账号：从角色设定开始设计内容栏目",
+    "type": "workflow",
+    "category": "数字人",
+    "summary": "数字人账号不只是生成头像，更需要角色人设、内容栏目、视觉风格和更新节奏。",
+    "tools": [
+      "Midjourney",
+      "HeyGen",
+      "D-ID",
+      "CapCut"
+    ],
+    "related_concepts": [
+      "digital human",
+      "character system",
+      "content column"
+    ],
+    "target_users": [
+      "内容运营者",
+      "AI 视觉创作者",
+      "学生创作者"
+    ],
+    "creator_value": "帮助创作者把数字人从单张图升级成可持续运营的角色项目。",
+    "project_ideas": [
+      "设计一个数字人学习博主账号",
+      "制作角色设定、口播视频和栏目表",
+      "把数字人账号包装成作品集项目"
+    ],
+    "prompt_hint": "consistent virtual persona, creator avatar, social media host, friendly expression, recognizable outfit",
+    "workflow_hint": "先做角色设定和视觉规范，再生成头像、口播视频、封面和栏目内容。",
+    "platform_suggestions": [
+      "小红书",
+      "抖音",
+      "视频号",
+      "作品集"
+    ],
+    "difficulty": "中级"
+  },
+  {
+    "source_name": "AI Creative Radar Notes",
+    "source_url": "",
+    "published_at": "",
+    "collected_at": "2026-06-22",
+    "status": "已入库",
+    "id": "resource-036",
+    "freshness_score": 4,
+    "credibility_score": 4,
+    "relevance_score": 5,
+    "creator_value_score": 5,
+    "actionability_score": 5,
+    "trend_score": 5,
+    "title": "虚拟代言人：适合品牌提案的 AI 角色方案",
+    "type": "case",
+    "category": "数字人",
+    "summary": "虚拟代言人项目可以围绕品牌气质、角色外观、语气、场景和社媒内容进行设计。",
+    "tools": [
+      "Midjourney",
+      "Krea",
+      "Runway",
+      "HeyGen"
+    ],
+    "related_concepts": [
+      "virtual influencer",
+      "brand character",
+      "AI avatar"
+    ],
+    "target_users": [
+      "品牌视觉创作者",
+      "广告学生",
+      "内容运营者"
+    ],
+    "creator_value": "适合做品牌视觉提案，展示角色设计和传播策略能力。",
+    "project_ideas": [
+      "为虚构美妆品牌设计虚拟代言人",
+      "制作角色三视图和短视频预告",
+      "整理品牌口吻和内容栏目"
+    ],
+    "prompt_hint": "virtual brand ambassador, consistent face, fashion editorial lighting, product campaign, social media ready",
+    "workflow_hint": "先确定品牌关键词和受众，再设计角色外观、内容场景和传播形式。",
+    "platform_suggestions": [
+      "商业提案",
+      "作品集",
+      "小红书"
+    ],
+    "difficulty": "中级"
+  },
+  {
+    "source_name": "AI Creative Radar Notes",
+    "source_url": "",
+    "published_at": "",
+    "collected_at": "2026-06-22",
+    "status": "已入库",
+    "id": "resource-037",
+    "freshness_score": 4,
+    "credibility_score": 4,
+    "relevance_score": 5,
+    "creator_value_score": 5,
+    "actionability_score": 5,
+    "trend_score": 4,
+    "title": "AI 角色设定：三视图、表情和场景延展",
+    "type": "workflow",
+    "category": "数字人",
+    "summary": "AI 角色设定可以从单张头像扩展为三视图、表情表、服装变化和生活场景。",
+    "tools": [
+      "Midjourney",
+      "Stable Diffusion",
+      "ComfyUI",
+      "Photoshop"
+    ],
+    "related_concepts": [
+      "character design",
+      "consistent character",
+      "LoRA"
+    ],
+    "target_users": [
+      "角色设计学生",
+      "数字媒体学生",
+      "AI 视觉创作者"
+    ],
+    "creator_value": "让角色项目更完整，更适合展示在作品集中。",
+    "project_ideas": [
+      "设计一个 AI 虚拟角色设定集",
+      "生成角色表情和服装变化",
+      "制作角色生活场景海报系列"
+    ],
+    "prompt_hint": "character sheet, front side back view, consistent face, expression sheet, outfit variations, clean background",
+    "workflow_hint": "先确定角色关键词，再生成主形象，之后围绕角度、表情和场景做扩展。",
+    "platform_suggestions": [
+      "作品集",
+      "课程作业",
+      "角色设定集"
+    ],
+    "difficulty": "中级"
+  },
+  {
+    "source_name": "AI Creative Radar Notes",
+    "source_url": "",
+    "published_at": "",
+    "collected_at": "2026-06-22",
+    "status": "已入库",
+    "id": "resource-038",
+    "freshness_score": 4,
+    "credibility_score": 4,
+    "relevance_score": 5,
+    "creator_value_score": 5,
+    "actionability_score": 5,
+    "trend_score": 5,
+    "title": "AI 形象一致性：让同一个角色出现在多个画面里",
+    "type": "concept",
+    "category": "数字人",
+    "summary": "形象一致性是数字人和角色项目的关键，通常需要参考图、种子、LoRA 或工具内的角色保持能力。",
+    "tools": [
+      "Midjourney",
+      "Runway",
+      "ComfyUI",
+      "LoRA"
+    ],
+    "related_concepts": [
+      "character consistency",
+      "reference image",
+      "seed",
+      "LoRA"
+    ],
+    "target_users": [
+      "AI 视觉创作者",
+      "角色设计学生",
+      "数字媒体学生"
+    ],
+    "creator_value": "解决“每张图都像不同人”的问题，让项目更像完整角色系统。",
+    "project_ideas": [
+      "做一个角色在 6 个场景中的系列图",
+      "制作数字人账号头像和封面系统",
+      "整理一致性测试过程页"
+    ],
+    "prompt_hint": "same character, consistent facial features, same hairstyle and outfit, multiple scenes, character continuity",
+    "workflow_hint": "保留主参考图和核心描述，逐步变化场景和动作，避免同时改太多变量。",
+    "platform_suggestions": [
+      "作品集",
+      "小红书",
+      "课程作业"
+    ],
+    "difficulty": "中级"
+  },
+  {
+    "source_name": "AI Creative Radar Notes",
+    "source_url": "",
+    "published_at": "",
+    "collected_at": "2026-06-22",
+    "status": "已入库",
+    "id": "resource-039",
+    "freshness_score": 4,
+    "credibility_score": 4,
+    "relevance_score": 5,
+    "creator_value_score": 5,
+    "actionability_score": 5,
+    "trend_score": 4,
+    "title": "AI 项目如何包装成作品集：展示问题、过程和结果",
+    "type": "workflow",
+    "category": "作品集",
+    "summary": "AI 项目进入作品集时，重点不是只展示生成图，而是展示问题定义、工具选择、迭代过程和最终应用。",
+    "tools": [
+      "Figma",
+      "Notion",
+      "Framer",
+      "Photoshop"
+    ],
+    "related_concepts": [
+      "portfolio",
+      "case study",
+      "process documentation"
+    ],
+    "target_users": [
+      "数字媒体学生",
+      "视觉设计学生",
+      "求职者"
+    ],
+    "creator_value": "帮助学生把 AI 练习整理成可以被老师或面试官理解的项目。",
+    "project_ideas": [
+      "把 AI 海报实验包装成完整 case study",
+      "制作工具链和迭代过程页面",
+      "为数字人项目写项目目标和应用场景"
+    ],
+    "prompt_hint": "portfolio case study layout, process documentation, visual system, before and after, design rationale",
+    "workflow_hint": "按背景、目标、工具、过程、结果、反思六个部分整理项目。",
+    "platform_suggestions": [
+      "作品集",
+      "Behance",
+      "个人网站"
+    ],
+    "difficulty": "入门"
+  },
+  {
+    "source_name": "AI Creative Radar Notes",
+    "source_url": "",
+    "published_at": "",
+    "collected_at": "2026-06-22",
+    "status": "已入库",
+    "id": "resource-040",
+    "freshness_score": 4,
+    "credibility_score": 4,
+    "relevance_score": 5,
+    "creator_value_score": 5,
+    "actionability_score": 5,
+    "trend_score": 4,
+    "title": "AI 工作流展示页：让工具链成为作品集亮点",
+    "type": "workflow",
+    "category": "作品集",
+    "summary": "把 Prompt、参考图、工具链、筛选标准和后期步骤整理成一页，可以增强 AI 项目的可信度。",
+    "tools": [
+      "Figma",
+      "Notion",
+      "Midjourney",
+      "Runway"
+    ],
+    "related_concepts": [
+      "workflow",
+      "toolchain",
+      "portfolio process"
+    ],
+    "target_users": [
+      "AIGC 初学者",
+      "视觉创作者",
+      "数字媒体学生"
+    ],
+    "creator_value": "让别人看到你不是随机生成，而是在控制流程和做设计判断。",
+    "project_ideas": [
+      "制作 AI 视频工具链流程图",
+      "整理海报 Prompt 迭代表",
+      "展示从概念到成稿的关键节点"
+    ],
+    "prompt_hint": "AI workflow diagram, process board, toolchain map, portfolio documentation, clear visual hierarchy",
+    "workflow_hint": "用流程图和截图记录每一步输入、输出和筛选原因。",
+    "platform_suggestions": [
+      "作品集",
+      "课程作业",
+      "商业提案"
+    ],
+    "difficulty": "入门"
+  },
+  {
+    "source_name": "AI Creative Radar Notes",
+    "source_url": "",
+    "published_at": "",
+    "collected_at": "2026-06-22",
+    "status": "已入库",
+    "id": "resource-041",
+    "freshness_score": 4,
+    "credibility_score": 4,
+    "relevance_score": 5,
+    "creator_value_score": 5,
+    "actionability_score": 5,
+    "trend_score": 4,
+    "title": "课程作业转作品集：给 AI 实验补上项目目标",
+    "type": "workflow",
+    "category": "作品集",
+    "summary": "课程中的 AI 练习可以通过补充目标、受众、应用场景和延展物料，升级成作品集项目。",
+    "tools": [
+      "Figma",
+      "Photoshop",
+      "Notion",
+      "Canva"
+    ],
+    "related_concepts": [
+      "portfolio upgrade",
+      "project framing",
+      "design brief"
+    ],
+    "target_users": [
+      "学生",
+      "数字媒体艺术学生",
+      "视觉设计学生"
+    ],
+    "creator_value": "帮助学生把零散作业整理成有逻辑、有目标、有展示价值的项目。",
+    "project_ideas": [
+      "把课堂海报练习升级成展览视觉系统",
+      "把 AI 短片练习包装成品牌概念片",
+      "为 AI 角色作业补充应用场景"
+    ],
+    "prompt_hint": "student portfolio project, design brief, visual system, process and final outcome, clear presentation board",
+    "workflow_hint": "先写项目 brief，再整理已有素材，最后补齐过程页和应用场景。",
+    "platform_suggestions": [
+      "作品集",
+      "课程作业",
+      "求职材料"
+    ],
+    "difficulty": "入门"
+  },
+  {
+    "source_name": "AI Creative Radar Notes",
+    "source_url": "",
+    "published_at": "",
+    "collected_at": "2026-06-22",
+    "status": "已入库",
+    "id": "resource-042",
+    "freshness_score": 4,
+    "credibility_score": 4,
+    "relevance_score": 5,
+    "creator_value_score": 5,
+    "actionability_score": 5,
+    "trend_score": 4,
+    "title": "AI 项目文档结构：从一句想法到完整方案",
+    "type": "concept",
+    "category": "作品集",
+    "summary": "一个清楚的 AI 项目文档通常包含创意目标、参考资料、工具链、执行步骤、视觉风格和最终输出。",
+    "tools": [
+      "Notion",
+      "Figma",
+      "Markdown"
+    ],
+    "related_concepts": [
+      "project document",
+      "creative plan",
+      "execution plan"
+    ],
+    "target_users": [
+      "AIGC 初学者",
+      "内容运营者",
+      "学生创作者"
+    ],
+    "creator_value": "让 AI 创作从灵感变成可执行计划，也方便后续复制、下载和保存。",
+    "project_ideas": [
+      "制作 AI 项目方案模板",
+      "整理作品集项目大纲",
+      "把多轮 AI 讨论变成执行文档"
+    ],
+    "prompt_hint": "creative project document, objective, tools, workflow, visual style, platform plan, portfolio value",
+    "workflow_hint": "先写一句目标，再补充工具、步骤、输出物和评价标准。",
+    "platform_suggestions": [
+      "作品集",
+      "Notion 文档",
+      "商业提案"
+    ],
+    "difficulty": "入门"
+  },
+  {
+    "source_name": "AI Creative Radar Notes",
+    "source_url": "",
+    "published_at": "",
+    "collected_at": "2026-06-22",
+    "status": "已入库",
+    "id": "resource-043",
+    "freshness_score": 4,
+    "credibility_score": 4,
+    "relevance_score": 5,
+    "creator_value_score": 5,
+    "actionability_score": 5,
+    "trend_score": 5,
+    "title": "小红书 AI 账号定位：从工具体验变成固定栏目",
+    "type": "platform",
+    "category": "小红书",
+    "summary": "小红书 AI 账号更适合围绕固定栏目更新，例如工具教程、案例拆解、Prompt 实验和作品集记录。",
+    "tools": [
+      "小红书",
+      "Canva",
+      "CapCut",
+      "Midjourney"
+    ],
+    "related_concepts": [
+      "content strategy",
+      "AI account",
+      "column design"
+    ],
+    "target_users": [
+      "内容运营者",
+      "学生创作者",
+      "AI 初学者"
+    ],
+    "creator_value": "帮助创作者从偶尔晒图转向可持续内容生产。",
+    "project_ideas": [
+      "设计 4 个固定栏目",
+      "做一周 AI 工具教程内容计划",
+      "整理 AI 作品集成长记录账号"
+    ],
+    "prompt_hint": "AI tutorial cover, clear title, visual before after, social media carousel, friendly educational tone",
+    "workflow_hint": "先确定账号对象，再固定栏目和封面风格，最后批量准备选题。",
+    "platform_suggestions": [
+      "小红书",
+      "抖音",
+      "视频号"
+    ],
+    "difficulty": "入门"
+  },
+  {
+    "source_name": "AI Creative Radar Notes",
+    "source_url": "",
+    "published_at": "",
+    "collected_at": "2026-06-22",
+    "status": "已入库",
+    "id": "resource-044",
+    "freshness_score": 4,
+    "credibility_score": 4,
+    "relevance_score": 5,
+    "creator_value_score": 5,
+    "actionability_score": 5,
+    "trend_score": 4,
+    "title": "小红书封面与标题：让 AI 内容更容易被理解",
+    "type": "platform",
+    "category": "小红书",
+    "summary": "AI 内容账号需要清楚封面和标题，让用户一眼知道工具、效果和适合人群。",
+    "tools": [
+      "Canva",
+      "Figma",
+      "小红书"
+    ],
+    "related_concepts": [
+      "cover design",
+      "content hook",
+      "social media title"
+    ],
+    "target_users": [
+      "内容运营者",
+      "小红书创作者",
+      "设计学生"
+    ],
+    "creator_value": "提升 AI 教程、案例拆解和作品展示的传播效率。",
+    "project_ideas": [
+      "做一套 AI 工具教程封面模板",
+      "整理 20 个 AI 内容标题句式",
+      "为作品集项目制作社媒传播封面"
+    ],
+    "prompt_hint": "xiaohongshu cover design, bold readable title, AI visual example, clean layout, beginner friendly",
+    "workflow_hint": "标题先说结果和对象，封面突出前后对比或核心画面。",
+    "platform_suggestions": [
+      "小红书",
+      "课程作业",
+      "内容账号"
+    ],
+    "difficulty": "入门"
+  },
+  {
+    "source_name": "AI Creative Radar Notes",
+    "source_url": "",
+    "published_at": "",
+    "collected_at": "2026-06-22",
+    "status": "已入库",
+    "id": "resource-045",
+    "freshness_score": 4,
+    "credibility_score": 4,
+    "relevance_score": 5,
+    "creator_value_score": 5,
+    "actionability_score": 5,
+    "trend_score": 5,
+    "title": "AI 视觉灵感账号：把资料库变成内容资产",
+    "type": "platform",
+    "category": "小红书",
+    "summary": "AI 视觉灵感账号可以围绕工具、案例、Prompt 和趋势做持续整理，形成个人资料库。",
+    "tools": [
+      "小红书",
+      "Notion",
+      "Pinterest",
+      "Midjourney"
+    ],
+    "related_concepts": [
+      "visual archive",
+      "content curation",
+      "trend board"
+    ],
+    "target_users": [
+      "内容运营者",
+      "视觉创作者",
+      "学生创作者"
+    ],
+    "creator_value": "适合把学习过程公开化，同时积累作品集和内容资产。",
+    "project_ideas": [
+      "建立 AI 视觉灵感栏目",
+      "每周整理 5 个工具或案例",
+      "把趋势观察做成图文卡片"
+    ],
+    "prompt_hint": "visual archive card, AI creative radar, tool case prompt trend, dark green editorial layout",
+    "workflow_hint": "收集资料后按工具、案例、Prompt、趋势四类整理，再转成图文内容。",
+    "platform_suggestions": [
+      "小红书",
+      "Notion",
+      "作品集"
+    ],
+    "difficulty": "入门"
+  },
+  {
+    "source_name": "AI Creative Radar Notes",
+    "source_url": "",
+    "published_at": "",
+    "collected_at": "2026-06-22",
+    "status": "已入库",
+    "id": "resource-046",
+    "freshness_score": 4,
+    "credibility_score": 4,
+    "relevance_score": 5,
+    "creator_value_score": 5,
+    "actionability_score": 5,
+    "trend_score": 4,
+    "title": "Prompt 结构：从风格描述变成执行指令",
+    "type": "prompt",
+    "category": "Prompt",
+    "summary": "有效 Prompt 不只是堆风格词，而是把主体、场景、构图、光线、材质、限制和输出目标组织清楚。",
+    "tools": [
+      "Midjourney",
+      "Krea",
+      "Adobe Firefly"
+    ],
+    "related_concepts": [
+      "Prompt",
+      "text-to-image",
+      "composition"
+    ],
+    "target_users": [
+      "AIGC 初学者",
+      "视觉设计学生",
+      "内容创作者"
+    ],
+    "creator_value": "帮助用户从“随便试”变成有目的地控制视觉结果。",
+    "project_ideas": [
+      "整理个人 Prompt 公式",
+      "测试同一主体不同构图",
+      "做一页 Prompt 迭代过程展示"
+    ],
+    "prompt_hint": "subject + scene + composition + lighting + material + style reference + output purpose",
+    "workflow_hint": "先锁定主体和输出目标，再逐步加入风格与限制，避免一次写太多不相关词。",
+    "platform_suggestions": [
+      "作品集",
+      "小红书",
+      "课程作业"
+    ],
+    "difficulty": "入门"
+  },
+  {
+    "source_name": "AI Creative Radar Notes",
+    "source_url": "",
+    "published_at": "",
+    "collected_at": "2026-06-22",
+    "status": "已入库",
+    "id": "resource-047",
+    "freshness_score": 4,
+    "credibility_score": 4,
+    "relevance_score": 5,
+    "creator_value_score": 5,
+    "actionability_score": 5,
+    "trend_score": 5,
+    "title": "参考图控制：让 AI 输出更接近你的视觉方向",
+    "type": "workflow",
+    "category": "工作流",
+    "summary": "参考图可以帮助 AI 理解构图、角色、色彩或风格，是稳定视觉方向的重要方式。",
+    "tools": [
+      "Midjourney",
+      "Krea",
+      "Runway",
+      "ComfyUI"
+    ],
+    "related_concepts": [
+      "reference image",
+      "style reference",
+      "image prompt"
+    ],
+    "target_users": [
+      "视觉创作者",
+      "设计学生",
+      "AI 初学者"
+    ],
+    "creator_value": "减少纯文字 Prompt 的不确定性，让作品更接近预期风格。",
+    "project_ideas": [
+      "建立一个参考图情绪板",
+      "测试同一 Prompt 在不同参考图下的变化",
+      "做品牌视觉风格控制实验"
+    ],
+    "prompt_hint": "use reference image for composition, preserve color palette, adapt style, consistent visual mood",
+    "workflow_hint": "先准备 3-6 张参考图，分别承担构图、色彩、材质和风格作用。",
+    "platform_suggestions": [
+      "作品集",
+      "商业提案",
+      "课程作业"
+    ],
+    "difficulty": "中级"
+  },
+  {
+    "source_name": "AI Creative Radar Notes",
+    "source_url": "",
+    "published_at": "",
+    "collected_at": "2026-06-22",
+    "status": "已入库",
+    "id": "resource-048",
+    "freshness_score": 4,
+    "credibility_score": 4,
+    "relevance_score": 5,
+    "creator_value_score": 5,
+    "actionability_score": 5,
+    "trend_score": 5,
+    "title": "多工具工作流：从图像生成到视频发布",
+    "type": "workflow",
+    "category": "工作流",
+    "summary": "成熟的 AIGC 项目通常不是一个工具完成，而是图像、视频、剪辑、排版和发布工具组合。",
+    "tools": [
+      "Midjourney",
+      "Runway",
+      "Photoshop",
+      "CapCut",
+      "Figma"
+    ],
+    "related_concepts": [
+      "toolchain",
+      "workflow",
+      "content pipeline"
+    ],
+    "target_users": [
+      "AI 视觉创作者",
+      "内容运营者",
+      "数字媒体学生"
+    ],
+    "creator_value": "帮助用户理解每个工具在流程中的位置，避免把所有问题都交给一个模型。",
+    "project_ideas": [
+      "设计一个 AI 视频发布流程",
+      "制作从海报到短片的工具链图",
+      "整理多工具作品集案例"
+    ],
+    "prompt_hint": "AI creative workflow, image generation to video editing, toolchain map, social media output",
+    "workflow_hint": "图像工具做视觉方向，视频工具做动态，剪辑工具做节奏，设计工具做封面和说明。",
+    "platform_suggestions": [
+      "作品集",
+      "小红书",
+      "商业提案"
+    ],
+    "difficulty": "中级"
+  },
+  {
+    "source_name": "AI Creative Radar Notes",
+    "source_url": "",
+    "published_at": "",
+    "collected_at": "2026-06-22",
+    "status": "已入库",
+    "id": "resource-049",
+    "freshness_score": 4,
+    "credibility_score": 4,
+    "relevance_score": 5,
+    "creator_value_score": 5,
+    "actionability_score": 5,
+    "trend_score": 4,
+    "title": "AI 视觉服务：从技能练习变成可交付的小服务",
+    "type": "business",
+    "category": "商业化",
+    "summary": "个人创作者可以把 AI 海报草案、视频预演、数字人头像或内容模板包装成小型服务。",
+    "tools": [
+      "Midjourney",
+      "Canva",
+      "Runway",
+      "Figma"
+    ],
+    "related_concepts": [
+      "service package",
+      "freelance",
+      "creative business"
+    ],
+    "target_users": [
+      "自由创作者",
+      "内容运营者",
+      "视觉设计师"
+    ],
+    "creator_value": "帮助创作者从“我会用工具”转向“我能交付一个清楚结果”。",
+    "project_ideas": [
+      "设计 AI 头像服务套餐",
+      "做品牌海报草案服务",
+      "提供短视频视觉预演服务"
+    ],
+    "prompt_hint": "creative service package, AI visual preview, client moodboard, poster draft, social media visual kit",
+    "workflow_hint": "明确服务范围、交付格式、修改次数和版权边界，再用案例展示价值。",
+    "platform_suggestions": [
+      "商业提案",
+      "小红书",
+      "作品集"
+    ],
+    "difficulty": "中级"
+  },
+  {
+    "source_name": "AI Creative Radar Notes",
+    "source_url": "",
+    "published_at": "",
+    "collected_at": "2026-06-22",
+    "status": "已入库",
+    "id": "resource-050",
+    "freshness_score": 4,
+    "credibility_score": 4,
+    "relevance_score": 5,
+    "creator_value_score": 5,
+    "actionability_score": 5,
+    "trend_score": 5,
+    "title": "AI 创意咨询产品化：把方案生成变成可复用模板",
+    "type": "business",
+    "category": "商业化",
+    "summary": "AI 创意咨询可以被整理成模板、检查清单和方案生成流程，帮助更多人从想法进入执行。",
+    "tools": [
+      "Notion",
+      "Figma",
+      "ChatGPT",
+      "DeepSeek"
+    ],
+    "related_concepts": [
+      "creative consulting",
+      "template product",
+      "plan generation"
+    ],
+    "target_users": [
+      "个人创作者",
+      "内容运营者",
+      "学生创业者"
+    ],
+    "creator_value": "适合把自己的方法论沉淀为小产品，例如方案模板、提示词包或作品集规划表。",
+    "project_ideas": [
+      "制作 AI 视觉项目方案模板",
+      "设计作品集脑暴问卷",
+      "整理创意咨询服务页"
+    ],
+    "prompt_hint": "AI creative plan template, project brief, tools, workflow, platform strategy, portfolio value",
+    "workflow_hint": "把常见问题拆成输入表单，再让 AI 根据资料库生成初步方案。",
+    "platform_suggestions": [
+      "Notion 模板",
+      "小红书",
+      "商业提案"
+    ],
+    "difficulty": "中级"
   }
 ]

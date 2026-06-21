@@ -6,27 +6,16 @@ import SignalDetail from './components/SignalDetail.jsx'
 import SignalImage from './components/SignalImage.jsx'
 import SignalCard from './components/SignalCard.jsx'
 import TodaysSignal from './components/TodaysSignal.jsx'
-import signals from './data/news-sample.json'
-
-const categories = [
-  'All',
-  'AI视觉工具',
-  '创意案例',
-  '潮流趋势',
-  '商业玩法',
-  '灵感Prompt',
-  '前沿观察',
-]
+import resources from './data/news-sample.json'
 
 const planKeywords = ['数字人', 'AI 视频', '作品集', '海报', '小红书 AI 账号', '虚拟人', 'Midjourney', 'Runway']
 
 const savedPlanStorageKey = 'ai-creative-radar-plans'
 
-const postPlanActions = ['登录云端同步', '导出 PPT 大纲', '生成思维导图']
+const postPlanActions = ['登录云端同步', '生成思维导图']
 
 const libraryFeatures = [
   '登录云端同步',
-  '导出 PPT 大纲',
   '生成思维导图',
 ]
 
@@ -52,16 +41,28 @@ const modeTabs = [
 ]
 
 const searchableFields = [
+  'id',
   'title',
+  'type',
   'signal',
   'summary',
+  'source_name',
+  'source_url',
+  'published_at',
+  'collected_at',
   'creator_value',
   'project_ideas',
   'business_potential',
   'target_reader',
+  'target_users',
   'category',
   'tools',
+  'related_concepts',
   'prompt_hint',
+  'workflow_hint',
+  'platform_suggestions',
+  'difficulty',
+  'status',
   'source',
   'visual_tag',
 ]
@@ -108,6 +109,49 @@ const planKeywordBank = [
   '互动作品集',
 ]
 
+function normalizeResource(resource) {
+  const relatedConcepts = Array.isArray(resource.related_concepts) ? resource.related_concepts : []
+  const targetUsers = Array.isArray(resource.target_users) ? resource.target_users : []
+  const tools = Array.isArray(resource.tools) ? resource.tools : []
+  const projectIdeas = Array.isArray(resource.project_ideas) ? resource.project_ideas : []
+  const platformSuggestions = Array.isArray(resource.platform_suggestions) ? resource.platform_suggestions : []
+  const collectedAt = resource.collected_at || resource.date || ''
+  const publishedAt = resource.published_at || resource.date || collectedAt
+  const creatorValue = resource.creator_value || resource.signal || resource.summary || ''
+  const workflowHint = resource.workflow_hint || ''
+
+  return {
+    ...resource,
+    signal: resource.signal || creatorValue || resource.summary || '',
+    source: resource.source || resource.source_name || '',
+    url: resource.url || resource.source_url || '',
+    date: resource.date || publishedAt || collectedAt,
+    target_reader: resource.target_reader || targetUsers.join('、') || 'AIGC 初学者、视觉创作者',
+    visual_tag:
+      Array.isArray(resource.visual_tag) && resource.visual_tag.length > 0
+        ? resource.visual_tag
+        : relatedConcepts.slice(0, 5),
+    business_potential:
+      resource.business_potential ||
+      (platformSuggestions.length > 0
+        ? `适合延展到${platformSuggestions.join('、')}等场景。`
+        : workflowHint || creatorValue),
+    image: resource.image || '',
+    image_alt: resource.image_alt || `${resource.title || 'AI 创意资料'}预览`,
+    image_mode: resource.image_mode || 'cover',
+    confidence_level:
+      resource.confidence_level ||
+      (Number(resource.credibility_score) >= 5 ? 'HIGH' : Number(resource.credibility_score) >= 3 ? 'MEDIUM' : 'LOW'),
+    tools,
+    project_ideas: projectIdeas,
+    related_concepts: relatedConcepts,
+    target_users: targetUsers,
+    platform_suggestions: platformSuggestions,
+  }
+}
+
+const signals = resources.map(normalizeResource)
+
 function getSearchText(signal) {
   return searchableFields
     .flatMap((field) => {
@@ -117,6 +161,32 @@ function getSearchText(signal) {
     .filter(Boolean)
     .join(' ')
     .toLowerCase()
+}
+
+function buildSmartSearchResourcePayload(resource) {
+  return {
+    id: resource.id,
+    title: resource.title,
+    type: resource.type,
+    category: resource.category,
+    summary: resource.summary,
+    tools: resource.tools,
+    related_concepts: resource.related_concepts,
+    creator_value: resource.creator_value,
+    project_ideas: resource.project_ideas,
+    prompt_hint: resource.prompt_hint,
+    workflow_hint: resource.workflow_hint,
+    platform_suggestions: resource.platform_suggestions,
+    difficulty: resource.difficulty,
+    scores: {
+      freshness_score: resource.freshness_score,
+      credibility_score: resource.credibility_score,
+      relevance_score: resource.relevance_score,
+      creator_value_score: resource.creator_value_score,
+      actionability_score: resource.actionability_score,
+      trend_score: resource.trend_score,
+    },
+  }
 }
 
 function getSavedPlanSearchText(savedPlan) {
@@ -268,11 +338,25 @@ function sanitizeFilename(filename) {
   return filename.replace(/[\\/:*?"<>|]/g, '').replace(/\s+/g, ' ').trim()
 }
 
+function escapeHtml(value) {
+  return String(value || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
+}
+
 function formatSavedPlanDate(createdAt, options = {}) {
   const date = createdAt ? new Date(createdAt) : new Date()
   if (Number.isNaN(date.getTime())) return '未知时间'
 
   return date.toLocaleString('zh-CN', options)
+}
+
+function formatHtmlList(items, fallback = '暂无明确内容') {
+  const listItems = items?.length ? items : [fallback]
+  return `<ul>${listItems.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</ul>`
 }
 
 function buildFinalPlanText(finalPlan, query = '', createdAt = new Date().toISOString()) {
@@ -294,6 +378,9 @@ function buildFinalPlanText(finalPlan, query = '', createdAt = new Date().toISOS
     '## 项目目标',
     finalPlan.target || '暂无项目目标',
     '',
+    '## 适合人群 / 使用场景',
+    formatFinalPlanList(finalPlan.target_users),
+    '',
     '## 核心概念',
     finalPlan.concept || '暂无核心概念',
     '',
@@ -308,6 +395,9 @@ function buildFinalPlanText(finalPlan, query = '', createdAt = new Date().toISOS
     '',
     '## 视觉风格',
     formatFinalPlanList(finalPlan.visual_style),
+    '',
+    '## Prompt 灵感',
+    formatFinalPlanList(finalPlan.prompt_ideas),
     '',
     '## 平台建议',
     formatFinalPlanList(finalPlan.platform_suggestions),
@@ -339,6 +429,146 @@ function downloadMarkdownPlan(finalPlan, query = '', createdAt) {
   URL.revokeObjectURL(url)
 }
 
+function triggerTextDownload(content, filename, type) {
+  const blob = new Blob([content], { type })
+  const url = URL.createObjectURL(blob)
+  const link = document.createElement('a')
+
+  link.href = url
+  link.download = filename
+  document.body.appendChild(link)
+  link.click()
+  link.remove()
+  URL.revokeObjectURL(url)
+}
+
+function buildWordPlanHtml(finalPlan, query = '', createdAt, refineHistory = []) {
+  const displayDate = formatSavedPlanDate(createdAt)
+
+  return `<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>${escapeHtml(finalPlan.title || 'AI Creative Radar 创意方案文档')}</title>
+  <style>
+    body { font-family: "Microsoft YaHei", SimSun, Arial, sans-serif; line-height: 1.7; color: #111; }
+    h1 { font-size: 24px; }
+    h2 { margin-top: 22px; font-size: 18px; border-bottom: 1px solid #999; padding-bottom: 4px; }
+    p { margin: 8px 0; }
+    li { margin: 4px 0; }
+    .meta { color: #444; }
+  </style>
+</head>
+<body>
+  <h1>AI Creative Radar 创意方案文档</h1>
+  <p class="meta"><strong>生成时间：</strong>${escapeHtml(displayDate)}</p>
+  <p class="meta"><strong>原始创意方向：</strong>${escapeHtml(query || '未填写')}</p>
+
+  <h2>${escapeHtml(finalPlan.title || '完整方案草稿')}</h2>
+  <h2>方案摘要</h2>
+  <p>${escapeHtml(finalPlan.summary || '暂无摘要')}</p>
+  <h2>项目目标</h2>
+  <p>${escapeHtml(finalPlan.target || '暂无项目目标')}</p>
+  <h2>适合人群 / 使用场景</h2>
+  ${formatHtmlList(finalPlan.target_users)}
+  <h2>核心概念</h2>
+  <p>${escapeHtml(finalPlan.concept || '暂无核心概念')}</p>
+  <h2>推荐工具 / 资料库参考方向</h2>
+  ${formatHtmlList(finalPlan.tools)}
+  <h2>内容结构</h2>
+  ${formatHtmlList(finalPlan.content_structure)}
+  <h2>执行步骤</h2>
+  ${formatHtmlList(finalPlan.execution_steps)}
+  <h2>视觉风格</h2>
+  ${formatHtmlList(finalPlan.visual_style)}
+  <h2>Prompt 灵感</h2>
+  ${formatHtmlList(finalPlan.prompt_ideas)}
+  <h2>平台建议</h2>
+  ${formatHtmlList(finalPlan.platform_suggestions)}
+  <h2>作品集价值</h2>
+  <p>${escapeHtml(finalPlan.portfolio_value || '暂无说明')}</p>
+  <h2>下一步行动</h2>
+  ${formatHtmlList(finalPlan.next_actions)}
+  <h2>AI 讨论记录摘要</h2>
+  ${
+    refineHistory?.length
+      ? refineHistory
+          .map(
+            (record, index) => `
+  <p><strong>第 ${index + 1} 轮追问：</strong>${escapeHtml(record.question)}</p>
+  <p><strong>AI 回复：</strong>${escapeHtml(record.reply || record.answer)}</p>`,
+          )
+          .join('')
+      : '<p>暂无讨论记录，当前文档基于初步方案整理。</p>'
+  }
+</body>
+</html>`
+}
+
+function downloadWordPlan(finalPlan, query = '', createdAt, refineHistory = []) {
+  const safeTitle = sanitizeFilename(finalPlan?.title || 'AI-Creative-Radar-方案文档')
+  const filename = `${safeTitle || 'AI-Creative-Radar-方案文档'}.doc`
+  const htmlContent = `\ufeff${buildWordPlanHtml(finalPlan, query, createdAt, refineHistory)}`
+
+  triggerTextDownload(htmlContent, filename, 'application/msword;charset=utf-8')
+}
+
+function buildPptOutlineText(finalPlan, query = '', createdAt) {
+  const displayDate = formatSavedPlanDate(createdAt, {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  })
+  const title = finalPlan.title || 'AI Creative Radar 创意方案'
+
+  return [
+    '# AI Creative Radar 方案 PPT 大纲',
+    '',
+    `> 原始创意方向：${query || '未填写'}`,
+    `> 生成时间：${displayDate}`,
+    '',
+    '## 第 1 页：项目标题',
+    `- 项目名称：${title}`,
+    `- 一句话概念：${finalPlan.concept || finalPlan.summary || '暂无核心概念'}`,
+    '',
+    '## 第 2 页：项目背景',
+    `- 为什么要做：${finalPlan.target || '围绕当前创意方向做一个可执行的 AIGC 视觉项目。'}`,
+    `- 用户痛点 / 创作场景：${finalPlan.summary || '需要把模糊想法整理成可落地方案。'}`,
+    '',
+    '## 第 3 页：核心创意',
+    `- 核心视觉概念：${finalPlan.concept || '暂无核心概念'}`,
+    `- 创意亮点：${finalPlan.portfolio_value || '可作为作品集或内容账号实验展示。'}`,
+    '',
+    '## 第 4 页：目标用户',
+    formatFinalPlanList(finalPlan.target_users, 'AIGC 初学者、视觉创作者、学生或内容运营者'),
+    '',
+    '## 第 5 页：工具链',
+    formatFinalPlanList(finalPlan.tools),
+    '',
+    '## 第 6 页：视觉风格',
+    formatFinalPlanList(finalPlan.visual_style),
+    '',
+    '## 第 7 页：内容结构 / 执行流程',
+    formatFinalPlanList([...(finalPlan.content_structure || []), ...(finalPlan.execution_steps || [])]),
+    '',
+    '## 第 8 页：Prompt 与工作流',
+    formatFinalPlanList(finalPlan.prompt_ideas),
+    '',
+    '## 第 9 页：发布平台 / 作品集包装',
+    formatFinalPlanList(finalPlan.platform_suggestions),
+    '',
+    '## 第 10 页：下一步计划',
+    formatFinalPlanList(finalPlan.next_actions),
+  ].join('\n')
+}
+
+function downloadPptOutlinePlan(finalPlan, query = '', createdAt) {
+  const safeTitle = sanitizeFilename(`${finalPlan?.title || 'AI-Creative-Radar'}-PPT大纲`)
+  const filename = `${safeTitle || 'AI-Creative-Radar-PPT大纲'}.md`
+
+  triggerTextDownload(buildPptOutlineText(finalPlan, query, createdAt), filename, 'text/markdown;charset=utf-8')
+}
+
 function loadSavedPlans() {
   if (typeof window === 'undefined') return []
 
@@ -359,6 +589,39 @@ function getPlanSourceLabel(source) {
   if (source === 'ai') return 'AI 生成'
   if (source === 'ai-text') return 'AI 文本结果'
   return '本地匹配'
+}
+
+function getFriendlyAiErrorMessage(error, fallback = 'AI 暂时不可用，可以稍后再试。') {
+  const rawMessage = error instanceof Error ? error.message : String(error || '')
+  const normalizedMessage = rawMessage.toLowerCase()
+
+  if (!rawMessage) return fallback
+  if (rawMessage.includes('余额不足') || normalizedMessage.includes('insufficient balance')) {
+    return 'AI 额度暂时不足，可以稍后再试。'
+  }
+  if (rawMessage.includes('请求过于频繁') || normalizedMessage.includes('rate limit')) {
+    return 'AI 请求较多，请稍后再试。'
+  }
+  if (rawMessage.includes('模型名称') || normalizedMessage.includes('model')) {
+    return 'AI 模型配置暂时异常，可以稍后再试。'
+  }
+  if (
+    rawMessage.includes('API Key') ||
+    rawMessage.includes('未授权') ||
+    rawMessage.includes('环境变量') ||
+    normalizedMessage.includes('missing ai environment') ||
+    normalizedMessage.includes('unauthorized')
+  ) {
+    return 'AI 服务暂时不可用，可以稍后再试。'
+  }
+  if (rawMessage.includes('返回内容为空') || rawMessage.includes('未能解析')) {
+    return 'AI 返回内容不完整，可以重新生成一次。'
+  }
+  if (normalizedMessage.includes('failed to fetch') || normalizedMessage.includes('network')) {
+    return '网络或 AI 服务暂时不稳定，可以稍后再试。'
+  }
+
+  return rawMessage
 }
 
 function findPlanMatches(query) {
@@ -392,11 +655,17 @@ function App() {
   const [finalPlanError, setFinalPlanError] = useState('')
   const [finalPlanCopyStatus, setFinalPlanCopyStatus] = useState('idle')
   const [finalPlanDownloadStatus, setFinalPlanDownloadStatus] = useState('idle')
+  const [finalPlanWordStatus, setFinalPlanWordStatus] = useState('idle')
+  const [finalPlanPptStatus, setFinalPlanPptStatus] = useState('idle')
   const [savePlanStatus, setSavePlanStatus] = useState('idle')
   const [savedPlans, setSavedPlans] = useState(loadSavedPlans)
   const [selectedSavedPlanId, setSelectedSavedPlanId] = useState('')
   const [savedPlanCopyStatus, setSavedPlanCopyStatus] = useState('')
+  const [savedPlanExportStatus, setSavedPlanExportStatus] = useState('')
   const [globalSearchQuery, setGlobalSearchQuery] = useState('')
+  const [smartSearchResult, setSmartSearchResult] = useState(null)
+  const [smartSearchError, setSmartSearchError] = useState('')
+  const [isSmartSearchLoading, setIsSmartSearchLoading] = useState(false)
   const todaysSignal = signals[0]
 
   const feedSignals = useMemo(
@@ -404,6 +673,7 @@ function App() {
       signals.filter((signal) => activeCategory === 'All' || signal.category === activeCategory),
     [activeCategory],
   )
+  const categories = useMemo(() => ['All', ...uniqueItems(signals.map((signal) => signal.category))], [])
 
   const planResults = useMemo(() => {
     return findPlanMatches(submittedPlanQuery)
@@ -456,6 +726,8 @@ function App() {
     setFinalPlanError('')
     setFinalPlanCopyStatus('idle')
     setFinalPlanDownloadStatus('idle')
+    setFinalPlanWordStatus('idle')
+    setFinalPlanPptStatus('idle')
     setSavePlanStatus('idle')
 
     setIsPlanLoading(true)
@@ -485,10 +757,8 @@ function App() {
       setPlanSource('local')
       setPlanApiError(
         matchedSignalsForPlan.length > 0
-          ? error instanceof Error
-            ? error.message
-            : 'AI 接口暂时不可用'
-          : '',
+          ? getFriendlyAiErrorMessage(error)
+          : 'AI 暂时不可用，可以稍后再试，或换一个更具体的关键词。',
       )
     } finally {
       setIsPlanLoading(false)
@@ -569,11 +839,11 @@ function App() {
       setFinalPlanError('')
       setFinalPlanCopyStatus('idle')
       setFinalPlanDownloadStatus('idle')
+      setFinalPlanWordStatus('idle')
+      setFinalPlanPptStatus('idle')
       setSavePlanStatus('idle')
     } catch (error) {
-      setRefineError(
-        error instanceof Error ? error.message : 'AI 暂时无法继续完善方案，请稍后再试。',
-      )
+      setRefineError(getFriendlyAiErrorMessage(error, 'AI 暂时无法继续完善方案，请稍后再试。'))
     } finally {
       setIsRefineLoading(false)
     }
@@ -589,6 +859,8 @@ function App() {
     setFinalPlanError('')
     setFinalPlanCopyStatus('idle')
     setFinalPlanDownloadStatus('idle')
+    setFinalPlanWordStatus('idle')
+    setFinalPlanPptStatus('idle')
     setSavePlanStatus('idle')
 
     try {
@@ -603,6 +875,17 @@ function App() {
           refineHistory: refineRecords.map((record) => ({
             question: record.question,
             answer: record.reply,
+          })),
+          matchedResources: planResults.slice(0, 5).map((resource) => ({
+            title: resource.title,
+            category: resource.category,
+            summary: resource.summary,
+            tools: resource.tools,
+            creator_value: resource.creator_value,
+            project_ideas: resource.project_ideas,
+            prompt_hint: resource.prompt_hint,
+            workflow_hint: resource.workflow_hint,
+            platform_suggestions: resource.platform_suggestions,
           })),
         }),
       })
@@ -621,9 +904,7 @@ function App() {
         })
       }, 0)
     } catch (error) {
-      setFinalPlanError(
-        error instanceof Error ? error.message : 'AI 暂时无法生成完整方案草稿，请稍后再试。',
-      )
+      setFinalPlanError(getFriendlyAiErrorMessage(error, 'AI 暂时无法生成完整方案草稿，请稍后再试。'))
     } finally {
       setIsFinalizingPlan(false)
     }
@@ -647,11 +928,45 @@ function App() {
   const downloadFinalPlan = () => {
     if (!finalPlan) return
 
-    downloadMarkdownPlan(finalPlan, submittedPlanQuery || planQuery)
+    try {
+      downloadMarkdownPlan(finalPlan, submittedPlanQuery || planQuery)
+      setFinalPlanDownloadStatus('downloaded')
+    } catch (error) {
+      setFinalPlanDownloadStatus('failed')
+    }
 
-    setFinalPlanDownloadStatus('downloaded')
     window.setTimeout(() => {
       setFinalPlanDownloadStatus('idle')
+    }, 1500)
+  }
+
+  const downloadFinalPlanWord = () => {
+    if (!finalPlan) return
+
+    try {
+      downloadWordPlan(finalPlan, submittedPlanQuery || planQuery, undefined, refineRecords)
+      setFinalPlanWordStatus('downloaded')
+    } catch (error) {
+      setFinalPlanWordStatus('failed')
+    }
+
+    window.setTimeout(() => {
+      setFinalPlanWordStatus('idle')
+    }, 1500)
+  }
+
+  const downloadFinalPlanPptOutline = () => {
+    if (!finalPlan) return
+
+    try {
+      downloadPptOutlinePlan(finalPlan, submittedPlanQuery || planQuery)
+      setFinalPlanPptStatus('downloaded')
+    } catch (error) {
+      setFinalPlanPptStatus('failed')
+    }
+
+    window.setTimeout(() => {
+      setFinalPlanPptStatus('idle')
     }, 1500)
   }
 
@@ -664,6 +979,7 @@ function App() {
       query: submittedPlanQuery || planQuery,
       createdAt: new Date().toISOString(),
       finalPlan,
+      refineHistory: refineRecords,
     }
 
     setSavedPlans((plans) => {
@@ -701,6 +1017,32 @@ function App() {
     downloadMarkdownPlan(savedPlan.finalPlan, savedPlan.query, savedPlan.createdAt)
   }
 
+  const downloadSavedPlanWord = (savedPlan) => {
+    try {
+      downloadWordPlan(savedPlan.finalPlan, savedPlan.query, savedPlan.createdAt, savedPlan.refineHistory || [])
+      setSavedPlanExportStatus(`word-${savedPlan.id}`)
+    } catch (error) {
+      setSavedPlanExportStatus(`failed-${savedPlan.id}`)
+    }
+
+    window.setTimeout(() => {
+      setSavedPlanExportStatus('')
+    }, 1500)
+  }
+
+  const downloadSavedPlanPptOutline = (savedPlan) => {
+    try {
+      downloadPptOutlinePlan(savedPlan.finalPlan, savedPlan.query, savedPlan.createdAt)
+      setSavedPlanExportStatus(`ppt-${savedPlan.id}`)
+    } catch (error) {
+      setSavedPlanExportStatus(`failed-${savedPlan.id}`)
+    }
+
+    window.setTimeout(() => {
+      setSavedPlanExportStatus('')
+    }, 1500)
+  }
+
   const deleteSavedPlan = (planId) => {
     if (!window.confirm('确定要删除这个方案吗？')) return
 
@@ -730,8 +1072,90 @@ function App() {
     event.preventDefault()
   }
 
+  const handleGlobalSearchChange = (value) => {
+    setGlobalSearchQuery(value)
+    setSmartSearchResult(null)
+    setSmartSearchError('')
+  }
+
   const clearGlobalSearch = () => {
     setGlobalSearchQuery('')
+    setSmartSearchResult(null)
+    setSmartSearchError('')
+    setIsSmartSearchLoading(false)
+  }
+
+  const runSmartSearch = async () => {
+    const query = globalSearchQuery.trim()
+
+    if (!query || isSmartSearchLoading) {
+      if (!query) setSmartSearchError('请先输入搜索词或创作需求。')
+      return
+    }
+
+    const matchedResources = findPlanMatches(query).slice(0, 12)
+
+    setIsSmartSearchLoading(true)
+    setSmartSearchError('')
+    setSmartSearchResult(null)
+
+    try {
+      const response = await fetch('/api/smart-search', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          query,
+          resources: matchedResources.map(buildSmartSearchResourcePayload),
+        }),
+      })
+
+      const data = await response.json()
+
+      if (!response.ok || !data.success || !data.result) {
+        throw new Error(data.error || 'AI 暂时无法生成智能推荐')
+      }
+
+      setSmartSearchResult({
+        query,
+        matchedCount: matchedResources.length,
+        source: data.source,
+        ...data.result,
+      })
+    } catch (error) {
+      setSmartSearchError(getFriendlyAiErrorMessage(error, 'AI 智能推荐暂时不可用，可以稍后再试。'))
+    } finally {
+      setIsSmartSearchLoading(false)
+    }
+  }
+
+  const useSmartSearchForPlan = (query) => {
+    setPlanQuery(query)
+    setSubmittedPlanQuery('')
+    setApiPlanSummary(null)
+    setPlanSource('local')
+    setPlanApiError('')
+    setPlanCopyStatus('idle')
+    setRefineQuestion('')
+    setRefineRecords([])
+    setRefineError('')
+    setFinalPlan(null)
+    setFinalPlanError('')
+    setFinalPlanCopyStatus('idle')
+    setFinalPlanDownloadStatus('idle')
+    setFinalPlanWordStatus('idle')
+    setFinalPlanPptStatus('idle')
+    setSavePlanStatus('idle')
+    clearGlobalSearch()
+    setActiveMode('plan')
+
+    window.setTimeout(() => {
+      document.getElementById('plan-consult')?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      })
+    }, 80)
   }
 
   const openSignalFromSearch = (signal) => {
@@ -768,7 +1192,7 @@ function App() {
           activeMode={activeMode}
           onModeChange={selectMode}
           searchQuery={globalSearchQuery}
-          onSearchChange={setGlobalSearchQuery}
+          onSearchChange={handleGlobalSearchChange}
           onSearchSubmit={handleGlobalSearchSubmit}
         />
 
@@ -788,9 +1212,14 @@ function App() {
                   </small>
                 )}
               </span>
-              <button type="button" onClick={clearGlobalSearch}>
-                清除搜索
-              </button>
+              <div className="global-search-actions">
+                <button type="button" onClick={runSmartSearch} disabled={isSmartSearchLoading}>
+                  {isSmartSearchLoading ? 'AI 正在分析...' : 'AI 智能推荐'}
+                </button>
+                <button type="button" onClick={clearGlobalSearch}>
+                  清除搜索
+                </button>
+              </div>
             </div>
             {globalSearchCount > 0 ? (
               <div className="global-search-groups">
@@ -851,6 +1280,85 @@ function App() {
                 没有找到相关内容，可以换一个关键词试试。例如：数字人、海报、Runway、小红书、作品集。
               </p>
             )}
+            <div className="smart-search-area" aria-label="AI smart search recommendation">
+              <p className="smart-search-hint">
+                想输入完整需求？可以点击 AI 智能推荐，让 AI 基于资料库整理工具、案例、创意方向和下一步建议。
+              </p>
+              {isSmartSearchLoading && (
+                <p className="smart-search-status">AI 正在基于资料库分析你的需求...</p>
+              )}
+              {smartSearchError && <p className="plan-api-warning">{smartSearchError}</p>}
+              {smartSearchResult && (
+                <article className="smart-search-result">
+                  <div className="smart-search-result-head">
+                    <span>
+                      <strong>AI 智能推荐结果</strong>
+                      <small>Smart Recommendation</small>
+                    </span>
+                    <small>
+                      需求：{smartSearchResult.query} / 参考资料 {smartSearchResult.matchedCount} 条
+                    </small>
+                  </div>
+                  <section>
+                    <strong>需求理解</strong>
+                    <p>{smartSearchResult.understanding || 'AI 已根据你的输入整理推荐。'}</p>
+                  </section>
+                  <section>
+                    <strong>推荐资料</strong>
+                    {smartSearchResult.recommended_resources?.length ? (
+                      <div className="smart-resource-list">
+                        {smartSearchResult.recommended_resources.map((resource, index) => (
+                          <div className="smart-resource-card" key={`${resource.title}-${index}`}>
+                            <span>{resource.type || '资料'} / {resource.category || '未分类'}</span>
+                            <strong>{resource.title || '相关资料'}</strong>
+                            <p>{resource.reason || '适合作为当前需求的参考。'}</p>
+                            <small>{resource.usage || '可以用来补充工具、案例或执行方向。'}</small>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <p>资料库匹配较少，可以换一个关键词，或直接进入创意方案模块继续生成。</p>
+                    )}
+                  </section>
+                  <section>
+                    <strong>推荐工具链</strong>
+                    <ul>
+                      {(smartSearchResult.toolchain || []).map((item) => (
+                        <li key={item}>{item}</li>
+                      ))}
+                    </ul>
+                  </section>
+                  <section>
+                    <strong>可执行创意方向</strong>
+                    <div className="smart-direction-list">
+                      {(smartSearchResult.creative_directions || []).map((direction, index) => (
+                        <div className="smart-direction-card" key={`${direction.title}-${index}`}>
+                          <strong>{direction.title || `方向 ${index + 1}`}</strong>
+                          <p>适合：{direction.suitable_for || 'AIGC 初学者或视觉创作者'}</p>
+                          <p>做法：{direction.how_to_make || '先选择工具和参考资料，再做小型视觉实验。'}</p>
+                          <p>输出：{direction.output || '可整理成作品集项目或内容栏目。'}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </section>
+                  <section>
+                    <strong>下一步建议</strong>
+                    <ul>
+                      {(smartSearchResult.next_steps || []).map((step) => (
+                        <li key={step}>{step}</li>
+                      ))}
+                    </ul>
+                  </section>
+                  <button
+                    className="smart-use-button"
+                    type="button"
+                    onClick={() => useSmartSearchForPlan(smartSearchResult.query)}
+                  >
+                    用这个需求生成创意方案
+                  </button>
+                </article>
+              )}
+            </div>
           </section>
         )}
 
@@ -893,7 +1401,7 @@ function App() {
             </div>
             <div className="hero-status-grid" aria-label="Radar status">
               <span>在线更新 / Online</span>
-              <span>Archive 008</span>
+              <span>Archive {String(signals.length).padStart(3, '0')}</span>
               <span>最近扫描 {todaysSignal.date}</span>
             </div>
             <div className="personal-file-strip" aria-label="Personal project notes">
@@ -965,11 +1473,15 @@ function App() {
               <p>
                 输入你的创意方向，AI 会帮你整理工具组合、内容结构、Prompt 灵感、平台建议、作品集价值和下一步行动。这里生成的是创作方案，不是直接生成图片或海报。
               </p>
+              <p className="consult-flow-note">
+                流程：输入创意方向 → 获取初步方案 → 和 AI 继续讨论 → 确认方向，生成最终方案。
+              </p>
               <div className="idea-examples" aria-label="Example creative directions">
                 <span>我想做一个数字人作品集项目</span>
                 <span>我想做一个小红书 AI 账号</span>
                 <span>我想做一套 AI 海报视觉实验</span>
                 <span>我想做一个 AI 视频短片</span>
+                <span>我想做一个适合放进作品集的 AI 视觉项目</span>
               </div>
               <label className="search-field">
                 <span>
@@ -993,6 +1505,8 @@ function App() {
                     setFinalPlanError('')
                     setFinalPlanCopyStatus('idle')
                     setFinalPlanDownloadStatus('idle')
+                    setFinalPlanWordStatus('idle')
+                    setFinalPlanPptStatus('idle')
                     setSavePlanStatus('idle')
                   }}
                   onKeyDown={(event) => {
@@ -1133,27 +1647,27 @@ function App() {
           )}
 
           {hasPlanQuery && planSummary && (
-          <section className="coming-next next-refine-panel" aria-label="Next refine with AI">
+          <section className="coming-next next-refine-panel" aria-label="AI plan discussion">
             <div className="section-title">
               <span>
-                <strong>继续完善方案</strong>
+                <strong>AI 方案讨论区</strong>
                 <small>Refine with AI</small>
               </span>
-              <span>AI follow-up</span>
+              <span>{refineRecords.length > 0 ? `${refineRecords.length} 轮讨论` : '等待追问'}</span>
             </div>
             <div className="next-refine-body">
               <p>
-                你可以继续追问，让 AI 帮你细化执行步骤、视觉风格、发布平台或作品集呈现方式。
+                你可以继续追问、修改或补充要求，让 AI 帮你打磨执行步骤、视觉风格、发布平台和作品集呈现方式。每一轮讨论都会保留，并用于最终方案整理。
               </p>
               <label className="refine-field">
-                <span>继续追问</span>
+                <span>继续补充你的要求</span>
                 <textarea
                   value={refineQuestion}
                   onChange={(event) => {
                     setRefineQuestion(event.target.value)
                     setRefineError('')
                   }}
-                  placeholder="例如：我想把它做成小红书账号，怎么规划？"
+                  placeholder="继续补充你的要求，例如：帮我改成适合小红书发布 / 给我三天执行计划 / 这个项目怎么放进作品集？"
                   rows="3"
                 />
               </label>
@@ -1163,18 +1677,22 @@ function App() {
                 onClick={refineCurrentPlan}
                 disabled={!refineQuestion.trim() || isRefineLoading}
               >
-                {isRefineLoading ? 'AI 正在继续完善方案...' : '继续完善'}
+                {isRefineLoading ? 'AI 正在发送追问...' : '发送追问'}
               </button>
-              {isRefineLoading && <p className="refine-status">AI 正在继续完善方案...</p>}
+              {isRefineLoading && <p className="refine-status">AI 正在发送追问并整理补充建议...</p>}
               {refineError && <p className="plan-api-warning">{refineError}</p>}
               {refineRecords.length > 0 && (
                 <div className="refine-records" aria-label="Refine history">
                   {refineRecords.map((record) => (
                     <article className="refine-record" key={record.id}>
-                      <strong>你问：</strong>
-                      <p>{record.question}</p>
-                      <strong>AI 补充：</strong>
-                      <p>{record.reply}</p>
+                      <div className="refine-message user-message">
+                        <strong>你追问</strong>
+                        <p>{record.question}</p>
+                      </div>
+                      <div className="refine-message ai-message">
+                        <strong>AI 回复</strong>
+                        <p>{record.reply}</p>
+                      </div>
                     </article>
                   ))}
                 </div>
@@ -1182,12 +1700,12 @@ function App() {
               <div className="finalize-panel" aria-label="Finalize plan draft">
                 <div className="finalize-header">
                   <span>
-                    <strong>生成完整方案草稿</strong>
-                    <small>Finalize Plan Draft</small>
+                    <strong>确认方向，生成最终方案</strong>
+                    <small>Finalize Plan</small>
                   </span>
                 </div>
                 <p>
-                  AI 会把初步方案和追问记录整理成一份更完整的方案草稿，方便后续保存、下载或导出。
+                  当你觉得方向基本清楚后，AI 会结合最初输入、初步方案、资料库匹配内容和所有讨论记录，整理成一份最终方案草稿。即使没有追问记录，也可以直接基于初步方案生成。
                 </p>
                 <button
                   className="finalize-button"
@@ -1195,10 +1713,10 @@ function App() {
                   onClick={finalizeCurrentPlan}
                   disabled={isFinalizingPlan}
                 >
-                  {isFinalizingPlan ? 'AI 正在整理完整方案草稿...' : '生成完整方案草稿'}
+                  {isFinalizingPlan ? 'AI 正在整理最终方案...' : '确认方向，生成最终方案'}
                 </button>
                 {isFinalizingPlan && (
-                  <p className="refine-status">AI 正在整理完整方案草稿...</p>
+                  <p className="refine-status">AI 正在整理最终方案，请稍等...</p>
                 )}
                 {finalPlanError && <p className="plan-api-warning">{finalPlanError}</p>}
                 {finalPlan && (
@@ -1219,6 +1737,14 @@ function App() {
                       <section>
                         <strong>项目目标</strong>
                         <p>{finalPlan.target || '暂无项目目标'}</p>
+                      </section>
+                      <section>
+                        <strong>适合人群 / 使用场景</strong>
+                        <ul>
+                          {(finalPlan.target_users || []).map((item) => (
+                            <li key={item}>{item}</li>
+                          ))}
+                        </ul>
                       </section>
                       <section>
                         <strong>核心概念</strong>
@@ -1252,6 +1778,14 @@ function App() {
                         <strong>视觉风格</strong>
                         <ul>
                           {(finalPlan.visual_style || []).map((item) => (
+                            <li key={item}>{item}</li>
+                          ))}
+                        </ul>
+                      </section>
+                      <section>
+                        <strong>Prompt 灵感</strong>
+                        <ul>
+                          {(finalPlan.prompt_ideas || []).map((item) => (
                             <li key={item}>{item}</li>
                           ))}
                         </ul>
@@ -1291,11 +1825,25 @@ function App() {
                           {savePlanStatus === 'saved' ? '已保存到方案库' : '保存到我的方案库'}
                         </button>
                         <button className="finalize-button" type="button" onClick={downloadFinalPlan}>
-                          {finalPlanDownloadStatus === 'downloaded' ? '已生成下载' : '下载为 Markdown 文档'}
+                          {finalPlanDownloadStatus === 'downloaded'
+                            ? '已生成下载'
+                            : finalPlanDownloadStatus === 'failed'
+                              ? '下载失败'
+                              : '下载 Markdown'}
                         </button>
-                        <button type="button" disabled>
-                          导出 PPT 大纲
-                          <small>即将开放</small>
+                        <button className="finalize-button" type="button" onClick={downloadFinalPlanWord}>
+                          {finalPlanWordStatus === 'downloaded'
+                            ? '已生成 Word'
+                            : finalPlanWordStatus === 'failed'
+                              ? '下载失败'
+                              : '下载 Word 文档'}
+                        </button>
+                        <button className="finalize-button" type="button" onClick={downloadFinalPlanPptOutline}>
+                          {finalPlanPptStatus === 'downloaded'
+                            ? '已生成大纲'
+                            : finalPlanPptStatus === 'failed'
+                              ? '导出失败'
+                              : '导出 PPT 大纲'}
                         </button>
                         <button type="button" disabled>
                           生成思维导图
@@ -1407,6 +1955,20 @@ function App() {
                       <button type="button" onClick={() => downloadSavedPlan(savedPlan)}>
                         下载 Markdown
                       </button>
+                      <button type="button" onClick={() => downloadSavedPlanWord(savedPlan)}>
+                        {savedPlanExportStatus === `word-${savedPlan.id}`
+                          ? '已生成 Word'
+                          : savedPlanExportStatus === `failed-${savedPlan.id}`
+                            ? '导出失败'
+                            : '下载 Word'}
+                      </button>
+                      <button type="button" onClick={() => downloadSavedPlanPptOutline(savedPlan)}>
+                        {savedPlanExportStatus === `ppt-${savedPlan.id}`
+                          ? '已生成大纲'
+                          : savedPlanExportStatus === `failed-${savedPlan.id}`
+                            ? '导出失败'
+                            : '导出 PPT 大纲'}
+                      </button>
                       <button type="button" className="danger-button" onClick={() => deleteSavedPlan(savedPlan.id)}>
                         删除
                       </button>
@@ -1422,6 +1984,14 @@ function App() {
                           <section>
                             <strong>项目目标</strong>
                             <p>{savedPlan.finalPlan?.target || '暂无项目目标'}</p>
+                          </section>
+                          <section>
+                            <strong>适合人群 / 使用场景</strong>
+                            <ul>
+                              {(savedPlan.finalPlan?.target_users || []).map((item) => (
+                                <li key={item}>{item}</li>
+                              ))}
+                            </ul>
                           </section>
                           <section>
                             <strong>核心概念</strong>
@@ -1455,6 +2025,14 @@ function App() {
                             <strong>视觉风格</strong>
                             <ul>
                               {(savedPlan.finalPlan?.visual_style || []).map((item) => (
+                                <li key={item}>{item}</li>
+                              ))}
+                            </ul>
+                          </section>
+                          <section>
+                            <strong>Prompt 灵感</strong>
+                            <ul>
+                              {(savedPlan.finalPlan?.prompt_ideas || []).map((item) => (
                                 <li key={item}>{item}</li>
                               ))}
                             </ul>
