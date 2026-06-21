@@ -117,7 +117,7 @@ p {
 .browser-frame {
   position: relative;
   z-index: 1;
-  width: min(1060px, 100%);
+  width: min(1320px, 100%);
   margin: 0 auto;
   border: 2px solid #8faf8a;
   background: #243527;
@@ -331,6 +331,14 @@ h1 {
   text-decoration: none;
   box-shadow: 6px 6px 0 rgba(5, 8, 5, 0.28);
   cursor: pointer;
+}
+
+.primary-action-card:first-child,
+.primary-action-card:nth-child(2) {
+  border-color: #8faf8a;
+  background:
+    linear-gradient(135deg, rgba(220, 232, 202, 0.24), transparent 55%),
+    #aec7aa;
 }
 
 .primary-action-card:hover {
@@ -850,6 +858,10 @@ h1 {
     #aec7aa;
 }
 
+.mode-tab.is-active {
+  box-shadow: inset 0 0 0 2px rgba(5, 8, 5, 0.4), 5px 5px 0 rgba(5, 8, 5, 0.28);
+}
+
 .mode-tab:hover small,
 .mode-tab:hover strong,
 .mode-tab:hover span,
@@ -860,7 +872,7 @@ h1 {
 }
 
 .todays-signal {
-  width: min(920px, calc(100% - 36px));
+  width: min(1120px, calc(100% - 36px));
   box-shadow: 8px 8px 0 rgba(5, 8, 5, 0.25);
 }
 
@@ -1459,9 +1471,25 @@ h1 {
 
 .consult-entry-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(260px, 0.85fr);
+  grid-template-columns: minmax(0, 1.45fr) minmax(280px, 0.75fr);
   gap: 12px;
   padding: 14px;
+}
+
+.idea-examples {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin: 12px;
+}
+
+.idea-examples span {
+  padding: 8px 10px;
+  border: 1px solid rgba(143, 175, 138, 0.58);
+  color: #dce8ca;
+  background: rgba(5, 8, 5, 0.18);
+  font-size: 0.82rem;
+  line-height: 1.45;
 }
 
 .consult-input-card,
@@ -1497,6 +1525,12 @@ h1 {
   color: #050805;
   background: #aec7aa;
   padding: 10px 12px;
+}
+
+.plan-generate-button,
+.refine-submit-button,
+.finalize-button {
+  font-weight: 700;
 }
 
 .plan-generate-button {
@@ -1831,6 +1865,8 @@ h1 {
 .finalize-button:disabled {
   color: #b8c9aa !important;
   background: #243527 !important;
+  border-color: rgba(143, 175, 138, 0.42) !important;
+  opacity: 0.72;
   cursor: not-allowed !important;
 }
 
@@ -1943,6 +1979,8 @@ h1 {
 .final-plan-actions button:disabled {
   color: #b8c9aa;
   background: #243527;
+  border-color: rgba(143, 175, 138, 0.42);
+  opacity: 0.72;
   cursor: not-allowed;
 }
 
@@ -1951,6 +1989,39 @@ h1 {
   margin-top: 3px;
   font-size: 0.68rem;
   text-transform: uppercase;
+}
+
+.save-path-note {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid rgba(124, 255, 155, 0.5);
+  color: #e5f3d4;
+  background: rgba(124, 255, 155, 0.12);
+  line-height: 1.5;
+}
+
+.save-path-note button,
+.library-status-card button {
+  min-height: 38px;
+  border: 2px solid #6f876b;
+  color: #050805;
+  background: #aec7aa;
+  padding: 8px 10px;
+  font-family: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.save-path-note button:hover,
+.save-path-note button:focus-visible,
+.library-status-card button:hover,
+.library-status-card button:focus-visible {
+  border-color: #050805;
+  background: #7cff9b;
+  outline: none;
 }
 
 .next-refine-body > span {
@@ -2012,6 +2083,11 @@ h1 {
 .saved-plan-card h3 {
   margin: 0;
   color: #e5f3d4;
+}
+
+.library-status-card {
+  display: grid;
+  gap: 10px;
 }
 
 .library-note-card p,
@@ -2108,6 +2184,11 @@ h1 {
   background: #243527;
 }
 
+.saved-plan-actions .danger-button:hover,
+.saved-plan-actions .danger-button:focus-visible {
+  color: #050805;
+}
+
 .saved-plan-detail {
   display: grid;
   gap: 12px;
@@ -2168,6 +2249,12 @@ h1 {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 20px;
   padding: 0 18px 24px;
+}
+
+@media (min-width: 1120px) {
+  .signal-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }
 
 .signal-card {
@@ -2314,7 +2401,7 @@ h1 {
 }
 
 .detail-window {
-  width: min(920px, 100%);
+  width: min(1040px, 100%);
   max-height: min(86vh, 860px);
   border: 2px solid #8faf8a;
   background: #243527;
@@ -3279,12 +3366,22 @@ h1 {
   .source-actions .source-button,
   .final-plan-actions button,
   .saved-plan-actions button,
+  .save-path-note button,
   .plan-copy-button,
   .plan-generate-button,
   .refine-submit-button,
   .finalize-button {
     min-height: 44px;
     border-width: 1px;
+  }
+
+  .idea-examples {
+    grid-template-columns: 1fr;
+  }
+
+  .save-path-note {
+    display: grid;
+    grid-template-columns: 1fr;
   }
 }
 

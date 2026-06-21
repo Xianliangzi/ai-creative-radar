@@ -473,7 +473,7 @@ function App() {
 
     window.setTimeout(() => {
       setPlanCopyStatus('idle')
-    }, 1500)
+    }, 3500)
   }
 
   const refineCurrentPlan = async () => {
@@ -689,11 +689,11 @@ function App() {
 
         <div className="hero-panel">
           <div className="hero-copy">
-            <p className="eyebrow">AI 创意情报与方案工具 / creative radar</p>
+            <p className="eyebrow">AIGC 灵感雷达与方案脑暴工具 / creative radar</p>
             <h1>AI Creative Radar</h1>
-            <p className="subtitle">一个面向视觉创作者的 AI 创意情报与方案工具</p>
+            <p className="subtitle">面向 AIGC / AI 视觉创作者的灵感雷达与方案脑暴工具</p>
             <p className="intro-copy">
-              浏览最新 AI 工具、案例和趋势；输入你的创意方向，获得工具推荐、案例参考、Prompt 灵感和可落地方案。
+              它帮助你扫描 AI 创意资讯、寻找工具与案例，并把模糊的创意方向整理成可执行的视觉项目方案。它不会直接替你生成最终图片或海报，而是帮你决定做什么、怎么做、用什么工具、发到哪里，以及如何整理成作品集项目。
             </p>
             <div className="primary-actions three-actions" aria-label="Primary actions">
               <button
@@ -790,14 +790,20 @@ function App() {
               <strong id="plan-consult-title">AI 创意方案咨询</strong>
               <small>Creative Plan Assistant</small>
             </span>
-            <span>local match</span>
+            <span>AI + 本地资讯</span>
           </div>
           <div className="consult-entry-grid">
             <div className="consult-input-card">
-              <h3>你想做什么？</h3>
+              <h3>把一个模糊想法整理成可执行方案</h3>
               <p>
-                当前会基于已有 AI 资讯进行本地匹配，整理工具、案例、Prompt 灵感和商业玩法。
+                输入你的创意方向，AI 会帮你整理工具组合、内容结构、Prompt 灵感、平台建议、作品集价值和下一步行动。这里生成的是创作方案，不是直接生成图片或海报。
               </p>
+              <div className="idea-examples" aria-label="Example creative directions">
+                <span>我想做一个数字人作品集项目</span>
+                <span>我想做一个小红书 AI 账号</span>
+                <span>我想做一套 AI 海报视觉实验</span>
+                <span>我想做一个 AI 视频短片</span>
+              </div>
               <label className="search-field">
                 <span>
                   创意方向
@@ -1035,7 +1041,7 @@ function App() {
                         完整方案草稿
                         <small>Final Plan Draft</small>
                       </span>
-                      <p>这份方案由初步方案和你的追问记录整理生成，当前可以复制，未来可保存到方案库或导出为文档。</p>
+                      <p>这份方案由初步方案和你的追问记录整理生成，当前可以复制、下载 Markdown，也可以保存到我的方案库。</p>
                     </div>
                     <h3>{finalPlan.title || '完整方案草稿'}</h3>
                     <div className="final-plan-grid">
@@ -1129,6 +1135,14 @@ function App() {
                           <small>即将开放</small>
                         </button>
                       </div>
+                      {savePlanStatus === 'saved' && (
+                        <div className="save-path-note">
+                          <span>已保存到我的方案库。你可以去查看、复制、下载或删除这份方案。</span>
+                          <button type="button" onClick={() => selectMode('library')}>
+                            查看我的方案
+                          </button>
+                        </div>
+                      )}
                     </div>
                   </article>
                 )}
@@ -1303,8 +1317,11 @@ function App() {
               </div>
             ) : (
               <article className="library-status-card">
-                <h3>暂无保存方案</h3>
-                <p>你还没有保存方案。生成完整方案草稿后，可以保存到这里。</p>
+                <h3>你还没有保存方案</h3>
+                <p>在创意方案中生成完整方案草稿后，点击“保存到我的方案库”，就可以在这里查看、复制、下载或删除。</p>
+                <button type="button" onClick={() => selectMode('plan')}>
+                  去生成一个方案
+                </button>
               </article>
             )}
             <div className="library-feature-list">
