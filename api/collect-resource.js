@@ -104,6 +104,7 @@ async function readLinkContent(url) {
 
 function normalizeResource(resource, inputType, sourceUrl, sourceName) {
   const sourceStatus = inputType === 'link' ? '链接导入' : '文本导入'
+  const allowedIntents = ['article', 'tool_site', 'case_page', 'github_project', 'social_post', 'unknown']
 
   return {
     id: '',
@@ -131,6 +132,8 @@ function normalizeResource(resource, inputType, sourceUrl, sourceName) {
     actionability_score: Number(resource.actionability_score) || 4,
     trend_score: Number(resource.trend_score) || 3,
     status: '已入库',
+    resource_intent: allowedIntents.includes(resource.resource_intent) ? resource.resource_intent : 'unknown',
+    use_in_plan_hint: resource.use_in_plan_hint || '',
     source_status: resource.source_status || sourceStatus,
     verification_status: '待核验',
     verification_note: '第一版仅做内容整理，真实性核验将在后续版本增强。',
@@ -160,6 +163,10 @@ function buildUserPrompt({ inputType, input, pageTitle, pageText, sourceName, so
     '- status 固定为“已入库”',
     '- source_status 使用“链接导入”或“文本导入”',
     '- verification_status 固定为“待核验”',
+    '- resource_intent 必须是 article、tool_site、case_page、github_project、social_post、unknown 之一',
+    '- 如果是工具官网、GitHub 项目或产品网站，不要强行写成新闻文章，请整理它适合怎么进入创意方案',
+    '- use_in_plan_hint 说明这条资料适合如何参与方案生成，例如工具链参考、视觉风格参考、案例参考、趋势背景参考、Prompt / workflow 参考',
+    '- 网页内容较少时，可以基于链接域名、页面标题和内容做保守整理，但必须保持 verification_status 为“待核验”，不要编造具体新闻事实',
     '',
     '请严格返回以下 JSON 结构，不要输出 Markdown，不要输出解释文字：',
     JSON.stringify(
@@ -189,6 +196,8 @@ function buildUserPrompt({ inputType, input, pageTitle, pageText, sourceName, so
         actionability_score: 4,
         trend_score: 3,
         status: '已入库',
+        resource_intent: 'article | tool_site | case_page | github_project | social_post | unknown',
+        use_in_plan_hint: '这条资料可以如何用于方案生成',
         source_status: sourceStatus,
         verification_status: '待核验',
         verification_note: '第一版仅做内容整理，真实性核验将在后续版本增强。',

@@ -55,7 +55,28 @@ function hasValidAccessCode(requiredAccessCode, providedAccessCode) {
   return String(providedAccessCode || '') === requiredAccessCode
 }
 
-function buildUserPrompt(query, currentPlan, refineHistory, matchedResources = []) {
+function buildReferenceResources(referenceResources) {
+  return Array.isArray(referenceResources)
+    ? referenceResources.slice(0, 8).map((resource) => ({
+        title: resource.title,
+        summary: resource.summary,
+        type: resource.type,
+        category: resource.category,
+        tools: resource.tools,
+        creator_value: resource.creator_value,
+        project_ideas: resource.project_ideas,
+        prompt_hint: resource.prompt_hint,
+        workflow_hint: resource.workflow_hint,
+        resource_intent: resource.resource_intent,
+        use_in_plan_hint: resource.use_in_plan_hint,
+        source_status: resource.source_status,
+        verification_status: resource.verification_status,
+      }))
+    : []
+}
+
+function buildUserPrompt(query, currentPlan, refineHistory, matchedResources = [], referenceResources = []) {
+  const referencesForPrompt = buildReferenceResources(referenceResources)
   return [
     `用户原始创意目标：${query}`,
     '',
@@ -67,6 +88,11 @@ function buildUserPrompt(query, currentPlan, refineHistory, matchedResources = [
     '',
     '资料库匹配内容（可作为参考，不需要逐字照搬）：',
     JSON.stringify(Array.isArray(matchedResources) ? matchedResources.slice(0, 5) : [], null, 2),
+    '',
+    referencesForPrompt.length
+      ? '用户添加的参考资料如下，可能未经过真实性核验，请优先作为创意参考、工具参考、视觉风格参考或 workflow 参考，避免将未核验内容写成确定事实：'
+      : '用户本次没有额外添加参考资料。',
+    JSON.stringify(referencesForPrompt, null, 2),
     '',
     '请把以上内容重新整理成一份最终方案草稿。',
     '要求：不要简单复制原文；要整合、归纳、补齐执行路径；适合后续保存、下载或导出。',
@@ -104,7 +130,14 @@ export default async function handler(request, response) {
   }
 
   try {
-    const { query, currentPlan, refineHistory = [], matchedResources = [], accessCode } = request.body || {}
+    const {
+      query,
+      currentPlan,
+      refineHistory = [],
+      matchedResources = [],
+      referenceResources = [],
+      accessCode,
+    } = request.body || {}
 
     if (!query || !String(query).trim()) {
       return response.status(400).json({
@@ -158,7 +191,13 @@ export default async function handler(request, response) {
           },
           {
             role: 'user',
-            content: buildUserPrompt(String(query).trim(), currentPlan, refineHistory, matchedResources),
+            content: buildUserPrompt(
+              String(query).trim(),
+              currentPlan,
+              refineHistory,
+              matchedResources,
+              referenceResources,
+            ),
           },
         ],
         temperature: 0.7,

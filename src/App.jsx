@@ -61,6 +61,8 @@ const searchableFields = [
   'related_concepts',
   'prompt_hint',
   'workflow_hint',
+  'use_in_plan_hint',
+  'resource_intent',
   'platform_suggestions',
   'difficulty',
   'status',
@@ -148,6 +150,8 @@ function normalizeResource(resource) {
     related_concepts: relatedConcepts,
     target_users: targetUsers,
     platform_suggestions: platformSuggestions,
+    resource_intent: resource.resource_intent || 'unknown',
+    use_in_plan_hint: resource.use_in_plan_hint || '',
   }
 }
 
@@ -177,6 +181,8 @@ function buildSmartSearchResourcePayload(resource) {
     project_ideas: resource.project_ideas,
     prompt_hint: resource.prompt_hint,
     workflow_hint: resource.workflow_hint,
+    use_in_plan_hint: resource.use_in_plan_hint,
+    verification_status: resource.verification_status,
     platform_suggestions: resource.platform_suggestions,
     difficulty: resource.difficulty,
     scores: {
@@ -188,6 +194,37 @@ function buildSmartSearchResourcePayload(resource) {
       trend_score: resource.trend_score,
     },
   }
+}
+
+function buildPlanReferencePayload(resource) {
+  return {
+    title: resource.title,
+    summary: resource.summary,
+    type: resource.type,
+    category: resource.category,
+    tools: resource.tools,
+    creator_value: resource.creator_value,
+    project_ideas: resource.project_ideas,
+    prompt_hint: resource.prompt_hint,
+    workflow_hint: resource.workflow_hint,
+    resource_intent: resource.resource_intent,
+    use_in_plan_hint: resource.use_in_plan_hint,
+    source_status: resource.source_status,
+    verification_status: resource.verification_status,
+  }
+}
+
+function getResourceIntentLabel(intent) {
+  const labels = {
+    article: '文章',
+    tool_site: '工具网站',
+    case_page: '案例页',
+    github_project: 'GitHub 项目',
+    social_post: '社交内容',
+    unknown: '未知',
+  }
+
+  return labels[intent] || labels.unknown
 }
 
 function getSavedPlanSearchText(savedPlan) {
@@ -637,6 +674,8 @@ function normalizeCollectedResource(resource, inputType, inputValue) {
     prompt_hint: resource.prompt_hint || '',
     workflow_hint: resource.workflow_hint || '',
     platform_suggestions: Array.isArray(resource.platform_suggestions) ? resource.platform_suggestions : [],
+    resource_intent: resource.resource_intent || 'unknown',
+    use_in_plan_hint: resource.use_in_plan_hint || '',
     difficulty: resource.difficulty || '入门',
     freshness_score: Number(resource.freshness_score) || 3,
     credibility_score: Number(resource.credibility_score) || (inputType === 'link' ? 3 : 2),
@@ -739,6 +778,11 @@ function App() {
   const [collectorPreview, setCollectorPreview] = useState(null)
   const [collectorStatus, setCollectorStatus] = useState('idle')
   const [collectorMessage, setCollectorMessage] = useState('')
+  const [planReferenceInput, setPlanReferenceInput] = useState('')
+  const [planReferences, setPlanReferences] = useState([])
+  const [planReferenceStatus, setPlanReferenceStatus] = useState('idle')
+  const [planReferenceMessage, setPlanReferenceMessage] = useState('')
+  const [savedReferenceIds, setSavedReferenceIds] = useState([])
   const signals = useMemo(
     () => [...staticSignals, ...customResources.map(normalizeResource)],
     [customResources],
@@ -818,6 +862,7 @@ function App() {
         body: JSON.stringify({
           query: nextQuery,
           matchedSignals: matchedSignalsForPlan,
+          referenceResources: planReferences.map(buildPlanReferencePayload),
         }),
       })
 
@@ -894,6 +939,7 @@ function App() {
           query: submittedPlanQuery || planQuery,
           currentPlan: buildCurrentPlanPayload(planSummary),
           followUpQuestion: question,
+          referenceResources: planReferences.map(buildPlanReferencePayload),
         }),
       })
 
@@ -963,7 +1009,10 @@ function App() {
             prompt_hint: resource.prompt_hint,
             workflow_hint: resource.workflow_hint,
             platform_suggestions: resource.platform_suggestions,
+            use_in_plan_hint: resource.use_in_plan_hint,
+            verification_status: resource.verification_status,
           })),
+          referenceResources: planReferences.map(buildPlanReferencePayload),
         }),
       })
 
@@ -1249,6 +1298,71 @@ function App() {
           ? '暂时无法读取这个链接内容，可以复制文章正文后用文本方式导入。'
           : getFriendlyAiErrorMessage(error, 'AI 暂时没有返回可用资料卡片，请稍后再试。'),
       )
+    }
+  }
+
+  const addPlanReference = async () => {
+    const input = planReferenceInput.trim()
+    const inputType = getCollectorInputType(input)
+
+    if (!input) {
+      setPlanReferenceMessage('请先粘贴一个链接或一段内容。')
+      return
+    }
+
+    setPlanReferenceStatus(inputType === 'link' ? 'reading' : 'collecting')
+    setPlanReferenceMessage(inputType === 'link' ? '正在读取链接并整理参考资料...' : '正在用 AI 整理参考文本...')
+
+    try {
+      const response = await fetch('/api/collect-resource', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          input_type: inputType,
+          input,
+        }),
+      })
+
+      const data = await response.json()
+
+      if (!response.ok || !data.success || !data.resource) {
+        throw new Error(data.error || 'AI 暂时没有返回可用参考资料')
+      }
+
+      const normalizedResource = normalizeCollectedResource(data.resource, inputType, input)
+      setPlanReferences((currentReferences) => [normalizedResource, ...currentReferences])
+      setPlanReferenceInput('')
+      setPlanReferenceStatus('added')
+      setPlanReferenceMessage('已添加到当前方案参考资料，会参与初步方案、讨论和最终方案生成。')
+    } catch (error) {
+      setPlanReferenceStatus('error')
+      setPlanReferenceMessage(
+        inputType === 'link'
+          ? '暂时无法读取这个链接内容，可以复制文章正文后用文本方式导入。'
+          : getFriendlyAiErrorMessage(error, 'AI 暂时没有返回可用参考资料，请稍后再试。'),
+      )
+    }
+  }
+
+  const removePlanReference = (resourceId) => {
+    setPlanReferences((currentReferences) => currentReferences.filter((resource) => resource.id !== resourceId))
+  }
+
+  const saveReferenceToLibrary = (resource) => {
+    try {
+      setCustomResources((currentResources) => {
+        if (currentResources.some((item) => item.id === resource.id)) return currentResources
+        const nextResources = [resource, ...currentResources]
+        persistCustomResources(nextResources)
+        return nextResources
+      })
+      setSavedReferenceIds((currentIds) => uniqueItems([...currentIds, resource.id]))
+      setPlanReferenceMessage('已保存到本地资料库。')
+    } catch (error) {
+      setPlanReferenceStatus('error')
+      setPlanReferenceMessage('本地保存失败，请检查浏览器存储权限后重试。')
     }
   }
 
@@ -1711,6 +1825,84 @@ function App() {
             </aside>
           </div>
 
+          <section className="plan-reference-panel" aria-label="Plan reference resources">
+            <div className="collector-header">
+              <span>
+                <strong>参考资料</strong>
+                <small>Reference Materials</small>
+              </span>
+              <span>{planReferences.length} 条当前参考</span>
+            </div>
+            <p className="collector-intro">
+              可粘贴工具网站、文章链接或文字内容，AI 会先整理这些资料，并在生成方案、继续讨论和最终方案时参考它们。
+            </p>
+            <label className="collector-field">
+              <span>
+                粘贴链接或文本
+                <small>{planReferenceInput.trim() ? `识别为：${getCollectorInputType(planReferenceInput) === 'link' ? '链接' : '文本'}` : 'Auto Detect'}</small>
+              </span>
+              <textarea
+                value={planReferenceInput}
+                onChange={(event) => {
+                  setPlanReferenceInput(event.target.value)
+                  setPlanReferenceMessage('')
+                  setPlanReferenceStatus('idle')
+                }}
+                placeholder="可以粘贴工具官网、GitHub 项目、案例页面、文章链接，或直接粘贴一段 AIGC 相关内容。"
+                rows="4"
+              />
+            </label>
+            <div className="collector-actions">
+              <button
+                type="button"
+                onClick={addPlanReference}
+                disabled={!planReferenceInput.trim() || planReferenceStatus === 'reading' || planReferenceStatus === 'collecting'}
+              >
+                {planReferenceStatus === 'reading'
+                  ? '正在读取链接...'
+                  : planReferenceStatus === 'collecting'
+                    ? 'AI 正在整理...'
+                    : '添加参考资料'}
+              </button>
+            </div>
+            {planReferenceMessage && (
+              <p className={planReferenceStatus === 'error' ? 'collector-message is-error' : 'collector-message'}>
+                {planReferenceMessage}
+              </p>
+            )}
+            {planReferences.length > 0 && (
+              <div className="plan-reference-list" aria-label="Current plan references">
+                {planReferences.map((resource) => (
+                  <article className="plan-reference-card" key={resource.id}>
+                    <div className="plan-reference-card-head">
+                      <span>
+                        <strong>{resource.title}</strong>
+                        <small>{resource.type} / {resource.category}</small>
+                      </span>
+                      <small>{resource.source_status} / {resource.verification_status}</small>
+                    </div>
+                    <p>{resource.summary || '暂无摘要'}</p>
+                    <div className="plan-reference-meta">
+                      <span>资料意图：{getResourceIntentLabel(resource.resource_intent)}</span>
+                      <span>相关工具：{resource.tools.length ? resource.tools.join(' / ') : '暂无明确工具'}</span>
+                    </div>
+                    <p className="plan-reference-hint">
+                      与当前方案的可能关系：{resource.use_in_plan_hint || '可作为创意方向、工具链或视觉风格参考。'}
+                    </p>
+                    <div className="plan-reference-actions">
+                      <button type="button" onClick={() => removePlanReference(resource.id)}>
+                        移除本次参考
+                      </button>
+                      <button type="button" onClick={() => saveReferenceToLibrary(resource)}>
+                        {savedReferenceIds.includes(resource.id) ? '已保存到资料库' : '保存到本地资料库'}
+                      </button>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            )}
+          </section>
+
           {hasPlanQuery && planSummary && (
             <section className="initial-plan" aria-label="Initial plan summary">
               <div className="section-title">
@@ -2061,13 +2253,13 @@ function App() {
           <section className="resource-collector" aria-label="AI resource collector">
             <div className="collector-header">
               <span>
-                <strong>AI 资料采集助手</strong>
-                <small>Resource Collector</small>
+                <strong>添加资料到本地资料库</strong>
+                <small>Local Resource Library</small>
               </span>
               <span>{customResources.length} 条本地新增资料</span>
             </div>
             <p className="collector-intro">
-              粘贴一个链接或一段内容，AI 会帮你整理成资料库卡片。当前新增资料只保存在本浏览器中。
+              这里用于把有价值的资料保存到本地资料库。也可以在“创意方案”中先添加参考资料，让 AI 直接参考这些链接或文本生成方案。
             </p>
             <label className="collector-field">
               <span>
@@ -2135,6 +2327,14 @@ function App() {
                     <strong>来源与核验</strong>
                     <p>{collectorPreview.source_status} / {collectorPreview.verification_status}</p>
                     <small>{collectorPreview.verification_note}</small>
+                  </section>
+                  <section>
+                    <strong>资料意图</strong>
+                    <p>{getResourceIntentLabel(collectorPreview.resource_intent)}</p>
+                  </section>
+                  <section>
+                    <strong>方案参考方式</strong>
+                    <p>{collectorPreview.use_in_plan_hint || '可作为创意方向、工具链或视觉风格参考。'}</p>
                   </section>
                   <section>
                     <strong>相关工具</strong>

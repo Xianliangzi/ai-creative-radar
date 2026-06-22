@@ -24,12 +24,38 @@ function hasValidAccessCode(requiredAccessCode, providedAccessCode) {
   return String(providedAccessCode || '') === requiredAccessCode
 }
 
-function buildUserPrompt(query, currentPlan, followUpQuestion) {
+function buildReferenceResources(referenceResources) {
+  return Array.isArray(referenceResources)
+    ? referenceResources.slice(0, 8).map((resource) => ({
+        title: resource.title,
+        summary: resource.summary,
+        type: resource.type,
+        category: resource.category,
+        tools: resource.tools,
+        creator_value: resource.creator_value,
+        project_ideas: resource.project_ideas,
+        prompt_hint: resource.prompt_hint,
+        workflow_hint: resource.workflow_hint,
+        resource_intent: resource.resource_intent,
+        use_in_plan_hint: resource.use_in_plan_hint,
+        source_status: resource.source_status,
+        verification_status: resource.verification_status,
+      }))
+    : []
+}
+
+function buildUserPrompt(query, currentPlan, followUpQuestion, referenceResources = []) {
+  const referencesForPrompt = buildReferenceResources(referenceResources)
   return [
     `用户原始创意目标：${query}`,
     '',
     '当前初步方案：',
     JSON.stringify(currentPlan || {}, null, 2),
+    '',
+    referencesForPrompt.length
+      ? '用户添加的参考资料如下，可能未经过真实性核验，请优先作为创意参考、工具参考、视觉风格参考或 workflow 参考，避免将未核验内容写成确定事实：'
+      : '用户本次没有额外添加参考资料。',
+    JSON.stringify(referencesForPrompt, null, 2),
     '',
     `用户追问：${followUpQuestion}`,
     '',
@@ -46,7 +72,7 @@ export default async function handler(request, response) {
   }
 
   try {
-    const { query, currentPlan, followUpQuestion, accessCode } = request.body || {}
+    const { query, currentPlan, followUpQuestion, referenceResources = [], accessCode } = request.body || {}
 
     if (!query || !String(query).trim()) {
       return response.status(400).json({
@@ -112,6 +138,7 @@ export default async function handler(request, response) {
               String(query).trim(),
               currentPlan,
               String(followUpQuestion).trim(),
+              referenceResources,
             ),
           },
         ],

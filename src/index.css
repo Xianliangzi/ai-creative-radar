@@ -536,7 +536,8 @@ p {
   outline: none;
 }
 
-.resource-collector {
+.resource-collector,
+.plan-reference-panel {
   display: grid;
   gap: 12px;
   margin: 14px;
@@ -656,6 +657,100 @@ p {
   color: #b8c9aa;
   background: #243527;
   cursor: not-allowed;
+}
+
+.plan-reference-panel {
+  margin-top: 0;
+}
+
+.plan-reference-list {
+  display: grid;
+  gap: 10px;
+}
+
+.plan-reference-card {
+  display: grid;
+  gap: 10px;
+  padding: 12px;
+  border: 1px solid rgba(143, 175, 138, 0.58);
+  background: rgba(5, 8, 5, 0.18);
+}
+
+.plan-reference-card-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(143, 175, 138, 0.36);
+}
+
+.plan-reference-card-head span {
+  display: grid;
+  gap: 2px;
+}
+
+.plan-reference-card strong {
+  color: #e5f3d4;
+}
+
+.plan-reference-card small,
+.plan-reference-meta span {
+  color: #b8c9aa;
+  font-size: 0.78rem;
+  line-height: 1.45;
+}
+
+.plan-reference-card p {
+  margin: 0;
+  color: #dce8ca;
+  line-height: 1.62;
+}
+
+.plan-reference-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.plan-reference-meta span {
+  padding: 5px 7px;
+  border: 1px solid rgba(143, 175, 138, 0.38);
+  background: rgba(5, 8, 5, 0.16);
+}
+
+.plan-reference-hint {
+  border-left: 2px solid rgba(124, 255, 155, 0.45);
+  padding-left: 10px;
+}
+
+.plan-reference-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.plan-reference-actions button {
+  min-height: 40px;
+  border: 2px solid #6f876b;
+  color: #050805;
+  background: #aec7aa;
+  padding: 8px 11px;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.plan-reference-actions button:first-child {
+  color: #e5f3d4;
+  background: #243527;
+}
+
+.plan-reference-actions button:hover,
+.plan-reference-actions button:focus-visible {
+  border-color: #050805;
+  background: #7cff9b;
+  color: #050805;
+  outline: none;
 }
 
 .collector-secondary-button {
@@ -4119,11 +4214,22 @@ h1 {
 
   .collector-header,
   .collector-preview-head,
+  .plan-reference-card-head,
   .collector-field > span {
     display: grid;
   }
 
   .local-resource-item {
+    grid-template-columns: 1fr;
+  }
+
+  .plan-reference-panel {
+    margin: 10px;
+    padding: 10px;
+  }
+
+  .plan-reference-actions {
+    display: grid;
     grid-template-columns: 1fr;
   }
 

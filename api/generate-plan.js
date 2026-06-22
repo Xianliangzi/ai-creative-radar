@@ -49,7 +49,27 @@ function hasValidAccessCode(requiredAccessCode, providedAccessCode) {
   return String(providedAccessCode || '') === requiredAccessCode
 }
 
-function buildUserPrompt(query, matchedSignals) {
+function buildReferenceResources(referenceResources) {
+  return Array.isArray(referenceResources)
+    ? referenceResources.slice(0, 8).map((resource) => ({
+        title: resource.title,
+        summary: resource.summary,
+        type: resource.type,
+        category: resource.category,
+        tools: resource.tools,
+        creator_value: resource.creator_value,
+        project_ideas: resource.project_ideas,
+        prompt_hint: resource.prompt_hint,
+        workflow_hint: resource.workflow_hint,
+        resource_intent: resource.resource_intent,
+        use_in_plan_hint: resource.use_in_plan_hint,
+        source_status: resource.source_status,
+        verification_status: resource.verification_status,
+      }))
+    : []
+}
+
+function buildUserPrompt(query, matchedSignals, referenceResources = []) {
   const signalsForPrompt = Array.isArray(matchedSignals)
     ? matchedSignals.slice(0, 5).map((signal) => ({
         title: signal.title,
@@ -63,6 +83,7 @@ function buildUserPrompt(query, matchedSignals) {
         url: signal.url,
       }))
     : []
+  const referencesForPrompt = buildReferenceResources(referenceResources)
 
   return [
     `用户输入的创意目标：${query}`,
@@ -77,6 +98,11 @@ function buildUserPrompt(query, matchedSignals) {
       ? '系统匹配到的 AI 工具、案例和资讯如下，最多 5 条：'
       : '当前匹配资讯较少，请基于用户目标给出一个谨慎、可执行的初步方案。',
     JSON.stringify(signalsForPrompt, null, 2),
+    '',
+    referencesForPrompt.length
+      ? '用户添加的参考资料如下，可能未经过真实性核验，请优先作为创意参考、工具参考、视觉风格参考或 workflow 参考，避免将未核验内容写成确定事实：'
+      : '用户本次没有额外添加参考资料。',
+    JSON.stringify(referencesForPrompt, null, 2),
     '',
     '字段长度要求：',
     '- overview：1-2 句话',
@@ -114,7 +140,7 @@ export default async function handler(request, response) {
   }
 
   try {
-    const { query, matchedSignals = [], accessCode } = request.body || {}
+    const { query, matchedSignals = [], referenceResources = [], accessCode } = request.body || {}
 
     if (!query || !String(query).trim()) {
       return response.status(400).json({
@@ -159,7 +185,7 @@ export default async function handler(request, response) {
           },
           {
             role: 'user',
-            content: buildUserPrompt(String(query).trim(), matchedSignals),
+            content: buildUserPrompt(String(query).trim(), matchedSignals, referenceResources),
           },
         ],
         temperature: 0.7,
