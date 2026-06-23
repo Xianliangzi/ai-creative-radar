@@ -744,6 +744,7 @@ function findPlanMatches(query, sourceSignals = staticSignals) {
 
 function App() {
   const finalPlanRef = useRef(null)
+  const refineEndRef = useRef(null)
   const [activeMode, setActiveMode] = useState('news')
   const [activeCategory, setActiveCategory] = useState('All')
   const [selectedSignal, setSelectedSignal] = useState(null)
@@ -983,6 +984,12 @@ function App() {
       setFinalPlanWordStatus('idle')
       setFinalPlanPptStatus('idle')
       setSavePlanStatus('idle')
+      window.setTimeout(() => {
+        refineEndRef.current?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'end',
+        })
+      }, 0)
     } catch (error) {
       setRefineError(getFriendlyAiErrorMessage(error, 'AI 暂时无法继续完善方案，请稍后再试。'))
     } finally {
@@ -1900,14 +1907,16 @@ function App() {
                   </p>
                 )}
               </div>
-              <button
-                className="plan-generate-button"
-                type="button"
-                onClick={generateInitialPlan}
-                disabled={!planQuery.trim() || isPlanLoading}
-              >
-                {isPlanLoading ? 'AI 正在整理初步方案...' : '生成初步方案'}
-              </button>
+              {!planSummary && (
+                <button
+                  className="plan-generate-button"
+                  type="button"
+                  onClick={generateInitialPlan}
+                  disabled={!planQuery.trim() || isPlanLoading}
+                >
+                  {isPlanLoading ? 'AI 正在整理初步方案...' : '生成初步方案'}
+                </button>
+              )}
               {isPlanLoading && (
                 <p className="plan-loading-note">AI 正在整理初步方案...</p>
               )}
@@ -1933,7 +1942,17 @@ function App() {
                 <span className="plan-source-tag">{planSourceLabel}</span>
               </div>
               <div className="initial-plan-body">
-                <p>这是根据现有 AI 资讯整理出的初步方向，不是最终完整方案。</p>
+                <div className="initial-plan-guidance">
+                  <p>初步方案已生成。你可以继续在下方和 AI 讨论，或重新生成一个方向。</p>
+                  <button
+                    className="plan-regenerate-button"
+                    type="button"
+                    onClick={generateInitialPlan}
+                    disabled={isPlanLoading}
+                  >
+                    {isPlanLoading ? '正在重新生成...' : '重新生成初步方案'}
+                  </button>
+                </div>
                 {planApiError && (
                   <p className="plan-api-warning">AI 暂时不可用：{planApiError}，已展示本地匹配结果。</p>
                 )}
@@ -2029,28 +2048,6 @@ function App() {
               <p>
                 像聊天一样继续补充要求、修改方向或追问细节。AI 会记住前面的讨论，直到你决定总结成完整方案。
               </p>
-              <label className="refine-field">
-                <span>继续讨论</span>
-                <textarea
-                  value={refineQuestion}
-                  onChange={(event) => {
-                    setRefineQuestion(event.target.value)
-                    setRefineError('')
-                  }}
-                  placeholder="例如：把它改成更适合小红书 / 给我 7 天执行计划 / 这个项目怎么包装进作品集？"
-                  rows="3"
-                />
-              </label>
-              <button
-                className="refine-submit-button"
-                type="button"
-                onClick={refineCurrentPlan}
-                disabled={!refineQuestion.trim() || isRefineLoading}
-              >
-                {isRefineLoading ? 'AI 正在回复...' : '发送'}
-              </button>
-              {isRefineLoading && <p className="refine-status">AI 正在基于当前方案和历史讨论继续回复...</p>}
-              {refineError && <p className="plan-api-warning">{refineError}</p>}
               {refineRecords.length > 0 && (
                 <div className="refine-records" aria-label="Refine history">
                   {refineRecords.map((record) => (
@@ -2067,6 +2064,31 @@ function App() {
                   ))}
                 </div>
               )}
+              {isRefineLoading && <p className="refine-status">AI 正在基于当前方案和历史讨论继续回复...</p>}
+              <div className="refine-composer" aria-label="Continue refining this plan">
+                <label className="refine-field">
+                  <span>继续追问</span>
+                  <textarea
+                    value={refineQuestion}
+                    onChange={(event) => {
+                      setRefineQuestion(event.target.value)
+                      setRefineError('')
+                    }}
+                    placeholder="例如：让它更适合小红书 / 给我 7 天执行计划 / 这个项目怎么包装进作品集？"
+                    rows="3"
+                  />
+                </label>
+                <button
+                  className="refine-submit-button"
+                  type="button"
+                  onClick={refineCurrentPlan}
+                  disabled={!refineQuestion.trim() || isRefineLoading}
+                >
+                  {isRefineLoading ? 'AI 正在回复...' : '发送'}
+                </button>
+                {refineError && <p className="plan-api-warning">{refineError}</p>}
+              </div>
+              <div ref={refineEndRef} aria-hidden="true" />
               <div className="finalize-panel" aria-label="Finalize plan draft">
                 <div className="finalize-header">
                   <span>
