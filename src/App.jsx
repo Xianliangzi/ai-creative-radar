@@ -1747,6 +1747,7 @@ function App() {
               </p>
               <p className="consult-flow-note">
                 流程：输入创意方向 → 获取初步方案 → 和 AI 继续讨论 → 确认方向，生成最终方案。
+                AI 会综合你的创意方向、可选参考资料和本地资料库生成方案。
               </p>
               <div className="idea-examples" aria-label="Example creative directions">
                 <span>我想做一个数字人作品集项目</span>
@@ -1789,6 +1790,84 @@ function App() {
                   placeholder="例如：我想做一个数字人作品集项目 / AI 视频短片 / 小红书 AI 账号..."
                 />
               </label>
+              <div className="plan-reference-inline" aria-label="Optional plan reference materials">
+                <div className="inline-reference-head">
+                  <span>
+                    <strong>参考资料（可选）</strong>
+                    <small>{planReferences.length} 条当前参考</small>
+                  </span>
+                  <p>可以粘贴工具网站、文章链接或一段文字。AI 会在生成方案时参考这些内容，不会把未核验信息当成确定事实。</p>
+                </div>
+                <label className="inline-reference-field">
+                  <span>
+                    粘贴链接或文本
+                    <small>{planReferenceInput.trim() ? `识别为：${getCollectorInputType(planReferenceInput) === 'link' ? '链接' : '文本'}` : 'Auto Detect'}</small>
+                  </span>
+                  <textarea
+                    value={planReferenceInput}
+                    onChange={(event) => {
+                      setPlanReferenceInput(event.target.value)
+                      setPlanReferenceMessage('')
+                      setPlanReferenceStatus('idle')
+                    }}
+                    placeholder="粘贴 Runway / GitHub / 工具官网 / 文章链接，或直接粘贴一段 AIGC 相关内容。"
+                    rows="3"
+                  />
+                </label>
+                <div className="inline-reference-actions">
+                  <button
+                    type="button"
+                    onClick={addPlanReference}
+                    disabled={!planReferenceInput.trim() || planReferenceStatus === 'reading' || planReferenceStatus === 'collecting'}
+                  >
+                    {planReferenceStatus === 'reading'
+                      ? '正在读取...'
+                      : planReferenceStatus === 'collecting'
+                        ? 'AI 正在整理...'
+                        : '添加参考'}
+                  </button>
+                </div>
+                {planReferenceMessage && (
+                  <p className={planReferenceStatus === 'error' ? 'inline-reference-message is-error' : 'inline-reference-message'}>
+                    {planReferenceMessage}
+                  </p>
+                )}
+                {planReferences.length > 0 && (
+                  <div className="inline-reference-list" aria-label="Current plan references">
+                    {planReferences.map((resource) => (
+                      <article className="inline-reference-card" key={resource.id}>
+                        <div className="inline-reference-summary">
+                          <span>
+                            <strong>{resource.title}</strong>
+                            <small>
+                              {getResourceIntentLabel(resource.resource_intent)} / {resource.verification_status || '待核验'}
+                            </small>
+                          </span>
+                          <button type="button" onClick={() => removePlanReference(resource.id)}>
+                            移除
+                          </button>
+                        </div>
+                        <p>{resource.summary || '暂无摘要'}</p>
+                        {resource.tools.length > 0 && <small>相关工具：{resource.tools.join(' / ')}</small>}
+                        <details className="inline-reference-details">
+                          <summary>展开详情</summary>
+                          <div>
+                            <p><strong>创作者价值：</strong>{resource.creator_value || '暂无说明'}</p>
+                            <p><strong>项目方向：</strong>{resource.project_ideas.length ? resource.project_ideas.join(' / ') : '暂无明确方向'}</p>
+                            <p><strong>Prompt：</strong>{resource.prompt_hint || '暂无 Prompt 灵感'}</p>
+                            <p><strong>Workflow：</strong>{resource.workflow_hint || '暂无 workflow 建议'}</p>
+                            <p><strong>方案参考：</strong>{resource.use_in_plan_hint || '可作为创意方向、工具链或视觉风格参考。'}</p>
+                            <p><strong>评分：</strong>可信度 {resource.credibility_score} / 相关度 {resource.relevance_score} / 可执行性 {resource.actionability_score}</p>
+                            <button type="button" className="inline-save-reference" onClick={() => saveReferenceToLibrary(resource)}>
+                              {savedReferenceIds.includes(resource.id) ? '已保存到本地资料库' : '保存到本地资料库'}
+                            </button>
+                          </div>
+                        </details>
+                      </article>
+                    ))}
+                  </div>
+                )}
+              </div>
               <button
                 className="plan-generate-button"
                 type="button"
@@ -1824,84 +1903,6 @@ function App() {
               </button>
             </aside>
           </div>
-
-          <section className="plan-reference-panel" aria-label="Plan reference resources">
-            <div className="collector-header">
-              <span>
-                <strong>参考资料</strong>
-                <small>Reference Materials</small>
-              </span>
-              <span>{planReferences.length} 条当前参考</span>
-            </div>
-            <p className="collector-intro">
-              可粘贴工具网站、文章链接或文字内容，AI 会先整理这些资料，并在生成方案、继续讨论和最终方案时参考它们。
-            </p>
-            <label className="collector-field">
-              <span>
-                粘贴链接或文本
-                <small>{planReferenceInput.trim() ? `识别为：${getCollectorInputType(planReferenceInput) === 'link' ? '链接' : '文本'}` : 'Auto Detect'}</small>
-              </span>
-              <textarea
-                value={planReferenceInput}
-                onChange={(event) => {
-                  setPlanReferenceInput(event.target.value)
-                  setPlanReferenceMessage('')
-                  setPlanReferenceStatus('idle')
-                }}
-                placeholder="可以粘贴工具官网、GitHub 项目、案例页面、文章链接，或直接粘贴一段 AIGC 相关内容。"
-                rows="4"
-              />
-            </label>
-            <div className="collector-actions">
-              <button
-                type="button"
-                onClick={addPlanReference}
-                disabled={!planReferenceInput.trim() || planReferenceStatus === 'reading' || planReferenceStatus === 'collecting'}
-              >
-                {planReferenceStatus === 'reading'
-                  ? '正在读取链接...'
-                  : planReferenceStatus === 'collecting'
-                    ? 'AI 正在整理...'
-                    : '添加参考资料'}
-              </button>
-            </div>
-            {planReferenceMessage && (
-              <p className={planReferenceStatus === 'error' ? 'collector-message is-error' : 'collector-message'}>
-                {planReferenceMessage}
-              </p>
-            )}
-            {planReferences.length > 0 && (
-              <div className="plan-reference-list" aria-label="Current plan references">
-                {planReferences.map((resource) => (
-                  <article className="plan-reference-card" key={resource.id}>
-                    <div className="plan-reference-card-head">
-                      <span>
-                        <strong>{resource.title}</strong>
-                        <small>{resource.type} / {resource.category}</small>
-                      </span>
-                      <small>{resource.source_status} / {resource.verification_status}</small>
-                    </div>
-                    <p>{resource.summary || '暂无摘要'}</p>
-                    <div className="plan-reference-meta">
-                      <span>资料意图：{getResourceIntentLabel(resource.resource_intent)}</span>
-                      <span>相关工具：{resource.tools.length ? resource.tools.join(' / ') : '暂无明确工具'}</span>
-                    </div>
-                    <p className="plan-reference-hint">
-                      与当前方案的可能关系：{resource.use_in_plan_hint || '可作为创意方向、工具链或视觉风格参考。'}
-                    </p>
-                    <div className="plan-reference-actions">
-                      <button type="button" onClick={() => removePlanReference(resource.id)}>
-                        移除本次参考
-                      </button>
-                      <button type="button" onClick={() => saveReferenceToLibrary(resource)}>
-                        {savedReferenceIds.includes(resource.id) ? '已保存到资料库' : '保存到本地资料库'}
-                      </button>
-                    </div>
-                  </article>
-                ))}
-              </div>
-            )}
-          </section>
 
           {hasPlanQuery && planSummary && (
             <section className="initial-plan" aria-label="Initial plan summary">
@@ -2249,156 +2250,6 @@ function App() {
           <p className="feed-description">
             浏览近期 AI 工具、创意案例、趋势观察和商业玩法。点击卡片可以查看摘要、来源链接和创作者可用信息。
           </p>
-
-          <section className="resource-collector" aria-label="AI resource collector">
-            <div className="collector-header">
-              <span>
-                <strong>添加资料到本地资料库</strong>
-                <small>Local Resource Library</small>
-              </span>
-              <span>{customResources.length} 条本地新增资料</span>
-            </div>
-            <p className="collector-intro">
-              这里用于把有价值的资料保存到本地资料库。也可以在“创意方案”中先添加参考资料，让 AI 直接参考这些链接或文本生成方案。
-            </p>
-            <label className="collector-field">
-              <span>
-                粘贴链接或文本
-                <small>{collectorInput.trim() ? `识别为：${getCollectorInputType(collectorInput) === 'link' ? '链接' : '文本'}` : 'Auto Detect'}</small>
-              </span>
-              <textarea
-                value={collectorInput}
-                onChange={(event) => {
-                  setCollectorInput(event.target.value)
-                  setCollectorMessage('')
-                  setCollectorPreview(null)
-                  setCollectorStatus('idle')
-                }}
-                placeholder="可以粘贴一篇文章链接，或直接粘贴一段 AI / AIGC 相关内容。"
-                rows="4"
-              />
-            </label>
-            <div className="collector-actions">
-              <button
-                type="button"
-                onClick={collectResource}
-                disabled={!collectorInput.trim() || collectorStatus === 'reading' || collectorStatus === 'collecting'}
-              >
-                {collectorStatus === 'reading'
-                  ? '正在读取链接...'
-                  : collectorStatus === 'collecting'
-                    ? 'AI 正在整理...'
-                    : '采集并整理'}
-              </button>
-              {customResources.length > 0 && (
-                <button type="button" className="collector-secondary-button" onClick={clearCustomResources}>
-                  清空本地新增资料
-                </button>
-              )}
-            </div>
-            {collectorMessage && (
-              <p className={collectorStatus === 'error' ? 'collector-message is-error' : 'collector-message'}>
-                {collectorMessage}
-              </p>
-            )}
-            {collectorPreview && (
-              <article className="collector-preview">
-                <div className="collector-preview-head">
-                  <span>
-                    <strong>资料卡片预览</strong>
-                    <small>Preview before saving</small>
-                  </span>
-                  <small>{collectorPreview.source_status} / {collectorPreview.verification_status}</small>
-                </div>
-                <div className="collector-preview-grid">
-                  <section>
-                    <strong>标题</strong>
-                    <p>{collectorPreview.title}</p>
-                  </section>
-                  <section>
-                    <strong>类型 / 分类</strong>
-                    <p>{collectorPreview.type} / {collectorPreview.category}</p>
-                  </section>
-                  <section>
-                    <strong>摘要</strong>
-                    <p>{collectorPreview.summary || '暂无摘要'}</p>
-                  </section>
-                  <section>
-                    <strong>来源与核验</strong>
-                    <p>{collectorPreview.source_status} / {collectorPreview.verification_status}</p>
-                    <small>{collectorPreview.verification_note}</small>
-                  </section>
-                  <section>
-                    <strong>资料意图</strong>
-                    <p>{getResourceIntentLabel(collectorPreview.resource_intent)}</p>
-                  </section>
-                  <section>
-                    <strong>方案参考方式</strong>
-                    <p>{collectorPreview.use_in_plan_hint || '可作为创意方向、工具链或视觉风格参考。'}</p>
-                  </section>
-                  <section>
-                    <strong>相关工具</strong>
-                    <p>{collectorPreview.tools.length ? collectorPreview.tools.join(' / ') : '暂无明确工具'}</p>
-                  </section>
-                  <section>
-                    <strong>相关概念</strong>
-                    <p>{collectorPreview.related_concepts.length ? collectorPreview.related_concepts.join(' / ') : '暂无明确概念'}</p>
-                  </section>
-                  <section>
-                    <strong>创作者价值</strong>
-                    <p>{collectorPreview.creator_value || '暂无说明'}</p>
-                  </section>
-                  <section>
-                    <strong>可转化项目方向</strong>
-                    <ul>
-                      {collectorPreview.project_ideas.length ? (
-                        collectorPreview.project_ideas.map((idea) => <li key={idea}>{idea}</li>)
-                      ) : (
-                        <li>暂无明确项目方向</li>
-                      )}
-                    </ul>
-                  </section>
-                  <section>
-                    <strong>Prompt 灵感</strong>
-                    <p>{collectorPreview.prompt_hint || '暂无 Prompt 灵感'}</p>
-                  </section>
-                  <section>
-                    <strong>Workflow 建议</strong>
-                    <p>{collectorPreview.workflow_hint || '暂无 workflow 建议'}</p>
-                  </section>
-                  <section>
-                    <strong>平台建议</strong>
-                    <p>{collectorPreview.platform_suggestions.length ? collectorPreview.platform_suggestions.join(' / ') : '暂无平台建议'}</p>
-                  </section>
-                  <section>
-                    <strong>难度与评分</strong>
-                    <p>
-                      {collectorPreview.difficulty} / 新鲜度 {collectorPreview.freshness_score} / 可信度 {collectorPreview.credibility_score} / 可执行性 {collectorPreview.actionability_score}
-                    </p>
-                  </section>
-                </div>
-                <p className="collector-note">当前版本只做资料整理，真实性核验和全网相似来源匹配将在后续版本增强。</p>
-                <button type="button" className="collector-save-button" onClick={saveCollectedResource}>
-                  保存到本地资料库
-                </button>
-              </article>
-            )}
-            {customResources.length > 0 && (
-              <div className="local-resource-list" aria-label="Local resources">
-                <strong>本地新增资料</strong>
-                {customResources.slice(0, 5).map((resource) => (
-                  <div className="local-resource-item" key={resource.id}>
-                    <span>{resource.title}</span>
-                    <small>{resource.category} / {resource.verification_status || '待核验'}</small>
-                    <button type="button" onClick={() => deleteCustomResource(resource.id)}>
-                      删除
-                    </button>
-                  </div>
-                ))}
-                {customResources.length > 5 && <small>还有 {customResources.length - 5} 条本地资料已合并进资料库。</small>}
-              </div>
-            )}
-          </section>
 
           <CategoryFilter
             categories={categories}
