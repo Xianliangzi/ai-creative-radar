@@ -8,7 +8,7 @@ import SignalCard from './components/SignalCard.jsx'
 import TodaysSignal from './components/TodaysSignal.jsx'
 import resources from './data/news-sample.json'
 
-const planKeywords = ['数字人', 'AI 视频', '作品集', '海报', '小红书 AI 账号', '虚拟人', 'Midjourney', 'Runway']
+const planKeywords = ['数字人作品集项目', '小红书 AI 账号', 'AI 海报视觉实验', 'AI 视频短片', '作品集 AI 视觉项目']
 
 const savedPlanStorageKey = 'ai-creative-radar-plans'
 const customResourceStorageKey = 'ai-creative-radar-custom-resources'
@@ -1741,21 +1741,13 @@ function App() {
           </div>
           <div className="consult-entry-grid">
             <div className="consult-input-card">
-              <h3>把一个模糊想法整理成可执行方案</h3>
+              <h3>你想做什么？</h3>
               <p>
-                输入你的创意方向，AI 会帮你整理工具组合、内容结构、Prompt 灵感、平台建议、作品集价值和下一步行动。这里生成的是创作方案，不是直接生成图片或海报。
+                输入一个模糊想法，AI 会结合本地资料库和可选参考资料整理成方案。
               </p>
               <p className="consult-flow-note">
-                流程：输入创意方向 → 获取初步方案 → 和 AI 继续讨论 → 确认方向，生成最终方案。
-                AI 会综合你的创意方向、可选参考资料和本地资料库生成方案。
+                流程：输入想法 → 可选添加参考 → 生成初步方案 → 继续讨论 → 生成最终方案
               </p>
-              <div className="idea-examples" aria-label="Example creative directions">
-                <span>我想做一个数字人作品集项目</span>
-                <span>我想做一个小红书 AI 账号</span>
-                <span>我想做一套 AI 海报视觉实验</span>
-                <span>我想做一个 AI 视频短片</span>
-                <span>我想做一个适合放进作品集的 AI 视觉项目</span>
-              </div>
               <label className="search-field">
                 <span>
                   创意方向
@@ -1790,6 +1782,20 @@ function App() {
                   placeholder="例如：我想做一个数字人作品集项目 / AI 视频短片 / 小红书 AI 账号..."
                 />
               </label>
+              <div className="quick-keywords" aria-label="Creative plan examples">
+                <span className="example-label">示例：</span>
+                {planKeywords.map((keyword) => (
+                  <button
+                    key={keyword}
+                    type="button"
+                    className={submittedPlanQuery === keyword ? 'is-active' : ''}
+                    onClick={() => choosePlanKeyword(keyword)}
+                    disabled={isPlanLoading}
+                  >
+                    {keyword}
+                  </button>
+                ))}
+              </div>
               <div className="plan-reference-inline" aria-label="Optional plan reference materials">
                 <div className="inline-reference-head">
                   <span>
@@ -1867,6 +1873,11 @@ function App() {
                     ))}
                   </div>
                 )}
+                {planReferences.length === 0 && (
+                  <p className="inline-reference-empty">
+                    未添加参考资料。可以直接生成方案，也可以粘贴链接或文本让 AI 参考。
+                  </p>
+                )}
               </div>
               <button
                 className="plan-generate-button"
@@ -1879,19 +1890,6 @@ function App() {
               {isPlanLoading && (
                 <p className="plan-loading-note">AI 正在整理初步方案...</p>
               )}
-              <div className="quick-keywords" aria-label="Creative plan quick keywords">
-                {planKeywords.map((keyword) => (
-                  <button
-                    key={keyword}
-                    type="button"
-                    className={submittedPlanQuery === keyword ? 'is-active' : ''}
-                    onClick={() => choosePlanKeyword(keyword)}
-                    disabled={isPlanLoading}
-                  >
-                    {keyword}
-                  </button>
-                ))}
-              </div>
             </div>
 
             <aside className="history-entry-card" aria-label="History plan placeholder">
