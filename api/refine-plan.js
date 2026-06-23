@@ -1,7 +1,8 @@
 const SYSTEM_PROMPT = [
   '你是 AI Creative Radar 的创意方案顾问。',
   '用户已经获得了一份初步创意方案，现在希望继续完善。',
-  '请基于用户原始目标、当前方案和用户追问，给出具体、可执行的补充建议。',
+  '请基于用户原始目标、当前方案、历史讨论、资料库匹配内容、用户参考资料和本轮追问，给出具体、可执行的补充建议。',
+  '这是连续方案讨论，不是一次性问答。你需要承接前文，不要忽略已经讨论过的方向。',
   '请用中文输出，避免空泛鸡汤，尽量给出工具、内容形式、执行步骤、视觉风格、发布平台和作品集呈现方式。',
   '不要输出过长内容。',
   '请输出 3-6 个要点，每点 1-2 句话，适合直接展示在页面里。',
@@ -44,13 +45,26 @@ function buildReferenceResources(referenceResources) {
     : []
 }
 
-function buildUserPrompt(query, currentPlan, followUpQuestion, referenceResources = []) {
+function buildUserPrompt(
+  query,
+  currentPlan,
+  followUpQuestion,
+  referenceResources = [],
+  refineHistory = [],
+  matchedResources = [],
+) {
   const referencesForPrompt = buildReferenceResources(referenceResources)
   return [
     `用户原始创意目标：${query}`,
     '',
     '当前初步方案：',
     JSON.stringify(currentPlan || {}, null, 2),
+    '',
+    '历史讨论记录（按时间顺序）：',
+    JSON.stringify(Array.isArray(refineHistory) ? refineHistory : [], null, 2),
+    '',
+    '本地资料库匹配内容（可作为背景参考，不需要逐字照搬）：',
+    JSON.stringify(Array.isArray(matchedResources) ? matchedResources.slice(0, 5) : [], null, 2),
     '',
     referencesForPrompt.length
       ? '用户添加的参考资料如下，可能未经过真实性核验，请优先作为创意参考、工具参考、视觉风格参考或 workflow 参考，避免将未核验内容写成确定事实：'
@@ -59,7 +73,7 @@ function buildUserPrompt(query, currentPlan, followUpQuestion, referenceResource
     '',
     `用户追问：${followUpQuestion}`,
     '',
-    '请围绕这个追问继续完善方案。回答要具体、可执行，不要重新生成整份方案。',
+    '请像连续聊天一样承接前面的讨论，围绕这个追问继续完善方案。回答要具体、可执行，不要重新生成整份方案。',
   ].join('\n')
 }
 
@@ -72,7 +86,15 @@ export default async function handler(request, response) {
   }
 
   try {
-    const { query, currentPlan, followUpQuestion, referenceResources = [], accessCode } = request.body || {}
+    const {
+      query,
+      currentPlan,
+      followUpQuestion,
+      referenceResources = [],
+      refineHistory = [],
+      matchedResources = [],
+      accessCode,
+    } = request.body || {}
 
     if (!query || !String(query).trim()) {
       return response.status(400).json({
@@ -139,6 +161,8 @@ export default async function handler(request, response) {
               currentPlan,
               String(followUpQuestion).trim(),
               referenceResources,
+              refineHistory,
+              matchedResources,
             ),
           },
         ],

@@ -45,6 +45,50 @@ function getDomainName(url) {
   }
 }
 
+function normalizeUrlInput(url) {
+  const trimmedUrl = String(url || '').trim()
+  return /^https?:\/\//i.test(trimmedUrl) ? trimmedUrl : `https://${trimmedUrl}`
+}
+
+function detectResourceIntentFromUrl(url, title = '') {
+  const normalizedUrl = normalizeUrlInput(url)
+  const domain = getDomainName(normalizedUrl).toLowerCase()
+  const text = `${normalizedUrl} ${domain} ${title}`.toLowerCase()
+
+  const toolSignals = [
+    'chatgpt',
+    'openai.com',
+    'runway',
+    'midjourney',
+    'pika',
+    'kling',
+    'kuaishou',
+    'jimeng',
+    'doubao',
+    'comfyui',
+    'heygen',
+    'd-id',
+    'canva',
+    'krea',
+    'figma',
+    'spline',
+    'firefly',
+    'adobe',
+    'stable-diffusion',
+  ]
+
+  if (domain.includes('github.com')) return 'github_project'
+  if (domain.includes('huggingface.co')) return 'github_project'
+  if (/(x\.com|twitter\.com|xiaohongshu\.com|instagram\.com|tiktok\.com|youtube\.com|bilibili\.com|douyin\.com)/i.test(domain)) {
+    return 'social_post'
+  }
+  if (toolSignals.some((signal) => text.includes(signal))) return 'tool_site'
+  if (/(case|gallery|showcase|portfolio|作品|案例)/i.test(text)) return 'case_page'
+  if (/(blog|news|article|post|medium\.com|substack\.com|notion\.site)/i.test(text)) return 'article'
+
+  return 'content_page'
+}
+
 function stripHtml(html) {
   return String(html || '')
     .replace(/<script[\s\S]*?<\/script>/gi, ' ')
@@ -69,10 +113,7 @@ function extractTitle(html) {
 }
 
 async function readLinkContent(url) {
-  let normalizedUrl = String(url || '').trim()
-  if (!/^https?:\/\//i.test(normalizedUrl)) {
-    normalizedUrl = `https://${normalizedUrl}`
-  }
+  const normalizedUrl = normalizeUrlInput(url)
 
   const pageResponse = await fetch(normalizedUrl, {
     headers: {
@@ -90,10 +131,6 @@ async function readLinkContent(url) {
   const title = contentType.includes('html') ? extractTitle(rawContent) : ''
   const text = contentType.includes('html') ? stripHtml(rawContent) : rawContent.replace(/\s+/g, ' ').trim()
 
-  if (!text || text.length < 80) {
-    throw new Error('Link content too short')
-  }
-
   return {
     url: normalizedUrl,
     title,
@@ -102,9 +139,10 @@ async function readLinkContent(url) {
   }
 }
 
-function normalizeResource(resource, inputType, sourceUrl, sourceName) {
+function normalizeResource(resource, inputType, sourceUrl, sourceName, fallbackIntent = 'unknown') {
   const sourceStatus = inputType === 'link' ? '链接导入' : '文本导入'
-  const allowedIntents = ['article', 'tool_site', 'case_page', 'github_project', 'social_post', 'unknown']
+  const allowedIntents = ['tool_site', 'content_page', 'github_project', 'case_page', 'social_post', 'article', 'unknown']
+  const resourceIntent = allowedIntents.includes(resource.resource_intent) ? resource.resource_intent : fallbackIntent
 
   return {
     id: '',
@@ -132,7 +170,7 @@ function normalizeResource(resource, inputType, sourceUrl, sourceName) {
     actionability_score: Number(resource.actionability_score) || 4,
     trend_score: Number(resource.trend_score) || 3,
     status: '已入库',
-    resource_intent: allowedIntents.includes(resource.resource_intent) ? resource.resource_intent : 'unknown',
+    resource_intent: allowedIntents.includes(resourceIntent) ? resourceIntent : 'unknown',
     use_in_plan_hint: resource.use_in_plan_hint || '',
     source_status: resource.source_status || sourceStatus,
     verification_status: '待核验',
@@ -141,12 +179,14 @@ function normalizeResource(resource, inputType, sourceUrl, sourceName) {
   }
 }
 
-function buildUserPrompt({ inputType, input, pageTitle, pageText, sourceName, sourceUrl }) {
+function buildUserPrompt({ inputType, input, pageTitle, pageText, sourceName, sourceUrl, detectedIntent }) {
   const sourceStatus = inputType === 'link' ? '链接导入' : '文本导入'
+  const isToolLike = ['tool_site', 'github_project'].includes(detectedIntent)
 
   return [
     `输入类型：${inputType}`,
     `来源状态：${sourceStatus}`,
+    `系统初步判断的资料类型：${detectedIntent || 'unknown'}`,
     `来源名称候选：${sourceName || ''}`,
     `来源链接：${sourceUrl || ''}`,
     `页面标题候选：${pageTitle || ''}`,
@@ -163,10 +203,14 @@ function buildUserPrompt({ inputType, input, pageTitle, pageText, sourceName, so
     '- status 固定为“已入库”',
     '- source_status 使用“链接导入”或“文本导入”',
     '- verification_status 固定为“待核验”',
-    '- resource_intent 必须是 article、tool_site、case_page、github_project、social_post、unknown 之一',
-    '- 如果是工具官网、GitHub 项目或产品网站，不要强行写成新闻文章，请整理它适合怎么进入创意方案',
-    '- use_in_plan_hint 说明这条资料适合如何参与方案生成，例如工具链参考、视觉风格参考、案例参考、趋势背景参考、Prompt / workflow 参考',
+    '- resource_intent 必须是 tool_site、content_page、github_project、case_page、social_post、article、unknown 之一',
+    '- 如果是工具官网、SaaS 产品页、GitHub 项目或 Hugging Face 项目，不要强行写成“文章讲了什么”，请整理它是什么工具 / 项目、适合 AIGC 流程哪个环节、可以具体做什么、适合哪些创作者、如何用于当前方案',
+    '- 如果是新闻文章、博客、教程、案例页、社媒内容或趋势分析，请总结内容重点，提炼和 AIGC / 创作相关的信息',
+    '- use_in_plan_hint 必须明确说明这条资料在生成方案时应该怎么用，例如工具链参考、AI 视频生成工具参考、数字人内容生产工具参考、视觉风格案例参考、趋势背景参考、Prompt / workflow 参考、平台运营玩法参考',
     '- 网页内容较少时，可以基于链接域名、页面标题和内容做保守整理，但必须保持 verification_status 为“待核验”，不要编造具体新闻事实',
+    isToolLike
+      ? '- 当前链接初步判断为工具 / 项目类，请优先输出工具用途、创作流程位置和可用于方案的方式，不要写成文章摘要。'
+      : '- 当前链接初步判断为内容类或未知，请优先提炼内容重点和创作参考价值。',
     '',
     '请严格返回以下 JSON 结构，不要输出 Markdown，不要输出解释文字：',
     JSON.stringify(
@@ -196,7 +240,7 @@ function buildUserPrompt({ inputType, input, pageTitle, pageText, sourceName, so
         actionability_score: 4,
         trend_score: 3,
         status: '已入库',
-        resource_intent: 'article | tool_site | case_page | github_project | social_post | unknown',
+        resource_intent: 'tool_site | content_page | github_project | case_page | social_post | article | unknown',
         use_in_plan_hint: '这条资料可以如何用于方案生成',
         source_status: sourceStatus,
         verification_status: '待核验',
@@ -263,16 +307,31 @@ export default async function handler(request, response) {
       text: String(input).slice(0, 9000),
       sourceName: '',
     }
+    let detectedIntent = inputType === 'link' ? detectResourceIntentFromUrl(input) : 'content_page'
 
     if (inputType === 'link') {
       try {
         pageData = await readLinkContent(input)
+        detectedIntent = detectResourceIntentFromUrl(pageData.url, pageData.title)
       } catch (error) {
+        const normalizedUrl = normalizeUrlInput(input)
+        const fallbackIntent = detectResourceIntentFromUrl(normalizedUrl)
+        if (['tool_site', 'github_project'].includes(fallbackIntent)) {
+          const sourceName = getDomainName(normalizedUrl)
+          pageData = {
+            url: normalizedUrl,
+            title: sourceName,
+            text: `这是一个可能的工具型网址或项目页。URL：${normalizedUrl}。域名：${sourceName}。页面正文暂时无法稳定读取，请根据链接、域名、标题和常见 AIGC 工具知识做保守整理。不要编造具体新闻事实、发布时间或已验证功能。`,
+            sourceName,
+          }
+          detectedIntent = fallbackIntent
+        } else {
         return response.status(422).json({
           success: false,
           source: 'link',
           error: '暂时无法读取这个链接内容，可以复制文章正文后用文本方式导入。',
         })
+        }
       }
     }
 
@@ -298,6 +357,7 @@ export default async function handler(request, response) {
               pageText: pageData.text,
               sourceName: pageData.sourceName,
               sourceUrl: pageData.url,
+              detectedIntent,
             }),
           },
         ],
@@ -331,7 +391,7 @@ export default async function handler(request, response) {
       return response.status(200).json({
         success: true,
         source: 'ai',
-        resource: normalizeResource(parsedResource, inputType, pageData.url, pageData.sourceName),
+        resource: normalizeResource(parsedResource, inputType, pageData.url, pageData.sourceName, detectedIntent),
       })
     } catch (error) {
       return response.status(502).json({

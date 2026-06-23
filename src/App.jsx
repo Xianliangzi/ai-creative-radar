@@ -218,6 +218,7 @@ function getResourceIntentLabel(intent) {
   const labels = {
     article: '文章',
     tool_site: '工具网站',
+    content_page: '内容页面',
     case_page: '案例页',
     github_project: 'GitHub 项目',
     social_post: '社交内容',
@@ -938,7 +939,24 @@ function App() {
         body: JSON.stringify({
           query: submittedPlanQuery || planQuery,
           currentPlan: buildCurrentPlanPayload(planSummary),
+          refineHistory: refineRecords.map((record) => ({
+            question: record.question,
+            answer: record.reply,
+          })),
           followUpQuestion: question,
+          matchedResources: planResults.slice(0, 5).map((resource) => ({
+            title: resource.title,
+            category: resource.category,
+            summary: resource.summary,
+            tools: resource.tools,
+            creator_value: resource.creator_value,
+            project_ideas: resource.project_ideas,
+            prompt_hint: resource.prompt_hint,
+            workflow_hint: resource.workflow_hint,
+            platform_suggestions: resource.platform_suggestions,
+            use_in_plan_hint: resource.use_in_plan_hint,
+            verification_status: resource.verification_status,
+          })),
           referenceResources: planReferences.map(buildPlanReferencePayload),
         }),
       })
@@ -1854,6 +1872,9 @@ function App() {
                           </button>
                         </div>
                         <p>{resource.summary || '暂无摘要'}</p>
+                        <p className="inline-reference-use">
+                          用途：{resource.use_in_plan_hint || '可作为创意方向、工具链或视觉风格参考。'}
+                        </p>
                         {resource.tools.length > 0 && <small>相关工具：{resource.tools.join(' / ')}</small>}
                         <details className="inline-reference-details">
                           <summary>展开详情</summary>
@@ -1999,24 +2020,24 @@ function App() {
           <section className="coming-next next-refine-panel" aria-label="AI plan discussion">
             <div className="section-title">
               <span>
-                <strong>AI 方案讨论区</strong>
+                <strong>方案迭代讨论</strong>
                 <small>Refine with AI</small>
               </span>
-              <span>{refineRecords.length > 0 ? `${refineRecords.length} 轮讨论` : '等待追问'}</span>
+              <span>{refineRecords.length > 0 ? `${refineRecords.length} 轮讨论` : '等待发送'}</span>
             </div>
             <div className="next-refine-body">
               <p>
-                你可以继续追问、修改或补充要求，让 AI 帮你打磨执行步骤、视觉风格、发布平台和作品集呈现方式。每一轮讨论都会保留，并用于最终方案整理。
+                像聊天一样继续补充要求、修改方向或追问细节。AI 会记住前面的讨论，直到你决定总结成完整方案。
               </p>
               <label className="refine-field">
-                <span>继续补充你的要求</span>
+                <span>继续讨论</span>
                 <textarea
                   value={refineQuestion}
                   onChange={(event) => {
                     setRefineQuestion(event.target.value)
                     setRefineError('')
                   }}
-                  placeholder="继续补充你的要求，例如：帮我改成适合小红书发布 / 给我三天执行计划 / 这个项目怎么放进作品集？"
+                  placeholder="例如：把它改成更适合小红书 / 给我 7 天执行计划 / 这个项目怎么包装进作品集？"
                   rows="3"
                 />
               </label>
@@ -2026,16 +2047,16 @@ function App() {
                 onClick={refineCurrentPlan}
                 disabled={!refineQuestion.trim() || isRefineLoading}
               >
-                {isRefineLoading ? 'AI 正在发送追问...' : '发送追问'}
+                {isRefineLoading ? 'AI 正在回复...' : '发送'}
               </button>
-              {isRefineLoading && <p className="refine-status">AI 正在发送追问并整理补充建议...</p>}
+              {isRefineLoading && <p className="refine-status">AI 正在基于当前方案和历史讨论继续回复...</p>}
               {refineError && <p className="plan-api-warning">{refineError}</p>}
               {refineRecords.length > 0 && (
                 <div className="refine-records" aria-label="Refine history">
                   {refineRecords.map((record) => (
                     <article className="refine-record" key={record.id}>
                       <div className="refine-message user-message">
-                        <strong>你追问</strong>
+                        <strong>你</strong>
                         <p>{record.question}</p>
                       </div>
                       <div className="refine-message ai-message">
@@ -2049,12 +2070,12 @@ function App() {
               <div className="finalize-panel" aria-label="Finalize plan draft">
                 <div className="finalize-header">
                   <span>
-                    <strong>确认方向，生成最终方案</strong>
+                    <strong>总结为完整方案</strong>
                     <small>Finalize Plan</small>
                   </span>
                 </div>
                 <p>
-                  当你觉得方向基本清楚后，AI 会结合最初输入、初步方案、资料库匹配内容和所有讨论记录，整理成一份最终方案草稿。即使没有追问记录，也可以直接基于初步方案生成。
+                  当你觉得方向基本清楚后，AI 会结合最初输入、初步方案、参考资料、资料库匹配内容和所有讨论记录，整理成一份最终方案草稿。即使没有很多讨论，也可以直接总结。
                 </p>
                 <button
                   className="finalize-button"
@@ -2062,10 +2083,10 @@ function App() {
                   onClick={finalizeCurrentPlan}
                   disabled={isFinalizingPlan}
                 >
-                  {isFinalizingPlan ? 'AI 正在整理最终方案...' : '确认方向，生成最终方案'}
+                  {isFinalizingPlan ? 'AI 正在总结当前讨论...' : '根据当前讨论生成完整方案'}
                 </button>
                 {isFinalizingPlan && (
-                  <p className="refine-status">AI 正在整理最终方案，请稍等...</p>
+                  <p className="refine-status">AI 正在整合初步方案、参考资料和讨论记录，请稍等...</p>
                 )}
                 {finalPlanError && <p className="plan-api-warning">{finalPlanError}</p>}
                 {finalPlan && (
