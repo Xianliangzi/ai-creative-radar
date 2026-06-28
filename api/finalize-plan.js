@@ -24,6 +24,7 @@ function normalizeList(value) {
 
 function normalizeFinalPlan(plan) {
   return {
+    plan_type: plan.plan_type || '',
     title: plan.title || '',
     summary: plan.summary || '',
     target: plan.target || '',
@@ -77,10 +78,27 @@ function buildReferenceResources(referenceResources) {
     : []
 }
 
-function buildUserPrompt(query, currentPlan, refineHistory, matchedResources = [], referenceResources = []) {
+function getPlanTypeInstruction(planType = '自由脑暴') {
+  const instructions = {
+    作品集项目: '最终方案类型是“作品集项目”。请重点整理项目概念、视觉系统、工具链、制作流程、最终展示方式和作品集包装价值。',
+    小红书账号: '最终方案类型是“小红书账号”。请重点整理账号定位、人设 / 内容风格、内容栏目、封面与标题方向、发布频率、涨粉与互动建议。',
+    'AI 视频短片': '最终方案类型是“AI 视频短片”。请重点整理故事概念、分镜结构、视觉风格、工具链、音乐 / 节奏建议和制作流程。',
+    'AI 海报实验': '最终方案类型是“AI 海报实验”。请重点整理视觉主题、系列结构、风格关键词、Prompt 灵感、输出规格和展示方式。',
+    数字人项目: '最终方案类型是“数字人项目”。请重点整理角色设定、人设定位、内容栏目、视觉一致性、工具链和平台发布建议。',
+    商业提案: '最终方案类型是“商业提案”。请重点整理目标人群、商业价值、使用场景、执行方案、成本 / 周期和交付物。',
+    课程作业: '最终方案类型是“课程作业”。请重点整理主题表达、作业结构、技术流程、展示材料、可交付内容和老师能看懂的项目说明。',
+    自由脑暴: '最终方案类型是“自由脑暴”。保持开放式结构，但仍然要总结成清楚、可执行的最终方案。',
+  }
+
+  return instructions[planType] || instructions.自由脑暴
+}
+
+function buildUserPrompt(query, currentPlan, refineHistory, matchedResources = [], referenceResources = [], planType = '自由脑暴') {
   const referencesForPrompt = buildReferenceResources(referenceResources)
   return [
     `用户原始创意目标：${query}`,
+    `用户选择的方案类型：${planType || '自由脑暴'}`,
+    getPlanTypeInstruction(planType),
     '',
     '当前初步方案：',
     JSON.stringify(currentPlan || {}, null, 2),
@@ -104,6 +122,7 @@ function buildUserPrompt(query, currentPlan, refineHistory, matchedResources = [
     JSON.stringify(
       {
         title: '方案标题',
+        plan_type: planType || '自由脑暴',
         summary: '一句话方案摘要',
         target: '项目目标',
         target_users: ['适合人群或使用场景1', '适合人群或使用场景2'],
@@ -138,6 +157,7 @@ export default async function handler(request, response) {
       refineHistory = [],
       matchedResources = [],
       referenceResources = [],
+      planType = '自由脑暴',
       accessCode,
     } = request.body || {}
 
@@ -199,6 +219,7 @@ export default async function handler(request, response) {
               refineHistory,
               matchedResources,
               referenceResources,
+              planType,
             ),
           },
         ],

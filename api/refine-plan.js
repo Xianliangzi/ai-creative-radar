@@ -45,6 +45,21 @@ function buildReferenceResources(referenceResources) {
     : []
 }
 
+function getPlanTypeInstruction(planType = '自由脑暴') {
+  const instructions = {
+    作品集项目: '当前方案类型是“作品集项目”。讨论时优先围绕项目概念、视觉系统、工具链、制作流程、最终展示方式和作品集包装价值展开。',
+    小红书账号: '当前方案类型是“小红书账号”。讨论时优先围绕账号定位、人设 / 内容风格、内容栏目、封面标题、发布频率和互动增长展开。',
+    'AI 视频短片': '当前方案类型是“AI 视频短片”。讨论时优先围绕故事概念、分镜结构、视觉风格、工具链、音乐节奏和制作流程展开。',
+    'AI 海报实验': '当前方案类型是“AI 海报实验”。讨论时优先围绕视觉主题、系列结构、风格关键词、Prompt、输出规格和展示方式展开。',
+    数字人项目: '当前方案类型是“数字人项目”。讨论时优先围绕角色设定、人设定位、内容栏目、视觉一致性、工具链和平台发布建议展开。',
+    商业提案: '当前方案类型是“商业提案”。讨论时优先围绕目标人群、商业价值、使用场景、执行方案、成本周期和交付物展开。',
+    课程作业: '当前方案类型是“课程作业”。讨论时优先围绕主题表达、作业结构、技术流程、展示材料、可交付内容和老师能看懂的说明展开。',
+    自由脑暴: '当前方案类型是“自由脑暴”。保持开放式讨论，但每次回复仍要给出具体、可执行的建议。',
+  }
+
+  return instructions[planType] || instructions.自由脑暴
+}
+
 function buildUserPrompt(
   query,
   currentPlan,
@@ -52,10 +67,13 @@ function buildUserPrompt(
   referenceResources = [],
   refineHistory = [],
   matchedResources = [],
+  planType = '自由脑暴',
 ) {
   const referencesForPrompt = buildReferenceResources(referenceResources)
   return [
     `用户原始创意目标：${query}`,
+    `用户选择的方案类型：${planType || '自由脑暴'}`,
+    getPlanTypeInstruction(planType),
     '',
     '当前初步方案：',
     JSON.stringify(currentPlan || {}, null, 2),
@@ -90,6 +108,7 @@ export default async function handler(request, response) {
       query,
       currentPlan,
       followUpQuestion,
+      planType = '自由脑暴',
       referenceResources = [],
       refineHistory = [],
       matchedResources = [],
@@ -163,6 +182,7 @@ export default async function handler(request, response) {
               referenceResources,
               refineHistory,
               matchedResources,
+              planType,
             ),
           },
         ],

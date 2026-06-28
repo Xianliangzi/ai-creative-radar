@@ -41,6 +41,17 @@ const modeTabs = [
   },
 ]
 
+const planTypeOptions = [
+  '作品集项目',
+  '小红书账号',
+  'AI 视频短片',
+  'AI 海报实验',
+  '数字人项目',
+  '商业提案',
+  '课程作业',
+  '自由脑暴',
+]
+
 const searchableFields = [
   'id',
   'title',
@@ -409,6 +420,7 @@ function buildFinalPlanText(finalPlan, query = '', createdAt = new Date().toISOS
     `# ${finalPlan.title || '完整方案草稿'}`,
     '',
     `> 原始创意目标：${query || '未填写'}`,
+    `> 方案类型：${finalPlan.plan_type || '自由脑暴'}`,
     `> 生成时间：${displayDate}`,
     '',
     '## 方案摘要',
@@ -502,6 +514,7 @@ function buildWordPlanHtml(finalPlan, query = '', createdAt, refineHistory = [])
   <h1>AI Creative Radar 创意方案文档</h1>
   <p class="meta"><strong>生成时间：</strong>${escapeHtml(displayDate)}</p>
   <p class="meta"><strong>原始创意方向：</strong>${escapeHtml(query || '未填写')}</p>
+  <p class="meta"><strong>方案类型：</strong>${escapeHtml(finalPlan.plan_type || '自由脑暴')}</p>
 
   <h2>${escapeHtml(finalPlan.title || '完整方案草稿')}</h2>
   <h2>方案摘要</h2>
@@ -564,6 +577,7 @@ function buildPptOutlineText(finalPlan, query = '', createdAt) {
     '# AI Creative Radar 方案 PPT 大纲',
     '',
     `> 原始创意方向：${query || '未填写'}`,
+    `> 方案类型：${finalPlan.plan_type || '自由脑暴'}`,
     `> 生成时间：${displayDate}`,
     '',
     '## 第 1 页：项目标题',
@@ -749,6 +763,8 @@ function App() {
   const [activeCategory, setActiveCategory] = useState('All')
   const [selectedSignal, setSelectedSignal] = useState(null)
   const [planQuery, setPlanQuery] = useState('')
+  const [planType, setPlanType] = useState('自由脑暴')
+  const [submittedPlanType, setSubmittedPlanType] = useState('自由脑暴')
   const [submittedPlanQuery, setSubmittedPlanQuery] = useState('')
   const [planCopyStatus, setPlanCopyStatus] = useState('idle')
   const [apiPlanSummary, setApiPlanSummary] = useState(null)
@@ -838,6 +854,7 @@ function App() {
     const matchedSignalsForPlan = findPlanMatches(nextQuery, signals)
 
     setSubmittedPlanQuery(nextQuery)
+    setSubmittedPlanType(planType)
     setApiPlanSummary(null)
     setPlanSource('local')
     setPlanApiError('')
@@ -863,6 +880,7 @@ function App() {
         },
         body: JSON.stringify({
           query: nextQuery,
+          planType,
           matchedSignals: matchedSignalsForPlan,
           referenceResources: planReferences.map(buildPlanReferencePayload),
         }),
@@ -939,6 +957,7 @@ function App() {
         },
         body: JSON.stringify({
           query: submittedPlanQuery || planQuery,
+          planType: submittedPlanType || planType,
           currentPlan: buildCurrentPlanPayload(planSummary),
           refineHistory: refineRecords.map((record) => ({
             question: record.question,
@@ -1019,6 +1038,7 @@ function App() {
         },
         body: JSON.stringify({
           query: submittedPlanQuery || planQuery,
+          planType: submittedPlanType || planType,
           currentPlan: buildCurrentPlanPayload(planSummary),
           refineHistory: refineRecords.map((record) => ({
             question: record.question,
@@ -1047,7 +1067,10 @@ function App() {
         throw new Error(data.error || 'AI 暂时无法生成完整方案草稿')
       }
 
-      setFinalPlan(data.finalPlan)
+      setFinalPlan({
+        ...data.finalPlan,
+        plan_type: data.finalPlan.plan_type || submittedPlanType || planType,
+      })
       window.setTimeout(() => {
         finalPlanRef.current?.scrollIntoView({
           behavior: 'smooth',
@@ -1807,6 +1830,41 @@ function App() {
                   placeholder="例如：我想做一个数字人作品集项目 / AI 视频短片 / 小红书 AI 账号..."
                 />
               </label>
+              <div className="plan-type-selector" aria-label="Plan type selector">
+                <div className="plan-type-heading">
+                  <strong>你想生成哪类方案？</strong>
+                  <span>选择一个方向，AI 会按对应场景组织方案结构。</span>
+                </div>
+                <div className="plan-type-options">
+                  {planTypeOptions.map((option) => (
+                    <button
+                      key={option}
+                      type="button"
+                      className={planType === option ? 'is-active' : ''}
+                      onClick={() => {
+                        setPlanType(option)
+                        setSubmittedPlanQuery('')
+                        setApiPlanSummary(null)
+                        setPlanSource('local')
+                        setPlanApiError('')
+                        setPlanCopyStatus('idle')
+                        setRefineQuestion('')
+                        setRefineRecords([])
+                        setRefineError('')
+                        setFinalPlan(null)
+                        setFinalPlanError('')
+                        setFinalPlanCopyStatus('idle')
+                        setFinalPlanDownloadStatus('idle')
+                        setFinalPlanWordStatus('idle')
+                        setFinalPlanPptStatus('idle')
+                        setSavePlanStatus('idle')
+                      }}
+                    >
+                      {option}
+                    </button>
+                  ))}
+                </div>
+              </div>
               <div className="quick-keywords" aria-label="Creative plan examples">
                 <span className="example-label">示例：</span>
                 {planKeywords.map((keyword) => (
@@ -1939,7 +1997,7 @@ function App() {
                   <strong>初步方案结果</strong>
                   <small>Initial Plan Result</small>
                 </span>
-                <span className="plan-source-tag">{planSourceLabel}</span>
+                <span className="plan-source-tag">{planSourceLabel} / {submittedPlanType}</span>
               </div>
               <div className="initial-plan-body">
                 <div className="initial-plan-guidance">
@@ -1953,6 +2011,7 @@ function App() {
                     {isPlanLoading ? '正在重新生成...' : '重新生成初步方案'}
                   </button>
                 </div>
+                <p className="plan-type-result">当前方案类型：{submittedPlanType}</p>
                 {planApiError && (
                   <p className="plan-api-warning">AI 暂时不可用：{planApiError}，已展示本地匹配结果。</p>
                 )}
@@ -2118,7 +2177,7 @@ function App() {
                         完整方案草稿
                         <small>Final Plan Draft</small>
                       </span>
-                      <p>这份方案由初步方案和你的追问记录整理生成，当前可以复制、下载 Markdown，也可以保存到我的方案库。</p>
+                      <p>方案类型：{finalPlan.plan_type || submittedPlanType}。这份方案由初步方案和你的追问记录整理生成，当前可以复制、下载 Markdown，也可以保存到我的方案库。</p>
                     </div>
                     <h3>{finalPlan.title || '完整方案草稿'}</h3>
                     <div className="final-plan-grid">

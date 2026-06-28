@@ -69,7 +69,22 @@ function buildReferenceResources(referenceResources) {
     : []
 }
 
-function buildUserPrompt(query, matchedSignals, referenceResources = []) {
+function getPlanTypeInstruction(planType = '自由脑暴') {
+  const instructions = {
+    作品集项目: '方案类型是“作品集项目”。请重点输出项目概念、视觉系统、工具链、制作流程、最终展示方式和作品集包装价值。',
+    小红书账号: '方案类型是“小红书账号”。请重点输出账号定位、人设 / 内容风格、内容栏目、封面与标题方向、发布频率、涨粉与互动建议。',
+    'AI 视频短片': '方案类型是“AI 视频短片”。请重点输出故事概念、分镜结构、视觉风格、工具链、音乐 / 节奏建议和制作流程。',
+    'AI 海报实验': '方案类型是“AI 海报实验”。请重点输出视觉主题、系列结构、风格关键词、Prompt 灵感、输出规格和展示方式。',
+    数字人项目: '方案类型是“数字人项目”。请重点输出角色设定、人设定位、内容栏目、视觉一致性、工具链和平台发布建议。',
+    商业提案: '方案类型是“商业提案”。请重点输出目标人群、商业价值、使用场景、执行方案、成本 / 周期和交付物。',
+    课程作业: '方案类型是“课程作业”。请重点输出主题表达、作业结构、技术流程、展示材料、可交付内容和老师能看懂的项目说明。',
+    自由脑暴: '方案类型是“自由脑暴”。保持开放式结构，但仍然要给出具体、可执行的工具、方向和下一步建议。',
+  }
+
+  return instructions[planType] || instructions.自由脑暴
+}
+
+function buildUserPrompt(query, matchedSignals, referenceResources = [], planType = '自由脑暴') {
   const signalsForPrompt = Array.isArray(matchedSignals)
     ? matchedSignals.slice(0, 5).map((signal) => ({
         title: signal.title,
@@ -87,6 +102,8 @@ function buildUserPrompt(query, matchedSignals, referenceResources = []) {
 
   return [
     `用户输入的创意目标：${query}`,
+    `用户选择的方案类型：${planType || '自由脑暴'}`,
+    getPlanTypeInstruction(planType),
     '',
     '说明：用户输入的是创意目标，不一定是关键词。请理解用户真正想做的项目方向。',
     '匹配到的资讯只是参考材料，不要求逐字照搬。',
@@ -140,7 +157,7 @@ export default async function handler(request, response) {
   }
 
   try {
-    const { query, matchedSignals = [], referenceResources = [], accessCode } = request.body || {}
+    const { query, planType = '自由脑暴', matchedSignals = [], referenceResources = [], accessCode } = request.body || {}
 
     if (!query || !String(query).trim()) {
       return response.status(400).json({
@@ -185,7 +202,7 @@ export default async function handler(request, response) {
           },
           {
             role: 'user',
-            content: buildUserPrompt(String(query).trim(), matchedSignals, referenceResources),
+            content: buildUserPrompt(String(query).trim(), matchedSignals, referenceResources, planType),
           },
         ],
         temperature: 0.7,

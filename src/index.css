@@ -2395,6 +2395,59 @@ h1 {
   min-height: 48px;
 }
 
+.plan-type-selector {
+  display: grid;
+  gap: 7px;
+}
+
+.plan-type-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.plan-type-heading strong {
+  color: #e5f3d4;
+}
+
+.plan-type-heading span,
+.plan-type-result {
+  color: #b8c9aa;
+  font-size: 0.84rem;
+  line-height: 1.55;
+}
+
+.plan-type-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.plan-type-options button {
+  min-height: 32px;
+  border: 1px solid rgba(143, 175, 138, 0.48);
+  color: #dce8ca;
+  background: rgba(5, 8, 5, 0.16);
+  padding: 5px 8px;
+  font-family: inherit;
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+
+.plan-type-options button:hover,
+.plan-type-options button:focus-visible {
+  border-color: #aec7aa;
+  color: #7cff9b;
+  outline: none;
+}
+
+.plan-type-options button.is-active {
+  border-color: #050805;
+  color: #050805;
+  background: #aec7aa;
+}
+
 .plan-generate-button,
 .history-entry-card button,
 .next-refine-body button {
@@ -4480,7 +4533,8 @@ h1 {
 
   .inline-reference-head span,
   .inline-reference-field > span,
-  .inline-reference-summary {
+  .inline-reference-summary,
+  .plan-type-heading {
     display: grid;
   }
 
